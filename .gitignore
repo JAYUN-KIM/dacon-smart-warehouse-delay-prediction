@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.DS_Store
+Thumbs.db
+
+# Large local competition artifacts
+/artifacts/
+/data/
+/raw_submissions/
+
+# Generated reports
+docs/daily_report.md
+docs/status_snapshot.json
+
