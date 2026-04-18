@@ -27,8 +27,12 @@
   이력서/포트폴리오용 요약 문서
 - `docs/experiment_log.md`
   주요 실험 흐름과 best score 기록
+- `docs/daily_logs/`
+  날짜별 작업 기록과 변화 요약
+- `docs/public_score_log.json`
+  public score와 제출 파일 기록
 - `scripts/update_daily_report.py`
-  현재 작업 폴더를 읽어 일일 요약 문서를 자동 생성
+  현재 작업 폴더를 읽어 일일 요약과 날짜별 로그를 자동 생성
 
 ## Daily Workflow
 
@@ -42,4 +46,4 @@
 - `a75` residual CatBoost에서 큰 폭의 점수 개선
 - `a79`에서 sequence residual branch를 추가해 새로운 error pattern 확보
 - `a81`에서 `a79` anchor 기반 sequence residual V2로 추가 개선
-
+- 매일 작업 로그와 실험 변화가 자동으로 문서화되도록 관리

@@ -9,8 +9,3 @@ Thumbs.db
 /artifacts/
 /data/
 /raw_submissions/
-
-# Generated reports
-docs/daily_report.md
-docs/status_snapshot.json
-

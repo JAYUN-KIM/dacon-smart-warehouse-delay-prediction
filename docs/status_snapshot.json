@@ -1,0 +1,410 @@
+{
+  "generated_at": "2026-04-18 14:34",
+  "best_public": {
+    "date": "2026-04-18",
+    "name": "a81_01",
+    "score": 10.121418246,
+    "file": "submission_a81_01.csv",
+    "note": "sequence residual v2"
+  },
+  "known_public_scores": [
+    {
+      "date": "2026-04-18",
+      "name": "a81_01",
+      "score": 10.121418246,
+      "file": "submission_a81_01.csv",
+      "note": "sequence residual v2"
+    },
+    {
+      "date": "2026-04-18",
+      "name": "a79_01",
+      "score": 10.1214263184,
+      "file": "submission_a79_01.csv",
+      "note": "sequence residual branch"
+    },
+    {
+      "date": "2026-04-18",
+      "name": "a77_01",
+      "score": 10.1214405285,
+      "file": "submission_a77_01.csv",
+      "note": "anchor3 residual"
+    },
+    {
+      "date": "2026-04-17",
+      "name": "a76_01",
+      "score": 10.121563682,
+      "file": "submission_a76_01.csv",
+      "note": "anchor2 residual"
+    },
+    {
+      "date": "2026-04-17",
+      "name": "a75_01",
+      "score": 10.122152212,
+      "file": "submission_a75_01.csv",
+      "note": "residual CatBoost jump"
+    },
+    {
+      "date": "2026-04-13",
+      "name": "a66_5",
+      "score": 10.1260335184,
+      "file": "submission_a66_5.csv",
+      "note": "TransLF ratio increased"
+    },
+    {
+      "date": "2026-04-12",
+      "name": "a56_3",
+      "score": 10.1276,
+      "file": "submission_a56_3.csv",
+      "note": "STT + TransLF + a48"
+    },
+    {
+      "date": "2026-04-10",
+      "name": "a48_v4_3",
+      "score": 10.1477,
+      "file": "submission_a48_v4_3.csv",
+      "note": "strong ensemble base"
+    },
+    {
+      "date": "2026-04-01",
+      "name": "baseline",
+      "score": 11.83,
+      "file": "submission_baseline.csv",
+      "note": "baseline"
+    }
+  ],
+  "recent_metrics": {
+    "a79": {
+      "fold_mae": [
+        6.182053565979004,
+        6.2462615966796875,
+        6.230278491973877,
+        6.165634632110596,
+        6.168391704559326
+      ],
+      "mean_mae": 6.198526382446289
+    },
+    "a80": {
+      "fold_rows": [
+        {
+          "fold": 1,
+          "soft_mae": 7.027323830018485,
+          "hard_mae": 7.027289836694836
+        },
+        {
+          "fold": 2,
+          "soft_mae": 6.947656538128316,
+          "hard_mae": 6.947649605341738
+        },
+        {
+          "fold": 3,
+          "soft_mae": 6.624395682084625,
+          "hard_mae": 6.624386845975518
+        },
+        {
+          "fold": 4,
+          "soft_mae": 6.999957771809794,
+          "hard_mae": 6.999911933877074
+        },
+        {
+          "fold": 5,
+          "soft_mae": 6.812349098986239,
+          "hard_mae": 6.812352157968318
+        }
+      ],
+      "soft_gate_mae": 6.882338047027588,
+      "hard_gate_mae": 6.882319927215576,
+      "anchor_mae": 6.882219314575195
+    },
+    "a81": {
+      "seed_rows": [
+        {
+          "seed": 42,
+          "fold_mae": [
+            6.183286666870117,
+            6.233107566833496,
+            6.229905605316162,
+            6.160367012023926,
+            6.168933868408203
+          ],
+          "mean_mae": 6.195120143890381
+        },
+        {
+          "seed": 2026,
+          "fold_mae": [
+            6.188933372497559,
+            6.247485637664795,
+            6.2324347496032715,
+            6.167442321777344,
+            6.176702976226807
+          ],
+          "mean_mae": 6.202599811553955
+        }
+      ],
+      "anchor_mae": 6.232080936431885,
+      "seq2_mae": 6.193705081939697
+    }
+  },
+  "recent_experiments": [
+    {
+      "name": "a81",
+      "summary_path": "C:\\open\\a81_candidates\\a81_candidates_summary.csv",
+      "top_rows": [
+        {
+          "submit_priority": "1",
+          "file_name": "submission_a81_01.csv",
+          "family": "low_seq2",
+          "alpha": "0.05",
+          "region": "low_q",
+          "region_param": "0.02",
+          "mean": "18.295719146728516",
+          "max": "42.51126480102539",
+          "std": "13.364471435546875",
+          "l1_to_anchor": "0.00036586157511919737",
+          "oof_mae": "6.311122894287109",
+          "rank_score": "0.0012482516607269646",
+          "name": "low_seq2_q0.02_a0.05"
+        },
+        {
+          "submit_priority": "2",
+          "file_name": "submission_a81_02.csv",
+          "family": "low_seq2",
+          "alpha": "0.05",
+          "region": "low_q",
+          "region_param": "0.03",
+          "mean": "18.295568466186523",
+          "max": "42.51126480102539",
+          "std": "13.36465072631836",
+          "l1_to_anchor": "0.0005446401773951948",
+          "oof_mae": "6.311122894287109",
+          "rank_score": "0.001292113612871617",
+          "name": "low_seq2_q0.03_a0.05"
+        },
+        {
+          "submit_priority": "3",
+          "file_name": "submission_a81_03.csv",
+          "family": "low_seq2",
+          "alpha": "0.08",
+          "region": "low_q",
+          "region_param": "0.02",
+          "mean": "18.295562744140625",
+          "max": "42.51126480102539",
+          "std": "13.364668846130371",
+          "l1_to_anchor": "0.0005853784386999905",
+          "oof_mae": "6.311122894287109",
+          "rank_score": "0.0013007953227497638",
+          "name": "low_seq2_q0.02_a0.08"
+        }
+      ]
+    },
+    {
+      "name": "a80",
+      "summary_path": "C:\\open\\a80_candidates\\a80_candidates_summary.csv",
+      "top_rows": [
+        {
+          "submit_priority": "1",
+          "file_name": "submission_a80_01.csv",
+          "family": "low_soft_gate",
+          "mix_alpha": "0.3",
+          "region": "low_q",
+          "region_param": "0.03",
+          "mean": "18.296253204345703",
+          "max": "42.51126480102539",
+          "std": "13.363811492919922",
+          "l1_to_anchor": "0.0003034489054698497",
+          "oof_mae": "6.881780624389648",
+          "rank_score": "8.152163762133568e-05",
+          "name": "low_soft_q0.03_m0.30"
+        },
+        {
+          "submit_priority": "2",
+          "file_name": "submission_a80_02.csv",
+          "family": "low_soft_gate",
+          "mix_alpha": "0.3",
+          "region": "low_q",
+          "region_param": "0.04",
+          "mean": "18.296308517456055",
+          "max": "42.51126480102539",
+          "std": "13.363749504089355",
+          "l1_to_anchor": "0.0003641975054051727",
+          "oof_mae": "6.881784915924072",
+          "rank_score": "0.00010207703395280988",
+          "name": "low_soft_q0.04_m0.30"
+        },
+        {
+          "submit_priority": "3",
+          "file_name": "submission_a80_03.csv",
+          "family": "low_soft_gate",
+          "mix_alpha": "0.3",
+          "region": "low_q",
+          "region_param": "0.05",
+          "mean": "18.296308517456055",
+          "max": "42.51126480102539",
+          "std": "13.363749504089355",
+          "l1_to_anchor": "0.00036441863630898297",
+          "oof_mae": "6.881784915924072",
+          "rank_score": "0.00010212568275164813",
+          "name": "low_soft_q0.05_m0.30"
+        }
+      ]
+    },
+    {
+      "name": "a79",
+      "summary_path": "C:\\open\\a79_candidates\\a79_candidates_summary.csv",
+      "top_rows": [
+        {
+          "submit_priority": "1",
+          "file_name": "submission_a79_01.csv",
+          "family": "low_seq_resid",
+          "alpha": "0.1",
+          "region": "low_q",
+          "region_param": "0.03",
+          "mean": "18.295982360839844",
+          "max": "42.51126480102539",
+          "std": "13.364143371582031",
+          "l1_to_anchor": "0.0013254713267087936",
+          "oof_mae": "6.311502933502197",
+          "rank_score": "0.0016290229186415673",
+          "name": "low_seq_q0.03_a0.10"
+        },
+        {
+          "submit_priority": "2",
+          "file_name": "submission_a79_02.csv",
+          "family": "low_seq_resid",
+          "alpha": "0.1",
+          "region": "low_q",
+          "region_param": "0.04",
+          "mean": "18.29557228088379",
+          "max": "42.51126480102539",
+          "std": "13.364622116088867",
+          "l1_to_anchor": "0.0017838134663179517",
+          "oof_mae": "6.311502933502197",
+          "rank_score": "0.001733401792589575",
+          "name": "low_seq_q0.04_a0.10"
+        },
+        {
+          "submit_priority": "3",
+          "file_name": "submission_a79_03.csv",
+          "family": "low_seq_resid",
+          "alpha": "0.15",
+          "region": "low_q",
+          "region_param": "0.03",
+          "mean": "18.2954158782959",
+          "max": "42.51126480102539",
+          "std": "13.364840507507324",
+          "l1_to_anchor": "0.0019882069900631905",
+          "oof_mae": "6.311502933502197",
+          "rank_score": "0.0017792525328695773",
+          "name": "low_seq_q0.03_a0.15"
+        }
+      ]
+    },
+    {
+      "name": "a78",
+      "summary_path": "C:\\open\\a78_candidates\\a78_candidates_summary.csv",
+      "top_rows": [
+        {
+          "submit_priority": "1",
+          "file_name": "submission_a78_01.csv",
+          "family": "low_resid4",
+          "model": "stage4_mae",
+          "alpha": "0.05",
+          "region": "low_q",
+          "region_param": "0.04",
+          "mean": "18.297119140625",
+          "max": "42.51126480102539",
+          "std": "13.362750053405762",
+          "l1_to_anchor": "0.0010050478158518672",
+          "oof_mae": "6.881917410990686",
+          "rank_score": "0.0020429253956712754",
+          "name": "low_stage4_mae_q0.04_a0.05"
+        },
+        {
+          "submit_priority": "2",
+          "file_name": "submission_a78_02.csv",
+          "family": "low_resid4",
+          "model": "stage4_huber",
+          "alpha": "0.05",
+          "region": "low_q",
+          "region_param": "0.04",
+          "mean": "18.297210693359375",
+          "max": "42.51126480102539",
+          "std": "13.362637519836426",
+          "l1_to_anchor": "0.0009330059983767569",
+          "oof_mae": "6.881937417163894",
+          "rank_score": "0.00204424637014089",
+          "name": "low_stage4_huber_q0.04_a0.05"
+        },
+        {
+          "submit_priority": "3",
+          "file_name": "submission_a78_03.csv",
+          "family": "low_resid4",
+          "model": "stage4_mae",
+          "alpha": "0.06",
+          "region": "low_q",
+          "region_param": "0.04",
+          "mean": "18.296939849853516",
+          "max": "42.51126480102539",
+          "std": "13.362966537475586",
+          "l1_to_anchor": "0.0012060573790222406",
+          "oof_mae": "6.881890852288238",
+          "rank_score": "0.002064266914765831",
+          "name": "low_stage4_mae_q0.04_a0.06"
+        }
+      ]
+    },
+    {
+      "name": "a77",
+      "summary_path": "C:\\open\\a77_candidates\\a77_candidates_summary.csv",
+      "top_rows": [
+        {
+          "submit_priority": "1",
+          "file_name": "submission_a77_01.csv",
+          "family": "low_resid3",
+          "model": "stage3_huber",
+          "alpha": "0.08",
+          "region": "low_q",
+          "region_param": "0.06",
+          "mean": "18.298015594482422",
+          "max": "42.51126480102539",
+          "std": "13.361668586730957",
+          "l1_to_anchor": "0.0019489331170916557",
+          "oof_mae": "6.882052865537556",
+          "rank_score": "0.0037008072547260796",
+          "name": "low_stage3_huber_q0.06_a0.08"
+        },
+        {
+          "submit_priority": "2",
+          "file_name": "submission_a77_02.csv",
+          "family": "low_resid3",
+          "model": "stage3_mae",
+          "alpha": "0.08",
+          "region": "low_q",
+          "region_param": "0.06",
+          "mean": "18.297592163085938",
+          "max": "42.51126480102539",
+          "std": "13.362166404724121",
+          "l1_to_anchor": "0.0022946211975067854",
+          "oof_mae": "6.881988543986745",
+          "rank_score": "0.0037179119793435337",
+          "name": "low_stage3_mae_q0.06_a0.08"
+        },
+        {
+          "submit_priority": "3",
+          "file_name": "submission_a77_03.csv",
+          "family": "low_resid3",
+          "model": "stage3_huber",
+          "alpha": "0.08",
+          "region": "low_q",
+          "region_param": "0.07",
+          "mean": "18.297822952270508",
+          "max": "42.51126480102539",
+          "std": "13.361885070800781",
+          "l1_to_anchor": "0.0021916572004556656",
+          "oof_mae": "6.882027255338637",
+          "rank_score": "0.003726569097732977",
+          "name": "low_stage3_huber_q0.07_a0.08"
+        }
+      ]
+    }
+  ]
+}

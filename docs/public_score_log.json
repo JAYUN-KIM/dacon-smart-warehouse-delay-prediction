@@ -1,0 +1,65 @@
+[
+  {
+    "date": "2026-04-01",
+    "name": "baseline",
+    "score": 11.83,
+    "file": "submission_baseline.csv",
+    "note": "baseline"
+  },
+  {
+    "date": "2026-04-10",
+    "name": "a48_v4_3",
+    "score": 10.1477,
+    "file": "submission_a48_v4_3.csv",
+    "note": "strong ensemble base"
+  },
+  {
+    "date": "2026-04-12",
+    "name": "a56_3",
+    "score": 10.1276,
+    "file": "submission_a56_3.csv",
+    "note": "STT + TransLF + a48"
+  },
+  {
+    "date": "2026-04-13",
+    "name": "a66_5",
+    "score": 10.1260335184,
+    "file": "submission_a66_5.csv",
+    "note": "TransLF ratio increased"
+  },
+  {
+    "date": "2026-04-17",
+    "name": "a75_01",
+    "score": 10.122152212,
+    "file": "submission_a75_01.csv",
+    "note": "residual CatBoost jump"
+  },
+  {
+    "date": "2026-04-17",
+    "name": "a76_01",
+    "score": 10.121563682,
+    "file": "submission_a76_01.csv",
+    "note": "anchor2 residual"
+  },
+  {
+    "date": "2026-04-18",
+    "name": "a77_01",
+    "score": 10.1214405285,
+    "file": "submission_a77_01.csv",
+    "note": "anchor3 residual"
+  },
+  {
+    "date": "2026-04-18",
+    "name": "a79_01",
+    "score": 10.1214263184,
+    "file": "submission_a79_01.csv",
+    "note": "sequence residual branch"
+  },
+  {
+    "date": "2026-04-18",
+    "name": "a81_01",
+    "score": 10.121418246,
+    "file": "submission_a81_01.csv",
+    "note": "sequence residual v2"
+  }
+]
