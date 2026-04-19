@@ -61,5 +61,12 @@
     "score": 10.121418246,
     "file": "submission_a81_01.csv",
     "note": "sequence residual v2"
+  },
+  {
+    "date": "2026-04-19",
+    "name": "a83_01",
+    "score": 10.1214032792,
+    "file": "submission_a83_01.csv",
+    "note": "layout-aware sequence residual"
   }
 ]

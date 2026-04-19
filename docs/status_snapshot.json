@@ -1,13 +1,20 @@
 {
-  "generated_at": "2026-04-18 14:34",
+  "generated_at": "2026-04-19 11:07",
   "best_public": {
-    "date": "2026-04-18",
-    "name": "a81_01",
-    "score": 10.121418246,
-    "file": "submission_a81_01.csv",
-    "note": "sequence residual v2"
+    "date": "2026-04-19",
+    "name": "a83_01",
+    "score": 10.1214032792,
+    "file": "submission_a83_01.csv",
+    "note": "layout-aware sequence residual"
   },
   "known_public_scores": [
+    {
+      "date": "2026-04-19",
+      "name": "a83_01",
+      "score": 10.1214032792,
+      "file": "submission_a83_01.csv",
+      "note": "layout-aware sequence residual"
+    },
     {
       "date": "2026-04-18",
       "name": "a81_01",
@@ -145,6 +152,117 @@
     }
   },
   "recent_experiments": [
+    {
+      "name": "a83",
+      "summary_path": "C:\\open\\a83_candidates\\a83_candidates_summary.csv",
+      "top_rows": [
+        {
+          "submit_priority": "1",
+          "file_name": "submission_a83_01.csv",
+          "family": "low_seq3",
+          "alpha": "0.03",
+          "region": "low_q",
+          "region_param": "0.02",
+          "mean": "18.295516967773438",
+          "max": "42.51126480102539",
+          "std": "13.364724159240723",
+          "l1_to_anchor": "0.0002075309312203899",
+          "oof_mae": "6.31104040145874",
+          "rank_score": "0.0003263305575819686",
+          "name": "low_seq3_q0.02_a0.03"
+        },
+        {
+          "submit_priority": "2",
+          "file_name": "submission_a83_02.csv",
+          "family": "low_seq3",
+          "alpha": "0.03",
+          "region": "low_q",
+          "region_param": "0.03",
+          "mean": "18.295419692993164",
+          "max": "42.51126480102539",
+          "std": "13.364839553833008",
+          "l1_to_anchor": "0.0003088923403993249",
+          "oof_mae": "6.31104040145874",
+          "rank_score": "0.0003518289746716619",
+          "name": "low_seq3_q0.03_a0.03"
+        },
+        {
+          "submit_priority": "3",
+          "file_name": "submission_a83_03.csv",
+          "family": "low_seq3",
+          "alpha": "0.05",
+          "region": "low_q",
+          "region_param": "0.02",
+          "mean": "18.295381546020508",
+          "max": "42.51126480102539",
+          "std": "13.364892959594727",
+          "l1_to_anchor": "0.00034588485141284764",
+          "oof_mae": "6.31104040145874",
+          "rank_score": "0.00036144000128842887",
+          "name": "low_seq3_q0.02_a0.05"
+        }
+      ]
+    },
+    {
+      "name": "a82",
+      "summary_path": "C:\\open\\a82_candidates\\a82_candidates_summary.csv",
+      "top_rows": [
+        {
+          "submit_priority": "1",
+          "file_name": "submission_a82_01.csv",
+          "family": "low_layout",
+          "model": "cb_layout_low",
+          "alpha": "0.05",
+          "region": "low_q",
+          "region_param": "0.03",
+          "mean": "18.295303344726562",
+          "max": "42.51126480102539",
+          "std": "13.36498737335205",
+          "l1_to_anchor": "0.0005612458917312324",
+          "oof_mae": "6.881625652313232",
+          "seen_oof_mae": "7.088587805198281",
+          "unseen_proxy_mae": "6.858707192470838",
+          "rank_score": "0.007700396671322522",
+          "name": "low_cb_layout_low_q0.03_a0.05"
+        },
+        {
+          "submit_priority": "2",
+          "file_name": "submission_a82_02.csv",
+          "family": "low_layout",
+          "model": "cb_layout_unseen",
+          "alpha": "0.05",
+          "region": "low_q",
+          "region_param": "0.03",
+          "mean": "18.2952880859375",
+          "max": "42.51126480102539",
+          "std": "13.365001678466797",
+          "l1_to_anchor": "0.0005906207952648401",
+          "oof_mae": "6.881633281707764",
+          "seen_oof_mae": "7.08858022227186",
+          "unseen_proxy_mae": "6.858716589814436",
+          "rank_score": "0.00771499714881637",
+          "name": "low_cb_layout_unseen_q0.03_a0.05"
+        },
+        {
+          "submit_priority": "3",
+          "file_name": "submission_a82_03.csv",
+          "family": "low_layout",
+          "model": "cb_layout_low",
+          "alpha": "0.08",
+          "region": "low_q",
+          "region_param": "0.03",
+          "mean": "18.2950496673584",
+          "max": "42.51126480102539",
+          "std": "13.365297317504883",
+          "l1_to_anchor": "0.000897993566468358",
+          "oof_mae": "6.881574630737305",
+          "seen_oof_mae": "7.088488309619134",
+          "unseen_proxy_mae": "6.858661922092339",
+          "rank_score": "0.007719271843099111",
+          "name": "low_cb_layout_low_q0.03_a0.08"
+        }
+      ]
+    },
     {
       "name": "a81",
       "summary_path": "C:\\open\\a81_candidates\\a81_candidates_summary.csv",
@@ -295,114 +413,6 @@
           "oof_mae": "6.311502933502197",
           "rank_score": "0.0017792525328695773",
           "name": "low_seq_q0.03_a0.15"
-        }
-      ]
-    },
-    {
-      "name": "a78",
-      "summary_path": "C:\\open\\a78_candidates\\a78_candidates_summary.csv",
-      "top_rows": [
-        {
-          "submit_priority": "1",
-          "file_name": "submission_a78_01.csv",
-          "family": "low_resid4",
-          "model": "stage4_mae",
-          "alpha": "0.05",
-          "region": "low_q",
-          "region_param": "0.04",
-          "mean": "18.297119140625",
-          "max": "42.51126480102539",
-          "std": "13.362750053405762",
-          "l1_to_anchor": "0.0010050478158518672",
-          "oof_mae": "6.881917410990686",
-          "rank_score": "0.0020429253956712754",
-          "name": "low_stage4_mae_q0.04_a0.05"
-        },
-        {
-          "submit_priority": "2",
-          "file_name": "submission_a78_02.csv",
-          "family": "low_resid4",
-          "model": "stage4_huber",
-          "alpha": "0.05",
-          "region": "low_q",
-          "region_param": "0.04",
-          "mean": "18.297210693359375",
-          "max": "42.51126480102539",
-          "std": "13.362637519836426",
-          "l1_to_anchor": "0.0009330059983767569",
-          "oof_mae": "6.881937417163894",
-          "rank_score": "0.00204424637014089",
-          "name": "low_stage4_huber_q0.04_a0.05"
-        },
-        {
-          "submit_priority": "3",
-          "file_name": "submission_a78_03.csv",
-          "family": "low_resid4",
-          "model": "stage4_mae",
-          "alpha": "0.06",
-          "region": "low_q",
-          "region_param": "0.04",
-          "mean": "18.296939849853516",
-          "max": "42.51126480102539",
-          "std": "13.362966537475586",
-          "l1_to_anchor": "0.0012060573790222406",
-          "oof_mae": "6.881890852288238",
-          "rank_score": "0.002064266914765831",
-          "name": "low_stage4_mae_q0.04_a0.06"
-        }
-      ]
-    },
-    {
-      "name": "a77",
-      "summary_path": "C:\\open\\a77_candidates\\a77_candidates_summary.csv",
-      "top_rows": [
-        {
-          "submit_priority": "1",
-          "file_name": "submission_a77_01.csv",
-          "family": "low_resid3",
-          "model": "stage3_huber",
-          "alpha": "0.08",
-          "region": "low_q",
-          "region_param": "0.06",
-          "mean": "18.298015594482422",
-          "max": "42.51126480102539",
-          "std": "13.361668586730957",
-          "l1_to_anchor": "0.0019489331170916557",
-          "oof_mae": "6.882052865537556",
-          "rank_score": "0.0037008072547260796",
-          "name": "low_stage3_huber_q0.06_a0.08"
-        },
-        {
-          "submit_priority": "2",
-          "file_name": "submission_a77_02.csv",
-          "family": "low_resid3",
-          "model": "stage3_mae",
-          "alpha": "0.08",
-          "region": "low_q",
-          "region_param": "0.06",
-          "mean": "18.297592163085938",
-          "max": "42.51126480102539",
-          "std": "13.362166404724121",
-          "l1_to_anchor": "0.0022946211975067854",
-          "oof_mae": "6.881988543986745",
-          "rank_score": "0.0037179119793435337",
-          "name": "low_stage3_mae_q0.06_a0.08"
-        },
-        {
-          "submit_priority": "3",
-          "file_name": "submission_a77_03.csv",
-          "family": "low_resid3",
-          "model": "stage3_huber",
-          "alpha": "0.08",
-          "region": "low_q",
-          "region_param": "0.07",
-          "mean": "18.297822952270508",
-          "max": "42.51126480102539",
-          "std": "13.361885070800781",
-          "l1_to_anchor": "0.0021916572004556656",
-          "oof_mae": "6.882027255338637",
-          "rank_score": "0.003726569097732977",
-          "name": "low_stage3_huber_q0.07_a0.08"
         }
       ]
     }

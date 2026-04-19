@@ -8,8 +8,8 @@
 - Competition: DACON Smart Warehouse Delay Prediction
 - Metric: MAE
 - Goal: public/private generalization이 좋은 sequence + residual ensemble 설계
-- Current best public score: `10.121418246`
-- Current best file: `submission_a81_01.csv`
+- Current best public score: `10.1214032792`
+- Current best file: `submission_a83_01.csv`
 
 ## What I Worked On
 
@@ -17,6 +17,7 @@
 - Transformer / STT / LSTM / LightGBM base model 실험
 - residual CatBoost stack (`a75~a78`)
 - sequence residual models (`a79`, `a81`)
+- layout-aware residual / layout-aware sequence residual (`a82`, `a83`)
 - low-band correction / selective blending / gating 실험
 
 ## Repository Structure
@@ -46,4 +47,6 @@
 - `a75` residual CatBoost에서 큰 폭의 점수 개선
 - `a79`에서 sequence residual branch를 추가해 새로운 error pattern 확보
 - `a81`에서 `a79` anchor 기반 sequence residual V2로 추가 개선
+- `a82`에서 layout-aware residual expert를 추가해 정적 warehouse 구조 정보를 반영
+- `a83`에서 layout-aware sequence residual로 정적 layout + 동적 sequence를 함께 학습
 - 매일 작업 로그와 실험 변화가 자동으로 문서화되도록 관리

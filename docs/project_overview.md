@@ -37,9 +37,11 @@
 - `a76/a77/a78`: anchor-based residual refinement
 - `a79`: sequence residual branch
 - `a81`: sequence residual V2
+- `a82`: layout-aware residual expert
+- `a83`: layout-aware sequence residual
 
 ## Current View
 
-현재까지는 low-band residual correction + sequence residual branch가 가장 유효했습니다.  
-다만 10.12 근처에서 improvement가 매우 작아져, 이후에는 layout-aware expert나 representation learning 같은 더 근본적인 축이 필요하다고 판단하고 있습니다.
-
+현재까지는 low-band residual correction + sequence residual branch가 가장 유효했고,  
+최근에는 `layout_info.csv`를 직접 쓰는 layout-aware expert와 layout-aware sequence residual까지 확장했습니다.  
+다만 10.12 근처에서 improvement가 매우 작아져, 이후에는 regime 분리, representation learning, pretrained/external branch 같은 더 근본적인 축이 필요하다고 판단하고 있습니다.
