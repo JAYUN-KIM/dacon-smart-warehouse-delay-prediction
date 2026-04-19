@@ -2,9 +2,9 @@
 
 ## Competition
 
-- 대회명: 데이콘 스마트 창고 출고 지연 예측 AI 경진대회
-- 목표: 향후 30분 평균 출고 지연 시간 예측
-- 평가지표: MAE
+- Title: DACON Smart Warehouse Delay Prediction
+- Target: predict `avg_delay_minutes_next_30m`
+- Metric: MAE
 
 ## Data Structure
 
@@ -17,31 +17,55 @@
   - train-only layouts: 200
   - test-only layouts: 50
 
-## Core Research Direction
+## Research Evolution
 
-초기에는 tabular + sequence base model을 만들고, 이후에는 best anchor prediction의 residual을 단계적으로 줄이는 방향으로 발전시켰습니다.
+The project evolved in distinct phases rather than one single model family.
 
-주요 축은 다음과 같습니다.
+### Phase 1: Strong tabular and sequence baselines
 
-1. Layout-free sequence modeling
-2. Residual CatBoost stack
-3. Low-band selective correction
-4. Sequence residual branch
-
-## Main Experimental Evolution
-
-- `a18`: EDA threshold + LGBM strong baseline
+- `a18`: EDA threshold + LGBM baseline
 - `a48`: Transformer + LSTM + LGBM ensemble
-- `a56/a66`: STT + TransLF + a48 weighted blend
-- `a75`: residual CatBoost branch
+- `a56/a66`: STT + TransLF + a48 blend
+
+### Phase 2: Residual stack
+
+- `a75`: residual CatBoost was the first major jump
 - `a76/a77/a78`: anchor-based residual refinement
+- the main idea was to keep the strongest anchor and only learn the remaining error
+
+### Phase 3: Sequence residual and layout-aware expansion
+
 - `a79`: sequence residual branch
-- `a81`: sequence residual V2
+- `a81`: stronger sequence residual V2
 - `a82`: layout-aware residual expert
 - `a83`: layout-aware sequence residual
 
+### Phase 4: Representation learning and shift-specific correction
+
+- `a87`: TS2Vec-style representation branch
+- `a88`: representation reused as a residual feature, not as a direct final predictor
+- the best result from this phase came from applying the new signal only on layout-shift subsets
+
 ## Current View
 
-현재까지는 low-band residual correction + sequence residual branch가 가장 유효했고,  
-최근에는 `layout_info.csv`를 직접 쓰는 layout-aware expert와 layout-aware sequence residual까지 확장했습니다.  
-다만 10.12 근처에서 improvement가 매우 작아져, 이후에는 regime 분리, representation learning, pretrained/external branch 같은 더 근본적인 축이 필요하다고 판단하고 있습니다.
+The current project hypothesis is:
+
+1. anchor-based residual learning is still the right backbone
+2. pure low-band refinement is close to saturation
+3. the new growth area is better regime definition
+4. representation-derived signals appear to matter most on shift-heavy subsets
+
+## Current Best Direction
+
+The most promising next step is `a89`.
+
+Planned idea:
+
+- build a stronger shift-aware specialist
+- define shift subsets using:
+  - unseen layouts
+  - representation gap to the anchor
+  - layout compactness / dispersion / flow extremes
+- apply the specialist only where the new signal is likely to help
+
+This is currently the clearest path toward a larger jump than another round of low-band-only tuning.

@@ -2,8 +2,8 @@
 
 ## Best Public Score
 
-- `10.1214032792`
-- file: `submission_a83_01.csv`
+- `10.1201425252`
+- file: `submission_a88_27.csv`
 
 ## Major Milestones
 
@@ -17,11 +17,34 @@
 - `a79_01`: `10.1214263184`
 - `a81_01`: `10.121418246`
 - `a83_01`: `10.1214032792`
+- `a88_27`: `10.1201425252`
 
-## Notes
+## What Changed In The Latest Phase
 
-- `a75` was the first large jump from repeated blend tuning into residual modeling.
-- `a79` introduced a sequence residual branch that improved public score.
-- `a81` refined the sequence residual branch with a stronger hybrid sequence model.
-- `a82` added a layout-aware residual expert using `layout_info.csv`.
-- `a83` combined layout-aware signals and sequence residuals in one model and set the current best score.
+### a87
+
+- major design change: TS2Vec-style representation branch
+- direct prediction branch itself was not strong enough for direct submission
+- important finding: the new representation signal was not best as a standalone predictor
+
+### a88
+
+- key change: reused the `a87` representation-driven signal as a residual feature instead of a final prediction
+- strongest result came from applying the new signal only on layout-shift subsets
+- this produced the best current score: `10.1201425252`
+
+## Current Interpretation
+
+- the recent bottleneck is not only low-band tuning anymore
+- the better question is now: where should a new signal be applied
+- `a88` suggests that representation-derived corrections are more useful on shift-heavy subsets than on the full test population
+
+## Next Direction
+
+- `a89`: shift-aware specialist refinement
+- refine the shift mask using:
+  - unseen layouts
+  - large representation gap
+  - high dispersion / weak flow layouts
+  - layout-signal extremes
+- goal: improve regime definition rather than only changing blend alpha

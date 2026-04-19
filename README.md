@@ -1,52 +1,62 @@
 # DACON Smart Warehouse Delay Prediction
 
-개인 대회 연구 레포입니다.  
-데이콘 스마트 창고 출고 지연 예측 AI 경진대회에서, 향후 30분 평균 출고 지연 시간(`avg_delay_minutes_next_30m`)을 예측하기 위해 진행한 모델링, 앙상블, 실험 로그를 정리합니다.
+Personal competition portfolio for the DACON Smart Warehouse Delay Prediction challenge.
+
+This repository tracks the full research path for predicting `avg_delay_minutes_next_30m`, including feature engineering, sequence modeling, residual learning, layout-aware experts, representation learning, and submission history.
 
 ## Project Summary
 
 - Competition: DACON Smart Warehouse Delay Prediction
 - Metric: MAE
-- Goal: public/private generalization이 좋은 sequence + residual ensemble 설계
-- Current best public score: `10.1214032792`
-- Current best file: `submission_a83_01.csv`
+- Goal: improve public/private generalization for 30-minute outbound delay prediction
+- Current best public score: `10.1201425252`
+- Current best file: `submission_a88_27.csv`
 
 ## What I Worked On
 
-- layout-free feature engineering
-- Transformer / STT / LSTM / LightGBM base model 실험
+- layout-free feature engineering for operational signals
+- Transformer, STT, LSTM, and LightGBM base model experiments
 - residual CatBoost stack (`a75~a78`)
-- sequence residual models (`a79`, `a81`)
-- layout-aware residual / layout-aware sequence residual (`a82`, `a83`)
-- low-band correction / selective blending / gating 실험
+- sequence residual branches (`a79`, `a81`)
+- layout-aware residual and layout-aware sequence residual (`a82`, `a83`)
+- representation learning branch with TS2Vec-style direct signal (`a87`)
+- representation-as-feature residual expert focused on layout shift (`a88`)
+
+## Current Insight
+
+The strongest recent signal is no longer pure low-band correction.
+
+The important change from `a88` was:
+
+- representation-driven residuals worked better on layout-shift subsets than on the full population
+- this suggests the next meaningful improvement should come from better regime definition, not simply smaller alpha tuning
+- the next planned direction is `a89`: shift-aware specialist refinement using representation gaps and layout-shift routing
 
 ## Repository Structure
 
 - `docs/project_overview.md`
-  프로젝트와 데이터, 실험 흐름 요약
+  high-level project direction and experiment evolution
 - `docs/resume_summary.md`
-  이력서/포트폴리오용 요약 문서
+  resume-friendly project summary
 - `docs/experiment_log.md`
-  주요 실험 흐름과 best score 기록
+  milestone submissions and core findings
 - `docs/daily_logs/`
-  날짜별 작업 기록과 변화 요약
+  date-based progress notes
 - `docs/public_score_log.json`
-  public score와 제출 파일 기록
+  public score history
 - `scripts/update_daily_report.py`
-  현재 작업 폴더를 읽어 일일 요약과 날짜별 로그를 자동 생성
+  auto-generates daily summary files from the latest local experiment outputs
+
+## Key Milestones
+
+- `a75_01`: residual CatBoost jump to `10.122152212`
+- `a79_01`: sequence residual branch to `10.1214263184`
+- `a83_01`: layout-aware sequence residual to `10.1214032792`
+- `a88_27`: representation-as-feature shift expert to `10.1201425252`
 
 ## Daily Workflow
 
-1. 실험 코드 실행
-2. `python scripts/update_daily_report.py`
-3. 변경된 `docs/` 확인
-4. commit / push
-
-## Key Highlights
-
-- `a75` residual CatBoost에서 큰 폭의 점수 개선
-- `a79`에서 sequence residual branch를 추가해 새로운 error pattern 확보
-- `a81`에서 `a79` anchor 기반 sequence residual V2로 추가 개선
-- `a82`에서 layout-aware residual expert를 추가해 정적 warehouse 구조 정보를 반영
-- `a83`에서 layout-aware sequence residual로 정적 layout + 동적 sequence를 함께 학습
-- 매일 작업 로그와 실험 변화가 자동으로 문서화되도록 관리
+1. run new experiments under `C:\open`
+2. update score/history documents
+3. run `python scripts/update_daily_report.py`
+4. commit and push portfolio updates

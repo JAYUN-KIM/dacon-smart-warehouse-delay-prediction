@@ -68,5 +68,12 @@
     "score": 10.1214032792,
     "file": "submission_a83_01.csv",
     "note": "layout-aware sequence residual"
+  },
+  {
+    "date": "2026-04-19",
+    "name": "a88_27",
+    "score": 10.1201425252,
+    "file": "submission_a88_27.csv",
+    "note": "representation-as-feature shift expert"
   }
 ]
