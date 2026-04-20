@@ -1,72 +1,27 @@
-# Daily Report
+# 일일 요약
 
-- Generated at: 2026-04-19 15:02
-- Current best public score: `10.1201425252`
-- Current best file: `a88_27`
-- Summary: Current best is `a88_27` / `10.1201425252`. Compared with the previous best `a83_01` / `10.1214032792`, the improvement is `0.001260754`.
+- 생성 시각: `2026-04-20`
+- 현재 최고 점수: `10.1133848903`
+- 현재 최고 파일: `submission_a94_51.csv`
 
-## Recent Branch Status
-### A88
-- global_best_oof_mae: `6.878267765045166`
-- low_best_oof_mae: `6.887139320373535`
-- overall_best_oof_mae: `6.878267765045166`
-- top candidates:
-  - `submission_a88_27.csv` | `shift_repr_a0.10` | metric `6.878852844238281`
-  - `submission_a88_26.csv` | `shift_repr_a0.08` | metric `6.880646228790283`
-  - `submission_a88_25.csv` | `shift_repr_a0.05` | metric `6.883394241333008`
+## 오늘까지의 핵심 변화
 
-### A87
-- direct_oof_mae: `15.235047340393066`
-- candidate_best_oof_mae: `6.238392353057861`
-- top candidates:
-  - `submission_a87_06.csv` | `low_ts2vec_q0.01_a0.02` | metric `6.238392353057861`
-  - `submission_a87_07.csv` | `low_ts2vec_q0.01_a0.03` | metric `6.238833427429199`
-  - `submission_a87_11.csv` | `low_ts2vec_q0.02_a0.02` | metric `6.2389817237854`
+- `a94`에서 `combo(shift + high + unseen)` specialist가 실제 public 점수 개선으로 이어짐
+- 최고 기록이 `a88_27 = 10.1201425252`에서 `a94_51 = 10.1133848903`으로 크게 갱신됨
+- `a95`, `a96`은 `a94`를 더 잘게 나누거나 더 보수적으로 다듬는 실험이었지만, 아직 `a94_51`을 확실히 넘는 카드로 보이지 않음
 
-### A86
-- anchor_mae: `6.88217306137085`
-- top candidates:
-  - `submission_a86_01.csv` | `seen_cb_a0.10` | metric `6.881375312805176`
-  - `submission_a86_02.csv` | `seen_cb_a0.15` | metric `6.881221294403076`
-  - `submission_a86_03.csv` | `seen_cb_a0.20` | metric `6.881070613861084`
+## 지금 판단
 
-### A85
-- anchor_mae: `6.212868690490723`
-- full_decomp_mae: `6.253900051116943`
-- top candidates:
-  - `submission_a85_01.csv` | `low_decomp_q0.01_a0.05` | metric `6.284698486328125`
-  - `submission_a85_02.csv` | `low_decomp_q0.01_a0.08` | metric `6.284698486328125`
-  - `submission_a85_03.csv` | `low_decomp_q0.02_a0.05` | metric `6.284698486328125`
+- 현재 주력 축은 `a94 family`
+- 무작정 새 모델 추가보다, `combo regime`를 더 안정적으로 정의하는 것이 더 중요
+- 다음 단계는 `a97`에서
+  - `a94`를 더 안정적으로 재현할지
+  - 아니면 전혀 다른 신호를 하나 추가할지
+를 결정하는 것
 
-### A84
-- anchor_mae: `6.232032775878906`
-- moe_mae: `6.2009806632995605`
-- top candidates:
-  - `submission_a84_01.csv` | `low_moe_q0.01_a0.03` | metric `6.310993671417236`
-  - `submission_a84_02.csv` | `low_moe_q0.01_a0.05` | metric `6.310993671417236`
-  - `submission_a84_03.csv` | `low_moe_q0.02_a0.03` | metric `6.310993671417236`
+## 최근 최고 점수 흐름
 
-### A83
-- anchor_mae: `6.2320475578308105`
-- seq3_mae: `6.2014007568359375`
-- top candidates:
-  - `submission_a83_01.csv` | `low_seq3_q0.02_a0.03` | metric `6.31104040145874`
-  - `submission_a83_02.csv` | `low_seq3_q0.03_a0.03` | metric `6.31104040145874`
-  - `submission_a83_03.csv` | `low_seq3_q0.02_a0.05` | metric `6.31104040145874`
+- `a83_01`: `10.1214032792`
+- `a88_27`: `10.1201425252`
+- `a94_51`: `10.1133848903`
 
-### A82
-- anchor_mae: `6.882187095768409`
-- anchor_seen_mae: `7.089481877234871`
-- anchor_unseen_proxy_mae: `6.85923186752793`
-- top candidates:
-  - `submission_a82_01.csv` | `low_cb_layout_low_q0.03_a0.05` | metric `6.881625652313232`
-  - `submission_a82_02.csv` | `low_cb_layout_unseen_q0.03_a0.05` | metric `6.881633281707764`
-  - `submission_a82_03.csv` | `low_cb_layout_low_q0.03_a0.08` | metric `6.881574630737305`
-
-### A81
-- anchor_mae: `6.232080936431885`
-- seq2_mae: `6.193705081939697`
-- top candidates:
-  - `submission_a81_01.csv` | `low_seq2_q0.02_a0.05` | metric `6.311122894287109`
-  - `submission_a81_02.csv` | `low_seq2_q0.03_a0.05` | metric `6.311122894287109`
-  - `submission_a81_03.csv` | `low_seq2_q0.02_a0.08` | metric `6.311122894287109`

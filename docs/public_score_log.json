@@ -4,14 +4,14 @@
     "name": "baseline",
     "score": 11.83,
     "file": "submission_baseline.csv",
-    "note": "baseline"
+    "note": "베이스라인"
   },
   {
     "date": "2026-04-10",
     "name": "a48_v4_3",
     "score": 10.1477,
     "file": "submission_a48_v4_3.csv",
-    "note": "strong ensemble base"
+    "note": "강한 앙상블 베이스"
   },
   {
     "date": "2026-04-12",
@@ -25,14 +25,14 @@
     "name": "a66_5",
     "score": 10.1260335184,
     "file": "submission_a66_5.csv",
-    "note": "TransLF ratio increased"
+    "note": "TransLF 비율 상향"
   },
   {
     "date": "2026-04-17",
     "name": "a75_01",
     "score": 10.122152212,
     "file": "submission_a75_01.csv",
-    "note": "residual CatBoost jump"
+    "note": "residual CatBoost 점프"
   },
   {
     "date": "2026-04-17",
@@ -74,6 +74,13 @@
     "name": "a88_27",
     "score": 10.1201425252,
     "file": "submission_a88_27.csv",
-    "note": "representation-as-feature shift expert"
+    "note": "representation 기반 shift expert"
+  },
+  {
+    "date": "2026-04-20",
+    "name": "a94_51",
+    "score": 10.1133848903,
+    "file": "submission_a94_51.csv",
+    "note": "combo specialist (shift + high + unseen)"
   }
 ]

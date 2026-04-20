@@ -1,11 +1,12 @@
-# Experiment Log
+# 실험 로그
 
-## Best Public Score
+## 현재 최고 기록
 
-- `10.1201425252`
-- file: `submission_a88_27.csv`
+- 점수: `10.1133848903`
+- 파일: `submission_a94_51.csv`
+- 날짜: `2026-04-20`
 
-## Major Milestones
+## 주요 점수 흐름
 
 - baseline: `11.83`
 - `a48_v4_3`: `10.1477`
@@ -18,33 +19,59 @@
 - `a81_01`: `10.121418246`
 - `a83_01`: `10.1214032792`
 - `a88_27`: `10.1201425252`
+- `a94_51`: `10.1133848903`
 
-## What Changed In The Latest Phase
+## 단계별 해석
 
-### a87
+### a75 ~ a81
 
-- major design change: TS2Vec-style representation branch
-- direct prediction branch itself was not strong enough for direct submission
-- important finding: the new representation signal was not best as a standalone predictor
+- 강한 앵커 위에 residual을 얹는 방식이 실제 public에서 계속 개선을 냈음
+- 특히 `a75`는 큰 점프였고, 이후 `a76 ~ a81`은 그 축을 더 정교하게 만든 단계였음
 
-### a88
+### a82 ~ a83
 
-- key change: reused the `a87` representation-driven signal as a residual feature instead of a final prediction
-- strongest result came from applying the new signal only on layout-shift subsets
-- this produced the best current score: `10.1201425252`
+- layout-aware 신호를 추가한 단계
+- 구조상 의미는 있었지만 점프 폭은 크지 않았음
 
-## Current Interpretation
+### a87 ~ a88
 
-- the recent bottleneck is not only low-band tuning anymore
-- the better question is now: where should a new signal be applied
-- `a88` suggests that representation-derived corrections are more useful on shift-heavy subsets than on the full test population
+- representation branch를 직접 제출용 예측이 아니라 residual feature로 재사용
+- 여기서 처음으로 `shift subset`에 새로운 신호를 써야 한다는 힌트를 얻음
+- `a88_27`이 그 결과를 실제 public 개선으로 연결함
 
-## Next Direction
+### a89 ~ a93
 
-- `a89`: shift-aware specialist refinement
-- refine the shift mask using:
-  - unseen layouts
-  - large representation gap
-  - high dispersion / weak flow layouts
-  - layout-signal extremes
-- goal: improve regime definition rather than only changing blend alpha
+- shift / unseen / specialist를 더 세분화하는 실험
+- 일부 방향은 맞았지만, `a88`을 단순히 쪼개는 것만으로는 큰 개선이 어려웠음
+- `a92` EDA를 통해
+  - 문제는 `scenario baseline + slot deviation`
+  - `order_inflow`, `robot_active`, `unique_sku`, `low_battery`, `pack_pressure`
+  축이 매우 중요하다는 점을 다시 확인
+
+### a94
+
+- `a88`의 representation 기반 shift residual
+- `a92`의 scenario baseline signal
+- `shift + high cluster + unseen`을 함께 보는 combo specialist
+를 통합
+
+- 이 조합이 실제로 가장 큰 최근 점프를 만들었고, `a94_51`로 최고 기록을 갱신함
+
+### a95 ~ a96
+
+- `a94`를 더 잘게 쪼개거나 보수적으로 다듬는 실험
+- 아직은 `a94_51`을 확실히 넘는 방향까지는 못 감
+- 다만 `a94 family`가 현재 주력 축이라는 점은 더 분명해짐
+
+## 현재 판단
+
+- 지금은 무작정 새 모델을 추가하기보다,
+- `a94`가 왜 먹혔는지 더 안정적으로 재현하고,
+- `combo regime`를 더 잘 정의하는 것이 중요함
+
+## 다음 방향
+
+- `a97`
+  - `a94 family`를 유지한 채 더 안정적인 combo specialist
+  - 또는 `a94`를 보완할 완전히 다른 신호원 1개 추가
+
