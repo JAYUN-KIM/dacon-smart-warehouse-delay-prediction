@@ -4,14 +4,14 @@
     "name": "baseline",
     "score": 11.83,
     "file": "submission_baseline.csv",
-    "note": "베이스라인"
+    "note": "기본 베이스라인"
   },
   {
     "date": "2026-04-10",
     "name": "a48_v4_3",
     "score": 10.1477,
     "file": "submission_a48_v4_3.csv",
-    "note": "강한 앙상블 베이스"
+    "note": "강한 초기 앙상블 베이스"
   },
   {
     "date": "2026-04-12",
@@ -25,14 +25,14 @@
     "name": "a66_5",
     "score": 10.1260335184,
     "file": "submission_a66_5.csv",
-    "note": "TransLF 비율 상향"
+    "note": "TransLF 비중 확대"
   },
   {
     "date": "2026-04-17",
     "name": "a75_01",
     "score": 10.122152212,
     "file": "submission_a75_01.csv",
-    "note": "residual CatBoost 점프"
+    "note": "residual CatBoost 시작"
   },
   {
     "date": "2026-04-17",
@@ -82,5 +82,19 @@
     "score": 10.1133848903,
     "file": "submission_a94_51.csv",
     "note": "combo specialist (shift + high + unseen)"
+  },
+  {
+    "date": "2026-04-21",
+    "name": "a100_05",
+    "score": 10.1090848449,
+    "file": "submission_a100_05.csv",
+    "note": "baseline + scale + routed deviation 첫 유효 버전"
+  },
+  {
+    "date": "2026-04-21",
+    "name": "a101_10",
+    "score": 10.1064209775,
+    "file": "submission_a101_10.csv",
+    "note": "soft router + fallback 적용"
   }
 ]

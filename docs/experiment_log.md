@@ -2,9 +2,9 @@
 
 ## 현재 최고 기록
 
-- 점수: `10.1133848903`
-- 파일: `submission_a94_51.csv`
-- 날짜: `2026-04-20`
+- 점수: `10.1064209775`
+- 파일: `submission_a101_10.csv`
+- 날짜: `2026-04-21`
 
 ## 주요 점수 흐름
 
@@ -20,58 +20,70 @@
 - `a83_01`: `10.1214032792`
 - `a88_27`: `10.1201425252`
 - `a94_51`: `10.1133848903`
+- `a100_05`: `10.1090848449`
+- `a101_10`: `10.1064209775`
 
-## 단계별 해석
+## 구간별 해석
 
 ### a75 ~ a81
 
-- 강한 앵커 위에 residual을 얹는 방식이 실제 public에서 계속 개선을 냈음
-- 특히 `a75`는 큰 점프였고, 이후 `a76 ~ a81`은 그 축을 더 정교하게 만든 단계였음
+- 강한 앵커 위에 residual을 얹는 방식이 실제 public에서 꾸준히 먹혔습니다.
+- 이 시기에는 “좋은 베이스 예측기 + residual correction”이라는 구조가 유효했습니다.
 
 ### a82 ~ a83
 
-- layout-aware 신호를 추가한 단계
-- 구조상 의미는 있었지만 점프 폭은 크지 않았음
+- layout-aware signal과 sequence signal을 더 강하게 넣어보는 구간이었습니다.
+- 구조적 의미는 있었지만 큰 점프를 만들 정도는 아니었습니다.
 
-### a87 ~ a88
+### a88
 
-- representation branch를 직접 제출용 예측이 아니라 residual feature로 재사용
-- 여기서 처음으로 `shift subset`에 새로운 신호를 써야 한다는 힌트를 얻음
-- `a88_27`이 그 결과를 실제 public 개선으로 연결함
-
-### a89 ~ a93
-
-- shift / unseen / specialist를 더 세분화하는 실험
-- 일부 방향은 맞았지만, `a88`을 단순히 쪼개는 것만으로는 큰 개선이 어려웠음
-- `a92` EDA를 통해
-  - 문제는 `scenario baseline + slot deviation`
-  - `order_inflow`, `robot_active`, `unique_sku`, `low_battery`, `pack_pressure`
-  축이 매우 중요하다는 점을 다시 확인
+- representation-derived signal을 전체가 아니라 shift subset에만 적용했습니다.
+- 여기서 다시 public 개선이 확인되면서, “특정 regime에만 다른 신호를 쓰는 방식”이 중요하다는 점이 선명해졌습니다.
 
 ### a94
 
-- `a88`의 representation 기반 shift residual
-- `a92`의 scenario baseline signal
-- `shift + high cluster + unseen`을 함께 보는 combo specialist
-를 통합
+- `representation residual`
+- `scenario baseline signal`
+- `shift + high + unseen combo specialist`
 
-- 이 조합이 실제로 가장 큰 최근 점프를 만들었고, `a94_51`로 최고 기록을 갱신함
+를 통합해서 큰 점프를 만들었습니다.
 
-### a95 ~ a96
+`a94_51`은 현재까지 나온 specialist 계열 중 가장 강한 기준점이었습니다.
 
-- `a94`를 더 잘게 쪼개거나 보수적으로 다듬는 실험
-- 아직은 `a94_51`을 확실히 넘는 방향까지는 못 감
-- 다만 `a94 family`가 현재 주력 축이라는 점은 더 분명해짐
+### a95 ~ a99
+
+- `a94`의 세분화, 보수적 refinement, feature 흡수 실험이 이어졌습니다.
+- 의미 있는 로컬 개선은 있었지만, `a94_51`을 압도하는 구조적 점프는 아니었습니다.
+
+### a100 ~ a101
+
+이 구간부터 문제를 다시 정의했습니다.
+
+기존:
+- raw target 또는 residual을 직접 맞추는 구조
+
+변경:
+- `y = baseline + scale * routed_z`
+
+즉,
+
+- scenario baseline
+- scenario scale
+- standardized deviation
+- expert routing
+
+으로 나누어 보는 새로운 family가 시작되었습니다.
+
+이 방향이 실제로 다시 큰 개선을 만들었고,
+현재 최고 기록도 이 family에서 나왔습니다.
 
 ## 현재 판단
 
-- 지금은 무작정 새 모델을 추가하기보다,
-- `a94`가 왜 먹혔는지 더 안정적으로 재현하고,
-- `combo regime`를 더 잘 정의하는 것이 중요함
+지금은 `a94 family`를 조금 더 다듬는 단계가 아니라,
 
-## 다음 방향
+- `baseline / scale / deviation`
+- `soft routing`
+- `fallback`
+- `support / shift feature`
 
-- `a97`
-  - `a94 family`를 유지한 채 더 안정적인 combo specialist
-  - 또는 `a94`를 보완할 완전히 다른 신호원 1개 추가
-
+를 더 안정화하는 `a100 family`가 메인입니다.

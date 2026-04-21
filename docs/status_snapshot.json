@@ -1,37 +1,37 @@
 {
-  "generated_at": "2026-04-20",
+  "generated_at": "2026-04-21",
   "best_public": {
-    "date": "2026-04-20",
-    "name": "a94_51",
-    "score": 10.1133848903,
-    "file": "submission_a94_51.csv",
-    "note": "combo specialist (shift + high + unseen)"
+    "date": "2026-04-21",
+    "name": "a101_10",
+    "score": 10.1064209775,
+    "file": "submission_a101_10.csv",
+    "note": "decomposition + soft router + fallback"
   },
   "current_view": {
-    "main_family": "a94 family",
-    "summary": "representation 기반 shift residual과 scenario baseline 신호를 combo regime에서 함께 쓰는 방향이 현재 가장 강함",
-    "next_direction": "a97에서 a94 family를 더 안정적으로 재현하거나, 완전히 다른 signal source를 1개 추가하는 방향 검토"
+    "main_family": "a100 family",
+    "summary": "scenario baseline, scenario scale, routed deviation으로 문제를 분해하고 soft routing으로 expert를 고르는 구조가 현재 가장 유망하다.",
+    "next_direction": "a100 family를 유지한 채 support/shift feature를 router에 더 넣고, robust scale과 fallback을 더 안정화하는 방향"
   },
   "recent_best_scores": [
+    {
+      "date": "2026-04-21",
+      "name": "a101_10",
+      "score": 10.1064209775
+    },
+    {
+      "date": "2026-04-21",
+      "name": "a100_05",
+      "score": 10.1090848449
+    },
     {
       "date": "2026-04-20",
       "name": "a94_51",
       "score": 10.1133848903
-    },
-    {
-      "date": "2026-04-19",
-      "name": "a88_27",
-      "score": 10.1201425252
-    },
-    {
-      "date": "2026-04-19",
-      "name": "a83_01",
-      "score": 10.1214032792
     }
   ],
   "recent_notes": [
-    "a94에서 shift + high + unseen을 함께 보는 combo specialist가 실제 public 점수 개선으로 이어졌다.",
-    "a95, a96은 a94를 세분화하거나 보수적으로 다듬는 실험이었지만 아직 a94_51을 확실히 넘는 카드는 아니었다.",
-    "현재는 무작정 새로운 모델 추가보다 a94가 먹힌 이유를 안정적으로 재현하는 것이 우선이다."
+    "a100에서 baseline + scale + routed deviation 구조가 실제 public 개선으로 이어졌다.",
+    "a101에서는 soft expected-error router와 fallback을 넣어 a100보다 한 단계 더 개선했다.",
+    "이제 메인 전략은 a94 미세조정이 아니라 a100 family 안정화다."
   ]
 }

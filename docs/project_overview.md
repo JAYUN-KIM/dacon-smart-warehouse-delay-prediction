@@ -1,10 +1,10 @@
 # 프로젝트 개요
 
-## 대회
+## 대회 목표
 
 - 대회명: 데이콘 스마트 창고 출고 지연 예측 AI 경진대회
 - 목표: `avg_delay_minutes_next_30m` 예측
-- 평가지표: `MAE`
+- 평가 지표: `MAE`
 
 ## 데이터 구조
 
@@ -16,62 +16,105 @@
   - seen layout: `50`
   - test-only layout: `50`
 
-## 지금까지의 문제 해석
+## 문제 해석
 
-이 문제는 단순 row-wise 회귀보다 아래 구조가 더 중요하다고 보고 있습니다.
+이 문제는 단순한 row-wise 회귀보다 아래 구조로 보는 쪽이 더 맞다고 판단하고 있습니다.
 
 1. `scenario baseline`
    - 시나리오 전체의 기본 지연 수준
-2. `slot deviation`
-   - 시간대별 편차
-3. `shift regime`
-   - unseen / high cluster / 분포 이동이 큰 subset
+2. `scenario scale`
+   - 시나리오 내부 변동 폭
+3. `slot deviation`
+   - 각 시점이 baseline에서 얼마나 벗어나는지
+4. `OOD / shift regime`
+   - unseen layout
+   - high-pressure / high-delay
+   - 운영 분포 이동이 큰 구간
 
-최근 EDA에서는:
+## EDA에서 얻은 핵심
 
-- 전체 분산 중 scenario mean 비중이 큼
-- test-only layout shift는 `order_inflow`, `robot_active`, `unique_sku` 축에서 특히 큼
-- scenario mean은 `low_battery_ratio`, `pack_utilization`, `pack_pressure`, `work_pressure`가 강하게 설명
-- slot deviation은 `time_idx`, `time_remaining`, `pack_pressure`, `robot_active`, `order_inflow_15m` 영향이 큼
+### 1. baseline 비중이 크다
 
-## 모델 흐름
+전체 분산 중 scenario-level baseline 비중이 큽니다.
+그래서 row target만 직접 맞추는 방식은 한계가 빨리 왔습니다.
 
-### 1단계: 강한 베이스 만들기
+### 2. layout ID보다 운영 상태 분포 이동이 더 중요하다
 
-- LightGBM
+특히 아래 축이 중요했습니다.
+
+- `order_inflow_15m`
+- `robot_active`
+- `unique_sku_15m`
+- `pack_pressure`
+- `work_pressure`
+- `low_battery_ratio`
+
+즉, layout 자체보다 운영 상태의 regime 변화가 더 중요합니다.
+
+### 3. slot deviation은 시간축과 압력 변수의 영향이 크다
+
+중요한 축은 다음과 같습니다.
+
+- `time_idx`
+- `time_remaining`
+- `pack_pressure`
+- `robot_active`
+- `order_inflow_15m`
+
+## 모델 흐름 요약
+
+### 1. 초기 strong ensemble
+
+- LGBM
 - Transformer
 - LSTM
 - STT
 - TransLF
 
-### 2단계: residual stack
+### 2. residual stack
 
+- 강한 앵커 위에 residual correction을 얹는 구조
 - `a75 ~ a81`
-- 강한 앵커를 유지하고 오차만 학습
 
-### 3단계: layout / sequence 확장
+### 3. layout-aware / sequence-aware 확장
 
 - `a82`, `a83`
 
-### 4단계: representation + shift specialist
+### 4. representation + shift specialist
 
-- `a87`
 - `a88`
-- `a89 ~ a96`
+- representation 신호를 shift subset에만 적용
 
-이 단계에서 가장 큰 의미가 있었던 건:
+### 5. integrated shift specialist
 
-- representation-derived signal은 전체보다 `shift subset`에서 잘 먹음
-- `shift + high cluster + unseen`을 같이 본 `combo specialist`가 가장 강했음
+- `a94`
+- representation residual + scenario baseline + combo specialist 통합
 
-## 현재 최고 방향
+### 6. decomposition + routing
 
-현재 가장 유효한 가설은:
+- `a100`
+- `a101`
 
-- `a94 family`를 유지
-- `combo regime` 정의를 더 안정적으로 만들기
-- 필요한 경우 완전히 다른 signal source를 하나 더 붙이기
+현재 가장 중요한 축은 이쪽입니다.
 
-즉, 지금은 “low-band만 더 미세하게”가 아니라
-“어떤 구간에 어떤 specialist를 적용할지”가 핵심입니다.
+## 현재 핵심 방향
 
+지금은 “평균적으로 가장 잘 맞는 모델 하나”를 더 찾는 단계가 아니라,
+
+**어떤 샘플에서 어떤 expert가 덜 틀리는지 고르는 시스템**
+
+을 만드는 단계입니다.
+
+현재 주력 구조:
+
+- baseline head
+- scale head
+- z-space expert library
+- soft router
+- confidence fallback
+
+## 현재 최고 기록
+
+- `submission_a101_10.csv`
+- `10.1064209775`
+- 날짜: `2026-04-21`

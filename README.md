@@ -1,79 +1,108 @@
 # 데이콘 스마트 창고 출고 지연 예측 기록
 
-데이콘 스마트 창고 출고 지연 예측 경진대회를 진행하면서 실험한 모델, 점수 변화, 해석, 다음 방향을 정리하는 저장소입니다.
+데이콘 스마트 창고 출고 지연 예측 AI 경진대회를 진행하면서 만든 실험 기록 저장소입니다.
 
-현재는 `avg_delay_minutes_next_30m`를 예측하는 과정에서 단순 블렌딩보다 `shift / unseen / high-regime` 구간을 어떻게 정의하고 보정할지가 핵심이라고 보고 있습니다.
+이 저장소의 목표는 단순히 점수만 남기는 것이 아니라,
+
+- 지금 무엇을 시도하고 있는지
+- 왜 그 방향으로 가고 있는지
+- 어떤 실험이 실제로 먹혔는지
+- 다음에는 무엇을 해볼지
+
+를 날짜별로 남기는 것입니다.
 
 ## 현재 최고 기록
 
-- 최고 public 점수: `10.1133848903`
-- 제출 파일: `submission_a94_51.csv`
-- 핵심 아이디어:
-  - `a88`의 representation 기반 shift residual
-  - `a92`의 scenario baseline 관점
-  - `shift + high cluster + unseen`을 함께 보는 `combo specialist`
+- 최고 public 점수: `10.1064209775`
+- 제출 파일: `submission_a101_10.csv`
+- 기준 날짜: `2026-04-21`
 
-## 지금까지의 큰 흐름
+## 현재 핵심 판단
 
-### 1. 기본 강한 앵커 만들기
+지금은 `a94 family`를 조금씩 더 다듬는 국면이 아니라,
 
-- `a18`: EDA 기반 LightGBM
-- `a48`: Transformer + LSTM + LGBM 앙상블
-- `a56`, `a66`: STT + TransLF + a48 조합
+- `scenario baseline`
+- `scenario scale`
+- `slot deviation`
+- `sample별 expert routing`
 
-### 2. residual stack 계열
+으로 문제를 다시 나누는 `a100 family`를 주력으로 밀어붙이는 단계입니다.
 
-- `a75`: residual CatBoost로 큰 점프
-- `a76 ~ a78`: 앵커 기반 residual refinement
-- `a79`, `a81`: sequence residual branch
+즉, 이제 핵심은 “평균적으로 가장 잘 맞는 모델 하나”를 찾는 것이 아니라,
 
-### 3. layout-aware / sequence 확장
+**어떤 샘플에서 어떤 expert가 덜 틀리는지를 고르는 시스템**
 
-- `a82`: layout-aware residual expert
-- `a83`: layout-aware sequence residual
+을 만드는 것입니다.
 
-### 4. representation / shift specialist 계열
+## 최근 실험 흐름
 
-- `a87`: TS2Vec 계열 representation branch
-- `a88`: representation을 직접 제출용이 아니라 residual feature로 재사용
-- `a89 ~ a91`: shift / unseen specialist 세분화 시도
-- `a92`: EDA 기반 `scenario baseline + slot deviation + regime router`
-- `a94`: `a88 + a92` 신호를 통합한 `combo specialist`로 최고 기록 갱신
+### 1. 초기 강한 앙상블 축
 
-## 현재 해석
+- LightGBM
+- Transformer
+- LSTM
+- STT
+- TransLF
 
-- 단순 low-band 미세조정만으로는 한계가 분명함
-- layout 전체보다 `shift regime` 정의가 더 중요함
-- `representation-derived signal`은 전체 population보다 `shift / unseen / high cluster` 구간에서 더 잘 먹음
-- 최근에는 “새 모델 하나 더”보다 “어디에 적용할지”가 더 중요했음
+이 축으로 기본 베이스를 만들었습니다.
 
-## 최근 실험 요약
+### 2. residual stack 축
+
+- `a75 ~ a81`
+- 강한 앵커 위에 residual correction을 쌓는 방식
+
+이 구간에서 public 점수를 꾸준히 깎았습니다.
+
+### 3. layout / sequence 확장
+
+- `a82`, `a83`
+- layout-aware residual / sequence residual
+
+구조적으로 의미는 있었지만 큰 점프까지는 못 갔습니다.
+
+### 4. representation + shift specialist 축
+
+- `a88`
+- representation 신호를 shift subset에만 적용
+
+이 구간에서 다시 의미 있는 상승이 나왔습니다.
+
+### 5. integrated shift specialist
+
+- `a94`
+- representation residual + scenario baseline + shift/high/unseen combo specialist 통합
+
+이 축에서 큰 점프가 났고, 이후 오랫동안 주력 family가 되었습니다.
+
+### 6. decomposition + routing 축
+
+- `a100`
+- `a101`
+
+최근에는 `baseline + scale + routed deviation` 구조로 문제를 다시 정의하고 있으며,
+이 축이 실제로 다시 큰 개선을 만들고 있습니다.
+
+## 최근 최고 점수 흐름
 
 - `a88_27`: `10.1201425252`
-  - representation-as-feature shift expert
 - `a94_51`: `10.1133848903`
-  - `combo(shift + high + unseen)` specialist
-  - 최근 가장 큰 개선
-- `a95`, `a96`
-  - `a94`를 더 세분화하거나 더 보수적으로 다듬는 실험
-  - 아직 `a94_51`을 확실히 넘는 카드로 보이진 않음
+- `a100_05`: `10.1090848449`
+- `a101_10`: `10.1064209775`
 
-## 다음 방향
+## 지금 보고 있는 방향
 
-- `a97`부터는 `a94 family`를 유지하되,
-  - combo 정의를 더 안정적으로 만들지
-  - 아니면 전혀 다른 signal source를 추가할지
-  를 다시 판단하면서 갈 예정
-- 현재 우선순위는 “작은 미세조정보다 구조적으로 먹힌 축을 더 안정적으로 재현하는 것”
+현재 가장 유망한 방향은 아래와 같습니다.
 
-## 저장소 구성
+1. `scenario baseline`을 먼저 안정적으로 맞추기
+2. `scale(MAD / IQR 기반)`를 별도로 예측하기
+3. `z-space`에서 여러 expert가 deviation을 예측하게 하기
+4. router가 expert별 expected error를 보고 soft routing 하기
+5. confidence가 낮은 샘플은 global 쪽으로 fallback 하기
 
-- [docs/project_overview.md](</C:/open/dacon-smart-warehouse-portfolio/docs/project_overview.md:1>)
-  - 프로젝트 전체 흐름과 모델 방향 정리
-- [docs/experiment_log.md](</C:/open/dacon-smart-warehouse-portfolio/docs/experiment_log.md:1>)
-  - 점수 변화와 주요 실험 요약
-- [docs/daily_logs](</C:/open/dacon-smart-warehouse-portfolio/docs/daily_logs>)
-  - 날짜별 작업 기록
-- [docs/public_score_log.json](</C:/open/dacon-smart-warehouse-portfolio/docs/public_score_log.json:1>)
-  - public 점수 이력
+## 문서 구성
 
+- [프로젝트 개요](</C:/open/dacon-smart-warehouse-portfolio/docs/project_overview.md>)
+- [실험 로그](</C:/open/dacon-smart-warehouse-portfolio/docs/experiment_log.md>)
+- [일일 리포트](</C:/open/dacon-smart-warehouse-portfolio/docs/daily_report.md>)
+- [일자별 기록](</C:/open/dacon-smart-warehouse-portfolio/docs/daily_logs>)
+- [public 점수 로그](</C:/open/dacon-smart-warehouse-portfolio/docs/public_score_log.json>)
