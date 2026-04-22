@@ -23,22 +23,7 @@
 - `a100_05`: `10.1090848449`
 - `a101_10`: `10.1064209775`
 
-## 구간별 해석
-
-### a75 ~ a81
-
-- 강한 앵커 위에 residual을 얹는 방식이 실제 public에서 꾸준히 먹혔습니다.
-- 이 시기에는 “좋은 베이스 예측기 + residual correction”이라는 구조가 유효했습니다.
-
-### a82 ~ a83
-
-- layout-aware signal과 sequence signal을 더 강하게 넣어보는 구간이었습니다.
-- 구조적 의미는 있었지만 큰 점프를 만들 정도는 아니었습니다.
-
-### a88
-
-- representation-derived signal을 전체가 아니라 shift subset에만 적용했습니다.
-- 여기서 다시 public 개선이 확인되면서, “특정 regime에만 다른 신호를 쓰는 방식”이 중요하다는 점이 선명해졌습니다.
+## 최근 실험 해석
 
 ### a94
 
@@ -48,42 +33,84 @@
 
 를 통합해서 큰 점프를 만들었습니다.
 
-`a94_51`은 현재까지 나온 specialist 계열 중 가장 강한 기준점이었습니다.
+`a94_51`은 specialist 계열의 가장 강한 기준점이었습니다.
 
-### a95 ~ a99
+### a100
 
-- `a94`의 세분화, 보수적 refinement, feature 흡수 실험이 이어졌습니다.
-- 의미 있는 로컬 개선은 있었지만, `a94_51`을 압도하는 구조적 점프는 아니었습니다.
+문제를 다음처럼 다시 분해했습니다.
 
-### a100 ~ a101
+- `baseline`
+- `scale`
+- `routed deviation`
 
-이 구간부터 문제를 다시 정의했습니다.
+그리고 `y = baseline + scale * routed_z` 구조로 direct correction을 만들었습니다.
 
-기존:
-- raw target 또는 residual을 직접 맞추는 구조
+`a100_05 = 10.1090848449`는 이 구조가 public에서도 먹힌다는 첫 증거였습니다.
 
-변경:
-- `y = baseline + scale * routed_z`
+### a101
 
-즉,
+`a100` 위에
 
-- scenario baseline
-- scenario scale
-- standardized deviation
-- expert routing
+- soft expected-error router
+- robust baseline / scale
+- fallback
 
-으로 나누어 보는 새로운 family가 시작되었습니다.
+을 얹어 `10.1064209775`까지 낮췄습니다.
 
-이 방향이 실제로 다시 큰 개선을 만들었고,
-현재 최고 기록도 이 family에서 나왔습니다.
+현재 최고 기록은 이 `a101_10`입니다.
+
+### a102
+
+지원 거리(`support`)와 `testlike` 신호를 더 강하게 써봤지만,
+
+- top-2 sparse routing
+- support-aware fallback
+
+이 너무 공격적으로 들어가면서 public이 `10.1360030381`까지 악화됐습니다.
+
+결론:
+- support/testlike는 유용한 정보일 수 있지만
+- 그것을 “강한 스위치”처럼 쓰면 오히려 망가질 수 있습니다.
+
+### a104
+
+`a101_10`을 앵커로 두고,
+확신 높은 subset에서만 `shift + repr hybrid`를 아주 조금 얹는 전략이었습니다.
+
+로컬 OOF는 좋아 보였지만 public은 `10.1111502564`로 악화됐습니다.
+
+결론:
+- 문제는 앵커가 아니라
+- subset 정의와 correction trigger가 너무 날카로웠던 것입니다.
+
+### a105
+
+`a101_10`을 앵커로 두고,
+hard subset이 아니라 continuous correction으로 이동 강도만 조절하는 전략이었습니다.
+
+아이디어는 맞았지만 public은 `10.1104250846`으로 아직 최고를 넘지 못했습니다.
+
+결론:
+- direction은 맞다
+- 하지만 correction magnitude calibration이 아직 부족하다
 
 ## 현재 판단
 
-지금은 `a94 family`를 조금 더 다듬는 단계가 아니라,
+지금 막힌 이유는 새 family가 없어서가 아니라,
 
-- `baseline / scale / deviation`
-- `soft routing`
-- `fallback`
-- `support / shift feature`
+- correction을 어디에 적용할지
+- 얼마나 강하게 적용할지
 
-를 더 안정화하는 `a100 family`가 메인입니다.
+를 정하는 메타 레이어가 아직 불안정하기 때문입니다.
+
+그래서 현재 메인 방향은:
+
+1. `a100 family` 유지
+2. `a101_10`을 안전 앵커로 사용
+3. hard mask보다 continuous correction
+4. support/testlike는 보조 feature로만 활용
+5. average OOF가 아니라 worst-group 관점 강화
+
+즉, 지금 단계의 핵심은
+
+**“더 좋은 모델 하나”보다 “더 안전하고 일관된 correction system”** 입니다.

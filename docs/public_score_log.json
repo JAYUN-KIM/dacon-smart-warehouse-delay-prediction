@@ -25,7 +25,7 @@
     "name": "a66_5",
     "score": 10.1260335184,
     "file": "submission_a66_5.csv",
-    "note": "TransLF 비중 확대"
+    "note": "TransLF 비중 상향"
   },
   {
     "date": "2026-04-17",
@@ -88,13 +88,34 @@
     "name": "a100_05",
     "score": 10.1090848449,
     "file": "submission_a100_05.csv",
-    "note": "baseline + scale + routed deviation 첫 유효 버전"
+    "note": "baseline + scale + routed deviation 첫 성공"
   },
   {
     "date": "2026-04-21",
     "name": "a101_10",
     "score": 10.1064209775,
     "file": "submission_a101_10.csv",
-    "note": "soft router + fallback 적용"
+    "note": "soft router + fallback 최고 기록"
+  },
+  {
+    "date": "2026-04-22",
+    "name": "a102_24",
+    "score": 10.1360030381,
+    "file": "submission_a102_24.csv",
+    "note": "support-aware fallback 과도 적용으로 악화"
+  },
+  {
+    "date": "2026-04-22",
+    "name": "a104_15",
+    "score": 10.1111502564,
+    "file": "submission_a104_15.csv",
+    "note": "a101 앵커 기반 subset correction 실패"
+  },
+  {
+    "date": "2026-04-22",
+    "name": "a105_16",
+    "score": 10.1104250846,
+    "file": "submission_a105_16.csv",
+    "note": "continuous correction 시도, 아직 최고 미달"
   }
 ]
