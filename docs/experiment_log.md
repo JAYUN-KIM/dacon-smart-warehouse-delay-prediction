@@ -22,6 +22,8 @@
 - `a94_51`: `10.1133848903`
 - `a100_05`: `10.1090848449`
 - `a101_10`: `10.1064209775`
+- `a105_13`: `10.1074718609`
+- `a106_20`: `10.11045386`
 
 ## 최근 실험 해석
 
@@ -37,15 +39,15 @@
 
 ### a100
 
-문제를 다음처럼 다시 분해했습니다.
+문제를 아래처럼 다시 분해했습니다.
 
 - `baseline`
 - `scale`
 - `routed deviation`
 
-그리고 `y = baseline + scale * routed_z` 구조로 direct correction을 만들었습니다.
+그리고 `y = baseline + scale * routed_z` 구조로 direct correction 시스템을 만들었습니다.
 
-`a100_05 = 10.1090848449`는 이 구조가 public에서도 먹힌다는 첫 증거였습니다.
+`a100_05 = 10.1090848449`는 이 구조가 public에서도 먹힌 첫 증거였습니다.
 
 ### a101
 
@@ -55,62 +57,79 @@
 - robust baseline / scale
 - fallback
 
-을 얹어 `10.1064209775`까지 낮췄습니다.
+을 넣어 `10.1064209775`까지 내려갔습니다.
 
-현재 최고 기록은 이 `a101_10`입니다.
+현재 최고 기록은 `a101_10`입니다.
 
 ### a102
 
-지원 거리(`support`)와 `testlike` 신호를 더 강하게 써봤지만,
+support-aware fallback을 강하게 적용했지만 public에서 `10.1360030381`로 크게 악화됐습니다.
 
-- top-2 sparse routing
-- support-aware fallback
-
-이 너무 공격적으로 들어가면서 public이 `10.1360030381`까지 악화됐습니다.
-
-결론:
-- support/testlike는 유용한 정보일 수 있지만
-- 그것을 “강한 스위치”처럼 쓰면 오히려 망가질 수 있습니다.
+해석:
+- support/testlike 신호 자체는 가치가 있음
+- 하지만 이를 강한 switch나 sparse fallback 기준으로 쓰면 public에서 쉽게 깨진다는 점을 확인했습니다
 
 ### a104
 
-`a101_10`을 앵커로 두고,
-확신 높은 subset에서만 `shift + repr hybrid`를 아주 조금 얹는 전략이었습니다.
+`a101_10`을 앵커로 두고, confidence가 높은 subset에만 hybrid correction을 얹는 방향이었습니다.
 
 로컬 OOF는 좋아 보였지만 public은 `10.1111502564`로 악화됐습니다.
 
-결론:
-- 문제는 앵커가 아니라
-- subset 정의와 correction trigger가 너무 날카로웠던 것입니다.
+해석:
+- 앵커가 약한 것이 아님
+- subset 정의와 correction trigger가 local에 과적합된 것으로 보임
 
 ### a105
 
-`a101_10`을 앵커로 두고,
-hard subset이 아니라 continuous correction으로 이동 강도만 조절하는 전략이었습니다.
+hard subset 대신 continuous correction으로 이동했습니다.
 
-아이디어는 맞았지만 public은 `10.1104250846`으로 아직 최고를 넘지 못했습니다.
+- `delta = routed - anchor`
+- `alpha(x)`로 correction strength 조절
 
-결론:
-- direction은 맞다
-- 하지만 correction magnitude calibration이 아직 부족하다
+방향성은 괜찮았지만 public은 `10.1104250846`, 저강도 버전인 `a105_13`도 `10.1074718609`로 최고를 넘지 못했습니다.
+
+해석:
+- 방향 자체는 맞음
+- 하지만 correction magnitude calibration이 아직 불안정
+
+### a106
+
+`a105`를 더 보수적으로 만든 safe continuous correction이었지만 public은 `10.11045386`로 더 나빠졌습니다.
+
+해석:
+- correction layer를 더 안전하게 줄인다고 해서 public이 바로 좋아지진 않음
+- `a101` 이후 correction layer 계열이 반복적으로 public에서 실패한다는 신호가 더 강해짐
+
+### a107
+
+이번에는 correction layer를 더 쌓지 않고, `shift-heavy expert` 자체를 물리적 extreme 그룹 기준으로 다시 학습했습니다.
+
+핵심:
+- `a101` direct router OOF: `7.4224`
+- `a107` direct router OOF: `7.4162`
+
+즉 전체 라우터 기준으로는 아주 미세하게 개선됐습니다.
+
+다만 extreme group 방어력은 `global` expert를 압도할 정도는 아니었습니다.
+
+해석:
+- correction layer 추가보다 expert 재학습이 더 건강한 방향
+- 하지만 아직 이득 폭이 크진 않음
 
 ## 현재 판단
 
-지금 막힌 이유는 새 family가 없어서가 아니라,
+지금 막히는 이유는 새 family가 없어서가 아닙니다.
 
-- correction을 어디에 적용할지
+- 어떤 correction을 어디에 적용할지
 - 얼마나 강하게 적용할지
+- 어려운 샘플을 학습에서 어떻게 더 잘 반영할지
 
-를 정하는 메타 레이어가 아직 불안정하기 때문입니다.
+를 정하는 메타 설계가 아직 public 기준으로 충분히 안정적이지 않기 때문입니다.
 
-그래서 현재 메인 방향은:
+그래서 현재 메인 방향은 아래와 같습니다.
 
 1. `a100 family` 유지
-2. `a101_10`을 안전 앵커로 사용
-3. hard mask보다 continuous correction
-4. support/testlike는 보조 feature로만 활용
-5. average OOF가 아니라 worst-group 관점 강화
-
-즉, 지금 단계의 핵심은
-
-**“더 좋은 모델 하나”보다 “더 안전하고 일관된 correction system”** 입니다.
+2. `a101_10`을 강한 public 앵커로 유지
+3. correction layer 추가보다 expert 재학습 쪽으로 이동
+4. support/testlike는 보조 feature로만 사용
+5. 평균 OOF보다 worst-group / adversarial subset 관점의 검증 강화

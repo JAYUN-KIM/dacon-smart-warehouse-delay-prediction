@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "date": "2026-04-01",
     "name": "baseline",
@@ -116,6 +116,20 @@
     "name": "a105_16",
     "score": 10.1104250846,
     "file": "submission_a105_16.csv",
-    "note": "continuous correction 시도, 아직 최고 미달"
+    "note": "continuous correction 시도, 최고 미달"
+  },
+  {
+    "date": "2026-04-23",
+    "name": "a105_13",
+    "score": 10.1074718609,
+    "file": "submission_a105_13.csv",
+    "note": "continuous correction 저강도 버전, a105 계열 중 가장 안정"
+  },
+  {
+    "date": "2026-04-23",
+    "name": "a106_20",
+    "score": 10.11045386,
+    "file": "submission_a106_20.csv",
+    "note": "safe continuous correction, public 개선 실패"
   }
 ]
