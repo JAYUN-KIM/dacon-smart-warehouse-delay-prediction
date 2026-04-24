@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "date": "2026-04-01",
     "name": "baseline",
@@ -18,14 +18,14 @@
     "name": "a56_3",
     "score": 10.1276,
     "file": "submission_a56_3.csv",
-    "note": "STT + TransLF + a48"
+    "note": "STT와 TransLF를 섞은 초기 기준"
   },
   {
     "date": "2026-04-13",
     "name": "a66_5",
     "score": 10.1260335184,
     "file": "submission_a66_5.csv",
-    "note": "TransLF 비중 상향"
+    "note": "TransLF 비중을 올린 버전"
   },
   {
     "date": "2026-04-17",
@@ -81,21 +81,21 @@
     "name": "a94_51",
     "score": 10.1133848903,
     "file": "submission_a94_51.csv",
-    "note": "combo specialist (shift + high + unseen)"
+    "note": "shift, high, unseen combo specialist"
   },
   {
     "date": "2026-04-21",
     "name": "a100_05",
     "score": 10.1090848449,
     "file": "submission_a100_05.csv",
-    "note": "baseline + scale + routed deviation 첫 성공"
+    "note": "baseline과 scale과 routed deviation 첫 성공"
   },
   {
     "date": "2026-04-21",
     "name": "a101_10",
     "score": 10.1064209775,
     "file": "submission_a101_10.csv",
-    "note": "soft router + fallback 최고 기록"
+    "note": "soft router와 fallback 최고 기록"
   },
   {
     "date": "2026-04-22",
@@ -123,13 +123,27 @@
     "name": "a105_13",
     "score": 10.1074718609,
     "file": "submission_a105_13.csv",
-    "note": "continuous correction 저강도 버전, a105 계열 중 가장 안정"
+    "note": "continuous correction 저강도 버전"
   },
   {
     "date": "2026-04-23",
     "name": "a106_20",
     "score": 10.11045386,
     "file": "submission_a106_20.csv",
-    "note": "safe continuous correction, public 개선 실패"
+    "note": "safe continuous correction 실패"
+  },
+  {
+    "date": "2026-04-24",
+    "name": "a107_10",
+    "score": 10.1067154934,
+    "file": "submission_a107_10.csv",
+    "note": "shift-heavy expert 재학습, 최고에 근접했지만 미달"
+  },
+  {
+    "date": "2026-04-24",
+    "name": "a108_12",
+    "score": 10.1122539111,
+    "file": "submission_a108_12.csv",
+    "note": "pseudo-group shift expert 검증, 현재 버전은 실패"
   }
 ]

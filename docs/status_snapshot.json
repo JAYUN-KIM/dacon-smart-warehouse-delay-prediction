@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-23",
+  "generated_at": "2026-04-24",
   "best_public": {
     "date": "2026-04-21",
     "name": "a101_10",
@@ -9,8 +9,8 @@
   },
   "current_view": {
     "main_family": "a100 family",
-    "summary": "baseline, scale, routed deviation 구조는 맞았고 실제 public 최고 기록도 여기서 나왔다. 현재 병목은 새 family 부족보다 a101 이후 correction 적용 방식과 calibration 불안정성에 가깝다.",
-    "next_direction": "a101 앵커는 유지하고, correction layer 추가보다 shift-heavy expert 재학습과 worst-group 기준 검증 강화 쪽으로 이동"
+    "summary": "baseline, scale, routed deviation 구조 자체는 맞았고 실제 public 최고 기록도 여기서 나왔다. 현재 병목은 새 backbone 부족보다 a101 이후 correction 적용 방식의 불안정성과 validation-public mismatch에 가깝다.",
+    "next_direction": "a101 앵커는 유지하고 correction layer 추가는 잠시 멈춘 뒤, shift-heavy expert 재학습과 worst-group / adversarial subset 중심 validation 강화로 이동"
   },
   "recent_best_scores": [
     {
@@ -19,20 +19,20 @@
       "score": 10.1064209775
     },
     {
+      "date": "2026-04-23",
+      "name": "a107_10",
+      "score": 10.1067154934
+    },
+    {
       "date": "2026-04-21",
       "name": "a100_05",
       "score": 10.1090848449
-    },
-    {
-      "date": "2026-04-20",
-      "name": "a94_51",
-      "score": 10.1133848903
     }
   ],
   "recent_notes": [
-    "a102는 support-aware fallback을 너무 강하게 적용하면서 public에서 크게 악화됐다.",
-    "a104와 a105는 a101 앵커 위 correction 방향 자체는 의미 있었지만 subset 정의와 correction magnitude가 local OOF에 과적합됐다.",
-    "a106도 보수적 continuous correction이 public에서 실패하면서 a101 이후 correction layer 계열의 한계가 더 분명해졌다.",
-    "a107은 correction layer가 아니라 shift-heavy expert 자체를 물리적 extreme 그룹 기준으로 다시 학습한 실험이며, 로컬 라우터 기준으로는 미세 개선이 있었다."
+    "a102, a104, a105, a106은 모두 a101 위 correction layer를 더 얹는 방향이었고 public에서 최고 기록을 넘지 못했다.",
+    "a107은 correction layer 대신 shift-heavy expert 자체를 다시 학습한 실험으로, public 최고에 매우 근접했지만 아직 넘지는 못했다.",
+    "a108은 pseudo-group 기반 shift-heavy expert 재학습 실험이었고, scenario hardness를 feature로 직접 쓰면 leakage-like 착시가 발생할 수 있음을 확인했다.",
+    "현재는 support/testlike를 보조 feature로만 쓰고, expert 재학습과 worst-group validation을 더 강화하는 쪽이 더 유망하다."
   ]
 }
