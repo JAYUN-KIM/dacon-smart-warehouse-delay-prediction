@@ -145,5 +145,19 @@
     "score": 10.1122539111,
     "file": "submission_a108_12.csv",
     "note": "pseudo-group shift expert 검증, 현재 버전은 실패"
+  },
+  {
+    "date": "2026-04-25",
+    "name": "a109_09",
+    "score": 10.1085982977,
+    "file": "submission_a109_09.csv",
+    "note": "worst-group 중심 선택 기준을 적용한 shift router"
+  },
+  {
+    "date": "2026-04-25",
+    "name": "a110_09",
+    "score": 10.106859334,
+    "file": "submission_a110_09.csv",
+    "note": "future-window 기반 창고 부하 피처를 추가한 backbone 실험"
   }
 ]

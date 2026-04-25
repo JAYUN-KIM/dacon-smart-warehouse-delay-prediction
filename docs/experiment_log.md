@@ -29,6 +29,8 @@
 - `a106_20`: `10.11045386`
 - `a107_10`: `10.1067154934`
 - `a108_12`: `10.1122539111`
+- `a109_09`: `10.1085982977`
+- `a110_09`: `10.106859334`
 
 ## 최근 실험 해석
 
@@ -133,6 +135,48 @@ hard subset 대신 continuous correction으로 전환했습니다.
 - 하지만 현재 구현은 제출용 카드가 아니고 검증용 실험에 가까움
 - hardness는 direct feature가 아니라 보조 signal로만 써야 안전함
 
+### a109
+
+`a109`는 pseudo-group를 더 늘리기보다, `shift_phys`, `shift_extreme` 같은 단순한 물리형 expert와 `worst-group / testlike / baseline_hi` 중심 선택 기준으로 다시 구성한 실험이었습니다.
+
+결과:
+- `a109` direct router OOF: `7.4180`
+- public: `10.1085982977`
+
+해석:
+- `a108`보다 훨씬 정상적이고 안정적인 검증 카드였음
+- 하지만 `a101_10`을 넘기기에는 부족했음
+- validation과 selection만 바꾸는 것으로는 큰 점프를 만들기 어렵다는 점이 선명해짐
+
+### a110
+
+`a110`은 문제를 다시 창고 운영 관점에서 해석한 실험이었습니다.
+
+핵심 가설:
+- 이 문제는 현재값만 맞추는 회귀가 아니라
+- 같은 시나리오 안의 25슬롯 전체 맥락을 활용해
+- 가까운 미래 부하와 지연 압력을 읽는 문제에 더 가깝다
+
+그래서 아래와 같은 future-window 피처를 넣었습니다.
+
+- `lead1`, `fut2`, `fut3`
+- `future_load_per_robot`
+- `future_pressure_gap`
+- `future_work_gap`
+- `future_battery_gap`
+- `future_instability`
+- `future_stress_score`
+
+결과:
+- `a110` direct router OOF: `7.4081`
+- best candidate OOF: `7.7730`
+- public: `10.106859334`
+
+해석:
+- `a101_10`은 못 넘었지만 future-window 해석은 실제로 유효한 신호를 보여줌
+- correction layer처럼 로컬 OOF 착시에 갇힌 방향이라기보다, backbone 쪽에서 더 발전시킬 가치가 있는 방향
+- 다만 hard subset과 공격적 selection으로 밀기보다는, 기존 강한 자산과 더 안정적으로 결합해야 함
+
 ## 현재 판단
 
 지금 막힌 이유는 새 family가 부족해서라기보다,
@@ -150,3 +194,4 @@ hard subset 대신 continuous correction으로 전환했습니다.
 3. correction layer 추가는 잠시 중단
 4. `shift-heavy expert` 재학습 방향 유지
 5. `worst-group / adversarial subset` 중심 validation 강화
+6. `future-window` 기반 창고 부하 해석을 backbone 쪽으로 더 정교하게 흡수

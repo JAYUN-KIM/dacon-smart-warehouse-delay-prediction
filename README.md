@@ -88,6 +88,36 @@
 - 하지만 현재 구현은 아직 public 제출용 카드가 아님
 - hardness를 직접 feature로 쓰는 건 매우 위험함
 
+### 6. a109에서 얻은 교훈
+
+`a109`는 pseudo-group를 더 복잡하게 늘리기보다, 단순한 물리 extreme expert와 `worst-group / testlike / baseline_hi` 중심 선택 기준으로 다시 정리한 실험이었습니다.
+
+- public: `10.1085982977`
+
+해석:
+- `a108`보다 훨씬 정상적이고 방향도 더 맞았음
+- 하지만 `a101_10`을 넘기기에는 부족했음
+- validation과 후보 선택 기준만으로는 대형 점프를 만들기 어렵다는 점을 확인
+
+### 7. a110에서 얻은 교훈
+
+`a110`은 문제를 다시 처음 원리에서 보고, 같은 시나리오 안에서 이미 주어진 25슬롯 맥락으로 가까운 미래 부하와 압력을 읽는 방향으로 만든 실험이었습니다.
+
+- 핵심 추가 피처:
+  - `lead1`, `fut2`, `fut3`
+  - `future_load_per_robot`
+  - `future_pressure_gap`
+  - `future_work_gap`
+  - `future_battery_gap`
+  - `future_instability`
+  - `future_stress_score`
+- public: `10.106859334`
+
+해석:
+- 최고 기록은 못 넘었지만 correction layer 계열과는 성격이 다름
+- future-window 해석 자체는 실제로 유효한 신호를 갖고 있음
+- 다만 hard subset이나 공격적 selection이 아니라 backbone 쪽에서 더 안정적으로 흡수해야 함
+
 ## 현재 방향
 
 지금 기준으로 다음 방향은 아래처럼 정리하고 있습니다.
@@ -98,6 +128,7 @@
 4. `shift-heavy expert` 자체를 더 잘 학습시키는 방향으로 이동
 5. `support/testlike`는 주연 신호가 아니라 보조 feature로만 사용
 6. average OOF보다 `worst-group / adversarial subset` 중심 검증 강화
+7. `future-window` 기반의 창고 부하 해석을 backbone 쪽에서 더 정교하게 확장
 
 즉 지금은 새 family로 갈아탈 때라기보다, `a100 family`를 더 안정적으로 운영할 수 있게 validation과 expert 학습 기준을 바꾸는 단계입니다.
 
