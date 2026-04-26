@@ -18,7 +18,7 @@
     "name": "a56_3",
     "score": 10.1276,
     "file": "submission_a56_3.csv",
-    "note": "STT와 TransLF를 섞은 초기 기준"
+    "note": "STT와 TransLF를 얹은 초기 기준"
   },
   {
     "date": "2026-04-13",
@@ -158,6 +158,20 @@
     "name": "a110_09",
     "score": 10.106859334,
     "file": "submission_a110_09.csv",
-    "note": "future-window 기반 창고 부하 피처를 추가한 backbone 실험"
+    "note": "future-window 기반 창고 부하 요약을 추가한 backbone 실험"
+  },
+  {
+    "date": "2026-04-26",
+    "name": "a114_09",
+    "score": 10.103316418,
+    "file": "submission_a114_09.csv",
+    "note": "future-window 신호를 scenario baseline/scale 강화용으로 넣어 최고 기록 갱신"
+  },
+  {
+    "date": "2026-04-26",
+    "name": "a115_146",
+    "score": 10.1066275842,
+    "file": "submission_a115_146.csv",
+    "note": "a114 backbone 유지 + candidate generation 정밀화, local 개선 대비 public은 미달"
   }
 ]

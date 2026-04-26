@@ -2,9 +2,9 @@
 
 ## 현재 최고 기록
 
-- 점수: `10.1064209775`
-- 파일: `submission_a101_10.csv`
-- 날짜: `2026-04-21`
+- 점수: `10.103316418`
+- 파일: `submission_a114_09.csv`
+- 날짜: `2026-04-26`
 
 ## 주요 점수 흐름
 
@@ -31,6 +31,8 @@
 - `a108_12`: `10.1122539111`
 - `a109_09`: `10.1085982977`
 - `a110_09`: `10.106859334`
+- `a114_09`: `10.103316418`
+- `a115_146`: `10.1066275842`
 
 ## 최근 실험 해석
 
@@ -40,7 +42,7 @@
 - `scenario baseline signal`
 - `shift + high + unseen combo specialist`
 
-를 통합해서 큰 점프를 만들었습니다.
+를 통합해서 큰 점프를 만든 실험입니다.
 
 `a94_51`은 specialist 계열의 가장 강한 기준점이었습니다.
 
@@ -62,103 +64,71 @@
 - robust baseline / scale
 - fallback
 
-을 얹어 현재 최고 기록 `10.1064209775`를 만들었습니다.
+을 얹어 오랫동안 최고 기록이었던 `10.1064209775`를 만들었습니다.
 
-현재 최고 기록은 `a101_10`입니다.
+### a102 ~ a106
 
-### a102
+이 구간은 모두 `a101` 위에 correction layer를 더 얹는 방향이었습니다.
 
-support-aware fallback을 강하게 적용했지만 public에서 `10.1360030381`로 크게 악화됐습니다.
-
-해석:
-- support/testlike 신호는 가치가 있음
-- 하지만 강한 switch/sparse fallback 기준으로 쓰면 public에서 쉽게 무너짐
-
-### a104
-
-`a101_10`을 앵커로 두고, confidence가 높은 subset에만 correction을 얹었지만 public에서 `10.1111502564`로 악화됐습니다.
+공통된 결론:
+- local OOF는 좋아 보이는 경우가 있었음
+- public에서는 모두 실패
 
 해석:
-- anchor가 약한 것이 아님
-- subset 정의와 correction trigger가 local OOF에 과적합된 것으로 판단
-
-### a105
-
-hard subset 대신 continuous correction으로 전환했습니다.
-
-- `delta = routed - anchor`
-- `alpha(x)`로 correction strength 조절
-
-방향은 맞아 보였지만 public은 `10.1104250846`, 저강도 버전 `a105_13`도 `10.1074718609`로 최고를 넘지 못했습니다.
-
-해석:
-- 방향은 맞음
-- 하지만 correction magnitude calibration이 아직 불안정
-
-### a106
-
-`a105`를 더 보수적으로 만든 safe continuous correction이었지만 public은 `10.11045386`으로 더 나아지지 않았습니다.
-
-해석:
-- correction layer를 더 안전하게 줄이는 것만으로는 public이 바로 좋아지지 않음
-- `a101` 이후 correction layer 계열은 반복적으로 public에서 실패 중
+- backbone이 약해서가 아니라
+- correction trigger / mask / magnitude calibration이 local OOF에 과적합됨
 
 ### a107
 
-이번에는 correction layer를 더 얹지 않고, `shift-heavy expert` 자체를 물리 extreme 그룹 기준으로 다시 학습했습니다.
+`a107`은 correction layer를 더 얹지 않고 `shift-heavy expert` 자체를 다시 학습한 실험이었습니다.
 
-결과:
 - `a101` direct router OOF: `7.4224`
 - `a107` direct router OOF: `7.4162`
 - public: `10.1067154934`
 
-해석:
-- correction layer 추가보다 expert 재학습이 더 건강한 방향
-- public에서도 최고에 매우 근접했지만 아직 넘지는 못함
+의미:
+- correction layer 추가보다 expert 재학습이 더 건강한 방향임
+- 다만 최고를 뒤집을 정도로 강하진 않음
 
 ### a108
 
-`a107`을 기반으로 pseudo-group 기반 shift-heavy expert를 다시 학습했습니다.
+`a108`은 pseudo-group 기반 shift-heavy expert 재학습 실험이었습니다.
 
 중간에 중요한 문제를 확인했습니다.
 
-- scenario hardness를 직접 feature에 넣었을 때 비정상적으로 좋은 로컬 점수가 나옴
+- scenario hardness를 feature에 직접 넣었더니 비정상적으로 좋은 로컬 성능이 나옴
 - leakage-like 착시로 판단
-- hardness는 feature에서 제거하고, weighting에만 사용하도록 수정
+- hardness는 feature에서 제거하고 weighting에만 사용하도록 수정
 
 수정 후:
 - `a108` direct router OOF: `7.4219`
 - public: `10.1122539111`
 
-해석:
-- pseudo-group 방향 자체는 가능성이 있음
-- 하지만 현재 구현은 제출용 카드가 아니고 검증용 실험에 가까움
-- hardness는 direct feature가 아니라 보조 signal로만 써야 안전함
+의미:
+- pseudo-group 방향 자체는 가능성 있음
+- 하지만 현재 구현은 아직 public 제출용 카드가 아님
+- hardness를 direct feature로 쓰는 건 매우 위험함
 
 ### a109
 
-`a109`는 pseudo-group를 더 늘리기보다, `shift_phys`, `shift_extreme` 같은 단순한 물리형 expert와 `worst-group / testlike / baseline_hi` 중심 선택 기준으로 다시 구성한 실험이었습니다.
+`a109`는 pseudo-group를 더 늘리기보다 `shift_phys`, `shift_extreme` 같은 단순한 물리 expert와 `worst-group / testlike / baseline_hi` 중심 선택 기준으로 다시 정리한 실험이었습니다.
 
-결과:
-- `a109` direct router OOF: `7.4180`
 - public: `10.1085982977`
 
-해석:
-- `a108`보다 훨씬 정상적이고 안정적인 검증 카드였음
-- 하지만 `a101_10`을 넘기기에는 부족했음
-- validation과 selection만 바꾸는 것으로는 큰 점프를 만들기 어렵다는 점이 선명해짐
+의미:
+- `a108`보다 훨씬 안정적
+- validation과 selection 방향은 맞았음
+- 하지만 selection 기준만 바꾸는 것으로는 대형 점프가 어렵다는 점을 확인
 
 ### a110
 
-`a110`은 문제를 다시 창고 운영 관점에서 해석한 실험이었습니다.
+`a110`은 문제를 창고 운영 관점에서 다시 해석한 실험입니다.
 
 핵심 가설:
 - 이 문제는 현재값만 맞추는 회귀가 아니라
-- 같은 시나리오 안의 25슬롯 전체 맥락을 활용해
-- 가까운 미래 부하와 지연 압력을 읽는 문제에 더 가깝다
+- 같은 시나리오 안의 25슬롯 전체 맥락으로 가까운 미래 부하와 압력을 읽는 문제에 가깝다
 
-그래서 아래와 같은 future-window 피처를 넣었습니다.
-
+추가한 핵심 피처:
 - `lead1`, `fut2`, `fut3`
 - `future_load_per_robot`
 - `future_pressure_gap`
@@ -172,26 +142,78 @@ hard subset 대신 continuous correction으로 전환했습니다.
 - best candidate OOF: `7.7730`
 - public: `10.106859334`
 
-해석:
-- `a101_10`은 못 넘었지만 future-window 해석은 실제로 유효한 신호를 보여줌
-- correction layer처럼 로컬 OOF 착시에 갇힌 방향이라기보다, backbone 쪽에서 더 발전시킬 가치가 있는 방향
-- 다만 hard subset과 공격적 selection으로 밀기보다는, 기존 강한 자산과 더 안정적으로 결합해야 함
+의미:
+- correction layer와는 다른 성격의 새로운 backbone 신호를 확인
+- future-window 해석 자체는 실제로 유효함
+
+### a111_v2
+
+외부에서 받은 routed-z 파이프라인을 그대로 검토하고 실행했습니다.
+
+결론:
+- 구조는 정돈되어 있었음
+- 하지만 raw feature 중심 standalone backbone이라 성능이 너무 약했음
+- `a101/a110`을 대체할 수 있는 수준은 아니었고, 운영/구조 참고용에 가까웠음
+
+### a112
+
+질문: 미래창 피처를 300개 이상으로 늘리면 더 나아질까?
+
+실험:
+- 총 피처 수 `348`
+- 미래창 관련 피처 `220`
+
+결과:
+- `direct_router_mae = 7.4448`
+- best candidate OOF `7.7841`
+
+의미:
+- 미래창 해석이 틀린 건 아님
+- 하지만 너무 많이 넣으면 신호가 희석되고 오히려 성능이 나빠짐
+
+### a113
+
+`a112`보다 작게 줄인 compact future row backbone 실험이었습니다.
+
+결과:
+- `direct_router_mae = 7.4633`
+- best candidate OOF `7.7857`
+
+의미:
+- 단순히 개수를 줄이는 것만으로 해결되지 않음
+- row expert 쪽에 future 신호를 과하게 넣는 방향 자체가 약할 수 있음
+
+### a114
+
+`a114`는 미래창 정보를 row expert 쪽으로 확장하는 대신, **scenario baseline/scale 강화용**으로 넣은 실험입니다.
+
+결과:
+- `direct_router_mae = 7.3957`
+- best candidate OOF `7.7759`
+- public: `10.103316418`
+
+의미:
+- 현재까지 future-window 계열 중 가장 성공적
+- 미래창 신호는 “더 많이”보다 “어디에 넣느냐”가 중요하다는 점을 확인
+- scenario-level stress 해석과 가장 궁합이 좋았음
+
+### a115
+
+`a115`는 `a114` backbone은 그대로 두고, 후보 생성과 fallback calibration만 정밀하게 다시 튜닝한 실험입니다.
+
+결과:
+- local best candidate OOF: `7.7112`
+- public: `10.1066275842`
+
+의미:
+- 로컬 기준으론 좋아졌지만 public에서는 `a114`를 못 넘음
+- 이 family 안에서 candidate generation만 더 미세하게 다듬는 방식은 한계가 있다는 신호
 
 ## 현재 판단
 
-지금 막힌 이유는 새 family가 부족해서라기보다,
-
-- 어떤 correction을 어디에 적용할지
-- 얼마나 강하게 적용할지
-- 어떤 expert를 어떤 validation 기준으로 선택할지
-
-를 정하는 메타 설계가 아직 public 기준으로 충분히 안정적이지 않기 때문입니다.
-
-그래서 현재 메인 방향은 다음과 같습니다.
-
-1. `a100 family` 유지
-2. `a101_10`을 강한 public 앵커로 유지
-3. correction layer 추가는 잠시 중단
-4. `shift-heavy expert` 재학습 방향 유지
-5. `worst-group / adversarial subset` 중심 validation 강화
-6. `future-window` 기반 창고 부하 해석을 backbone 쪽으로 더 정교하게 흡수
+1. `a100 family`는 맞았다.
+2. `a114_09`는 현재 가장 강한 public 앵커다.
+3. correction layer를 더 얹는 방향은 계속 우선순위를 낮춘다.
+4. 미래창 해석은 유지하되, scenario-level stress 해석에 집중한다.
+5. `a115`까지의 결과를 보면 이제 같은 family 안에서 calibration만 더 만지는 것으로는 9점대 진입이 어렵다.
+6. 다음은 지금까지 얻은 해석을 살린 **새 direct family** 설계가 더 중요하다.
