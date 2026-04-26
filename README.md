@@ -99,8 +99,8 @@
 
 ## 문서 구성
 
-- [프로젝트 개요](</C:/open/dacon-smart-warehouse-portfolio/docs/project_overview.md>)
-- [실험 로그](</C:/open/dacon-smart-warehouse-portfolio/docs/experiment_log.md>)
-- [일일 리포트](</C:/open/dacon-smart-warehouse-portfolio/docs/daily_report.md>)
-- [날짜별 작업 기록](</C:/open/dacon-smart-warehouse-portfolio/docs/daily_logs>)
-- [public 점수 로그](</C:/open/dacon-smart-warehouse-portfolio/docs/public_score_log.json>)
+- [프로젝트 개요](docs/project_overview.md)
+- [실험 로그](docs/experiment_log.md)
+- [일일 리포트](docs/daily_report.md)
+- [날짜별 작업 기록](docs/daily_logs/)
+- [public 점수 로그](docs/public_score_log.json)
