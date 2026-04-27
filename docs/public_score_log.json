@@ -11,21 +11,21 @@
     "name": "a48_v4_3",
     "score": 10.1477,
     "file": "submission_a48_v4_3.csv",
-    "note": "강한 초기 앙상블 베이스"
+    "note": "초기 강한 앙상블 베이스"
   },
   {
     "date": "2026-04-12",
     "name": "a56_3",
     "score": 10.1276,
     "file": "submission_a56_3.csv",
-    "note": "STT와 TransLF를 얹은 초기 기준"
+    "note": "STT와 TransLF를 섞은 초기 기준"
   },
   {
     "date": "2026-04-13",
     "name": "a66_5",
     "score": 10.1260335184,
     "file": "submission_a66_5.csv",
-    "note": "TransLF 비중을 올린 버전"
+    "note": "TransLF 비중 조정"
   },
   {
     "date": "2026-04-17",
@@ -88,21 +88,21 @@
     "name": "a100_05",
     "score": 10.1090848449,
     "file": "submission_a100_05.csv",
-    "note": "baseline과 scale과 routed deviation 첫 성공"
+    "note": "baseline, scale, routed deviation 구조 첫 성공"
   },
   {
     "date": "2026-04-21",
     "name": "a101_10",
     "score": 10.1064209775,
     "file": "submission_a101_10.csv",
-    "note": "soft router와 fallback 최고 기록"
+    "note": "soft router와 fallback 기반 당시 최고 기록"
   },
   {
     "date": "2026-04-22",
     "name": "a102_24",
     "score": 10.1360030381,
     "file": "submission_a102_24.csv",
-    "note": "support-aware fallback 과도 적용으로 악화"
+    "note": "support-aware fallback 과적용으로 악화"
   },
   {
     "date": "2026-04-22",
@@ -137,7 +137,7 @@
     "name": "a107_10",
     "score": 10.1067154934,
     "file": "submission_a107_10.csv",
-    "note": "shift-heavy expert 재학습, 최고에 근접했지만 미달"
+    "note": "shift-heavy expert 재학습, 최고 근접"
   },
   {
     "date": "2026-04-24",
@@ -158,14 +158,14 @@
     "name": "a110_09",
     "score": 10.106859334,
     "file": "submission_a110_09.csv",
-    "note": "future-window 기반 창고 부하 요약을 추가한 backbone 실험"
+    "note": "future-window 기반 창고 부하 요약 추가"
   },
   {
     "date": "2026-04-26",
     "name": "a114_09",
     "score": 10.103316418,
     "file": "submission_a114_09.csv",
-    "note": "future-window 신호를 scenario baseline/scale 강화용으로 넣어 최고 기록 갱신"
+    "note": "future-window 신호를 scenario baseline/scale 강화용으로 넣어 당시 최고 기록 갱신"
   },
   {
     "date": "2026-04-26",
@@ -173,5 +173,19 @@
     "score": 10.1066275842,
     "file": "submission_a115_146.csv",
     "note": "a114 backbone 유지 + candidate generation 정밀화, local 개선 대비 public은 미달"
+  },
+  {
+    "date": "2026-04-27",
+    "name": "a117_09",
+    "score": 10.1005923422,
+    "file": "submission_a117_09.csv",
+    "note": "ridge seq2seq direct prediction의 delta를 q98 clip, alpha 0.08로 얇게 반영해 새 최고 기록 갱신"
+  },
+  {
+    "date": "2026-04-27",
+    "name": "a117_18_family",
+    "score": 10.1014682069,
+    "file": "submission_a117_18.csv",
+    "note": "더 강한 ridge delta 반영 계열. 방향은 유지됐지만 a117_09보다 낮아 과한 correction은 위험하다는 신호"
   }
 ]

@@ -11,13 +11,13 @@
 
 ## 현재 최고 기록
 
-- 최고 public 점수: `10.103316418`
-- 제출 파일: `submission_a114_09.csv`
-- 기록 날짜: `2026-04-26`
+- 최고 public 점수: `10.1005923422`
+- 제출 파일: `submission_a117_09.csv`
+- 기록 날짜: `2026-04-27`
 
 ## 현재 핵심 판단
 
-지금 메인 방향은 더 이상 `a94 family` 미세조정이 아니라, `a100/a101`에서 만든 decomposition + routing 자산 위에 `future-window` 해석을 어떻게 흡수하느냐입니다.
+지금 메인 방향은 더 이상 `a94 family` 미세조정이 아니라, `a100/a101`에서 만든 decomposition + routing 자산 위에 `future-window` 해석과 `ridge seq2seq delta`를 얼마나 안전하게 흡수하느냐입니다.
 
 현재 가장 중요한 구조는 아래와 같습니다.
 
@@ -26,8 +26,9 @@
 3. `standardized deviation`
 4. `soft routing`
 5. `future-window 기반 scenario-level stress 해석`
+6. `clipped ridge seq2seq delta`
 
-즉 지금은 “correction layer를 더 잘 얹는 문제”보다, **미래 부하·압력·배터리 악화를 backbone 내부에서 더 안정적으로 읽게 만드는 문제**가 핵심입니다.
+즉 지금은 “correction layer를 더 세게 얹는 문제”보다, **public에서 검증된 앵커를 보존하면서 새로운 seq2seq 계열의 방향성만 얇고 안전하게 반영하는 문제**가 핵심입니다.
 
 ## 최근 실험 요약
 
@@ -83,19 +84,31 @@
 - 가장 잘 먹힌 건 `a114`처럼 미래 부하·압력 요약을 **scenario baseline/scale 강화용**으로 넣는 방식이었음
 - `a115`는 로컬 OOF는 좋아졌지만 public에서는 `a114`를 넘지 못해, 이제는 이 family도 후보 생성 미세조정만으로는 한계가 있다는 신호를 줌
 
+### 6. ridge seq2seq delta 계열
+
+- `a116`: 25개 슬롯을 한 번에 예측하는 ridge seq2seq direct family 실험
+- `a117`: direct ridge 자체는 약하지만, `a114` 앵커와의 delta를 얇게 clipped blend하면 public 개선이 나온다는 점 확인
+- `a118`: 내일 제출 후보로, `a117_09`의 안전한 평균/최댓값 대역을 유지하면서 delta를 비대칭 클리핑하는 후보 생성
+
+핵심 교훈:
+- direct ridge 모델 단독은 약하지만, 기존 앵커와 다른 방향의 오차 정보를 갖고 있음
+- 이 delta를 강하게 반영하면 public에서 흔들림
+- `a117_09`처럼 `q98 clip + alpha 0.08` 수준의 얇은 반영은 실제 최고 public `10.1005923422`를 만들었음
+- 다음은 correction을 키우는 게 아니라, `a117_09`의 안전한 형태를 유지하면서 delta shape만 조절하는 방향이 맞음
+
 ## 현재 방향
 
 지금 기준으로 다음 방향은 아래처럼 정리하고 있습니다.
 
-1. `a114_09`를 현재 최고 public 앵커로 유지
+1. `a117_09`를 현재 최고 public 앵커로 유지
 2. correction layer 추가는 계속 보류
-3. `future-window` 신호는 버리지 않고 유지
-4. 다만 미래창 피처를 더 많이 늘리기보다, scenario-level stress 해석에 집중
-5. `support/testlike`는 보조 feature로만 사용
-6. average OOF보다 `worst-group / adversarial subset / unseen-like / future-stress` 중심 검증 강화
-7. 다음은 `a114`에서 얻은 해석을 바탕으로 **새 direct family**를 설계하는 쪽이 더 빠르다고 판단
+3. `future-window` 신호와 `a114`의 scenario baseline/scale 해석은 유지
+4. `a116` ridge seq2seq direct prediction은 단독 모델이 아니라 delta provider로만 사용
+5. delta는 반드시 clipping, 낮은 alpha, 평균/최댓값 guard를 함께 적용
+6. `support/testlike`는 보조 feature로만 사용
+7. 내일은 `submission_a118_01.csv` public 점수부터 확인한 뒤, 10.00대 진입 가능성이 있는 clipping/alpha 구간을 더 좁힐 예정
 
-즉 지금은 correction layer나 candidate calibration을 더 깎는 단계가 아니라, **지금까지 얻은 해석을 살린 채 새 backbone으로 넘어갈 시점**에 가깝습니다.
+즉 지금은 새 correction layer를 더 얹는 단계가 아니라, **public에서 실제로 먹힌 clipped delta 방향을 얼마나 안정적으로 다듬을지 결정하는 단계**입니다.
 
 ## 문서 구성
 

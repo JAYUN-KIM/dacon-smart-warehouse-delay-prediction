@@ -2,9 +2,9 @@
 
 ## 현재 최고 기록
 
-- 점수: `10.103316418`
-- 파일: `submission_a114_09.csv`
-- 날짜: `2026-04-26`
+- 점수: `10.1005923422`
+- 파일: `submission_a117_09.csv`
+- 날짜: `2026-04-27`
 
 ## 주요 점수 흐름
 
@@ -33,6 +33,8 @@
 - `a110_09`: `10.106859334`
 - `a114_09`: `10.103316418`
 - `a115_146`: `10.1066275842`
+- `a117_09`: `10.1005923422`
+- `a117_18 계열`: `10.1014682069`
 
 ## 최근 실험 해석
 
@@ -209,11 +211,62 @@
 - 로컬 기준으론 좋아졌지만 public에서는 `a114`를 못 넘음
 - 이 family 안에서 candidate generation만 더 미세하게 다듬는 방식은 한계가 있다는 신호
 
+### a116
+
+`a116`은 `a114` 이후 새 direct family를 찾기 위해, scenario-level feature를 펼친 뒤 25개 슬롯을 한 번에 예측하는 ridge seq2seq 계열을 시도한 실험입니다.
+
+결과:
+- feature count: `950`
+- anchor OOF MAE: `7.7799119949`
+- direct ridge OOF MAE: `7.9801287651`
+- best ridge alpha: `500.0`
+
+의미:
+- direct ridge 자체는 앵커보다 약함
+- 하지만 기존 앵커와 다른 방향의 예측 delta를 제공함
+- 단독 제출 모델이 아니라, `a114/a117` 앵커를 보조하는 delta provider로 활용할 가치가 있음
+
+### a117
+
+`a117`은 `a116` direct ridge prediction을 그대로 섞지 않고, `a114` 앵커와의 차이를 clipping한 뒤 낮은 alpha로 반영한 실험입니다.
+
+결과:
+- `submission_a117_09.csv`
+- 설정: `alpha=0.08`, `q98 clip`
+- OOF MAE: `7.7673277855`
+- public: `10.1005923422`
+
+비교:
+- 기존 최고 `a114_09 = 10.103316418`
+- `a117_09`가 새 최고 기록 갱신
+- 더 강한 계열은 `10.1014682069`로 `a117_09`를 넘지 못함
+
+의미:
+- ridge seq2seq direct family 전체를 믿으면 위험함
+- 다만 앵커와의 delta를 제한적으로 반영하면 public 개선이 가능함
+- 현재 핵심은 더 세게 보정하는 것이 아니라, public-safe clipped delta band를 찾는 것
+
+### a118
+
+`a118`은 `a117_09`에서 성공한 clipped delta 방향을 더 안전하게 다듬기 위한 비대칭 클리핑 후보 생성 실험입니다.
+
+대표 후보:
+- `submission_a118_01.csv`
+- OOF MAE: `7.7275009155`
+- test mean: `18.356560`
+- test max: `44.054348`
+- public: 내일 제출 후 확인 예정
+
+의미:
+- OOF 1등 후보는 평균과 최댓값이 올라가 public에서 흔들릴 위험이 있었음
+- 따라서 `a117_09`의 평균/최댓값 대역에 가까운 후보를 우선 제출 후보로 선정
+- 다음 평가는 OOF 1등보다 public-safe distribution shape가 더 중요함
+
 ## 현재 판단
 
-1. `a100 family`는 맞았다.
-2. `a114_09`는 현재 가장 강한 public 앵커다.
-3. correction layer를 더 얹는 방향은 계속 우선순위를 낮춘다.
-4. 미래창 해석은 유지하되, scenario-level stress 해석에 집중한다.
-5. `a115`까지의 결과를 보면 이제 같은 family 안에서 calibration만 더 만지는 것으로는 9점대 진입이 어렵다.
-6. 다음은 지금까지 얻은 해석을 살린 **새 direct family** 설계가 더 중요하다.
+1. `a100 family`와 `a114`의 future-window scenario 해석은 맞았다.
+2. 현재 최고 public 앵커는 `a117_09`다.
+3. `a116` ridge seq2seq direct model은 단독으로 약하지만 delta provider로 가치가 있다.
+4. correction layer를 더 얹는 방향은 계속 우선순위를 낮춘다.
+5. 현재 가장 유망한 축은 `a117_09`처럼 clipped delta를 얇게 반영하는 방식이다.
+6. 다음은 `a118` public 결과를 보고 asymmetric clipping / alpha / distribution guard를 더 좁히는 것이다.
