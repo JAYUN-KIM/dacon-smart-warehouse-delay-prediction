@@ -12,21 +12,23 @@
 
 ## 현재 최고 기록
 
-- 최고 public 점수: `10.0967991272`
-- 제출 파일: `submission_a122_1045.csv`
-- 기록 날짜: `2026-04-28`
-- 핵심 해석: `a117_09` 앵커가 과소예측하는 late/high-stress 구간을 아주 작게 양수 보정한 후보가 public에서 검증됨
+- 최고 public 점수: `10.0960054075`
+- 제출 파일: `submission_a124_1443.csv`
+- 기록 날짜: `2026-04-29`
+- 핵심 해석: late/high-stress 과소예측 보정 축이 public에서 계속 유효했고, `a122_1045`의 flat uplift를 late-weighted 형태로 옮긴 후보가 추가 개선을 만들었습니다.
 
 ## 현재 핵심 판단
 
 초반에는 강한 ensemble과 residual model을 중심으로 점수를 줄였고, 중반에는 `baseline + scale + routed deviation` 구조로 문제를 분해했습니다. 이후 `a114`에서 future-window 기반 scenario stress 해석이 성과를 냈고, `a117`에서는 ridge seq2seq direct prediction을 앵커에 아주 작게 반영하는 방식이 개선을 만들었습니다.
 
-가장 중요한 최신 전환점은 `a121`과 `a122`입니다.
+가장 중요한 최근 전환점은 `a121` 이후입니다.
 
 - `a121`: `a117_09`의 high-error scenario를 다시 분석해 late slot, pack pressure, pack utilization, future stress 구간에서 구조적 과소예측이 있음을 확인
 - `a122`: 위 신호를 바탕으로 `a117_09`를 유지하되 stress risk가 높은 일부 구간에만 작은 양수 uplift를 적용해 `10.0967991272` 달성
+- `a123`: stress tail을 조금 더 얹는 two-tier 후보는 거의 동점이었고, 단순 tail 강화만으로는 개선이 제한적임을 확인
+- `a124`: 같은 평균 보정량을 유지하면서 보정 위치를 late 쪽으로 옮긴 `a124_1443`이 `10.0960054075`로 최고 기록을 갱신
 
-즉 현재 방향은 새 backbone을 무작정 키우는 것이 아니라, public에서 검증된 앵커가 구조적으로 틀리는 구간을 찾아 아주 제한적으로 보정하는 것입니다.
+즉 현재 방향은 새 backbone을 무작정 키우는 것이 아니라, public에서 검증된 앵커가 구조적으로 틀리는 late/high-stress 구간을 더 정확히 보정하는 것입니다.
 
 ## 주요 점수 흐름
 
@@ -40,6 +42,7 @@
 | a114 | `10.103316418` | future-window scenario baseline/scale 강화 |
 | a117 | `10.1005923422` | clipped ridge seq2seq delta를 앵커에 작게 반영 |
 | a122 | `10.0967991272` | late/high-stress 과소예측 구간에 small uplift 적용 |
+| a124 | `10.0960054075` | flat uplift를 late-weighted stress shift로 개선 |
 
 ## 문서 구성
 

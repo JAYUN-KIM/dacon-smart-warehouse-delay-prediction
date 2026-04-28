@@ -1,170 +1,158 @@
 [
   {
-    "date": "2026-04-01",
-    "name": "baseline",
-    "score": 11.83,
-    "file": "submission_baseline.csv",
-    "note": "초기 기준선"
-  },
-  {
-    "date": "2026-04-10",
-    "name": "a48_v4_3",
-    "score": 10.1477,
-    "file": "submission_a48_v4_3.csv",
-    "note": "초기 강한 ensemble 계열"
-  },
-  {
-    "date": "2026-04-12",
-    "name": "a56_3",
-    "score": 10.1276,
-    "file": "submission_a56_3.csv",
-    "note": "STT와 TransLF를 섞은 초기 기준"
-  },
-  {
-    "date": "2026-04-13",
-    "name": "a66_5",
-    "score": 10.1260335184,
-    "file": "submission_a66_5.csv",
-    "note": "TransLF 비중 조정"
-  },
-  {
-    "date": "2026-04-17",
-    "name": "a75_01",
-    "score": 10.122152212,
-    "file": "submission_a75_01.csv",
-    "note": "residual CatBoost 시작"
+    "date": "2026-04-18",
+    "submission": "baseline",
+    "public_score": 11.83,
+    "note": "초기 기준선. 전체 파이프라인과 제출 형식 검증."
   },
   {
     "date": "2026-04-18",
-    "name": "a88_27",
-    "score": 10.1201425252,
-    "file": "submission_a88_27.csv",
-    "note": "representation 기반 shift expert"
+    "submission": "submission_a48_v4_3.csv",
+    "public_score": 10.1477,
+    "note": "초기 앙상블/후처리 계열에서 10.1대 진입."
+  },
+  {
+    "date": "2026-04-18",
+    "submission": "submission_a56_3.csv",
+    "public_score": 10.1276,
+    "note": "시나리오 통계와 잔차 보정 계열 개선."
+  },
+  {
+    "date": "2026-04-18",
+    "submission": "submission_a66_5.csv",
+    "public_score": 10.1260335184,
+    "note": "앙상블/후처리 안정화."
+  },
+  {
+    "date": "2026-04-18",
+    "submission": "submission_a75_01.csv",
+    "public_score": 10.122152212,
+    "note": "low-band residual 보정 계열."
+  },
+  {
+    "date": "2026-04-19",
+    "submission": "submission_a88_27.csv",
+    "public_score": 10.1201425252,
+    "note": "representation residual 및 shift/high/unseen specialist 방향으로 전환."
   },
   {
     "date": "2026-04-20",
-    "name": "a94_51",
-    "score": 10.1133848903,
-    "file": "submission_a94_51.csv",
-    "note": "shift, high, unseen combo specialist"
+    "submission": "submission_a94_51.csv",
+    "public_score": 10.1133848903,
+    "note": "scenario baseline signal과 specialist 통합으로 큰 폭 개선."
   },
   {
     "date": "2026-04-21",
-    "name": "a100_05",
-    "score": 10.1090848449,
-    "file": "submission_a100_05.csv",
-    "note": "baseline, scale, routed deviation 구조 첫 성공"
-  },
-  {
-    "date": "2026-04-21",
-    "name": "a101_10",
-    "score": 10.1064209775,
-    "file": "submission_a101_10.csv",
-    "note": "soft router와 fallback 기반 당시 최고 기록"
+    "submission": "submission_a100_05.csv",
+    "public_score": 10.1090848449,
+    "note": "baseline + scale + routed_z decomposition 구조가 유효함을 확인."
   },
   {
     "date": "2026-04-22",
-    "name": "a102_24",
-    "score": 10.1360030381,
-    "file": "submission_a102_24.csv",
-    "note": "support-aware fallback을 과하게 적용해 악화"
-  },
-  {
-    "date": "2026-04-22",
-    "name": "a104_15",
-    "score": 10.1111502564,
-    "file": "submission_a104_15.csv",
-    "note": "a101 앵커 기반 subset correction 실패"
+    "submission": "submission_a101_10.csv",
+    "public_score": 10.1064209775,
+    "note": "soft expected-error router 계열 최고점 갱신."
   },
   {
     "date": "2026-04-23",
-    "name": "a105_13",
-    "score": 10.1074718609,
-    "file": "submission_a105_13.csv",
-    "note": "continuous correction 저강도 버전"
+    "submission": "submission_a102_24.csv",
+    "public_score": 10.1360030381,
+    "note": "support-aware hard routing/fallback이 public에서 크게 악화됨."
   },
   {
     "date": "2026-04-23",
-    "name": "a106_20",
-    "score": 10.11045386,
-    "file": "submission_a106_20.csv",
-    "note": "safe continuous correction 실패"
+    "submission": "submission_a104_15.csv",
+    "public_score": 10.1111502564,
+    "note": "aggressive correction/subset mask 계열은 과적합 위험 확인."
   },
   {
     "date": "2026-04-24",
-    "name": "a107_10",
-    "score": 10.1067154934,
-    "file": "submission_a107_10.csv",
-    "note": "shift-heavy expert 재학습. 최고 근접"
+    "submission": "submission_a105_13.csv",
+    "public_score": 10.1074718609,
+    "note": "anchor-preserving correction은 안정적이나 a101_10을 넘지 못함."
   },
   {
     "date": "2026-04-24",
-    "name": "a108_12",
-    "score": 10.1122539111,
-    "file": "submission_a108_12.csv",
-    "note": "pseudo-group shift expert 검증. public 실패"
+    "submission": "submission_a106_20.csv",
+    "public_score": 10.11045386,
+    "note": "domain-informed reweighting 계열이 public에서 개선 실패."
   },
   {
     "date": "2026-04-25",
-    "name": "a109_09",
-    "score": 10.1085982977,
-    "file": "submission_a109_09.csv",
-    "note": "worst-group 중심 선택 기준 적용"
+    "submission": "submission_a107_10.csv",
+    "public_score": 10.1067154934,
+    "note": "a101_10 근처까지 회복했으나 최고 갱신 실패."
   },
   {
     "date": "2026-04-25",
-    "name": "a110_09",
-    "score": 10.106859334,
-    "file": "submission_a110_09.csv",
-    "note": "future-window 기반 창고 부하 요약 추가"
+    "submission": "submission_a108_12.csv",
+    "public_score": 10.1122539111,
+    "note": "pseudo-group shift-heavy expert 재학습 방향은 public 악화."
+  },
+  {
+    "date": "2026-04-25",
+    "submission": "submission_a109_09.csv",
+    "public_score": 10.1085982977,
+    "note": "원점 재점검 이후에도 10.10대 초반 벽 유지."
+  },
+  {
+    "date": "2026-04-25",
+    "submission": "submission_a110_09.csv",
+    "public_score": 10.106859334,
+    "note": "future-window/warehouse-pressure 관점 재구성. 최고점 근처 회복."
   },
   {
     "date": "2026-04-26",
-    "name": "a114_09",
-    "score": 10.103316418,
-    "file": "submission_a114_09.csv",
-    "note": "future-window 신호를 scenario baseline/scale 강화로 반영해 당시 최고 기록 갱신"
+    "submission": "submission_a114_09.csv",
+    "public_score": 10.103316418,
+    "note": "미래창/pressure 피처 확장 방향에서 유의미한 개선."
   },
   {
     "date": "2026-04-26",
-    "name": "a115_146",
-    "score": 10.1066275842,
-    "file": "submission_a115_146.csv",
-    "note": "a114 backbone 유지 + candidate generation 정리. local 개선 대비 public 미달"
+    "submission": "submission_a115_146.csv",
+    "public_score": 10.1066275842,
+    "note": "a114 확장형은 public에서 후퇴. 과한 변형보다 보수적 제어 필요."
   },
   {
     "date": "2026-04-27",
-    "name": "a117_09",
-    "score": 10.1005923422,
-    "file": "submission_a117_09.csv",
-    "note": "ridge seq2seq direct prediction의 delta를 q98 clip, alpha 0.08로 작게 반영해 최고 기록 갱신"
+    "submission": "submission_a117_09.csv",
+    "public_score": 10.1005923422,
+    "note": "late/high-pressure uplift 계열에서 10.10 근처까지 접근."
   },
   {
     "date": "2026-04-27",
-    "name": "a117_18_family",
-    "score": 10.1014682069,
-    "file": "submission_a117_18.csv",
-    "note": "더 강한 ridge delta 반영은 a117_09보다 악화"
+    "submission": "submission_a117_18_family.csv",
+    "public_score": 10.1014682069,
+    "note": "같은 방향의 공격적 변형은 소폭 악화."
   },
   {
     "date": "2026-04-28",
-    "name": "a118_01",
-    "score": 10.1018318718,
-    "file": "submission_a118_01.csv",
-    "note": "asymmetric clipped ridge delta. OOF와 분포 guard는 좋아 보였지만 public 미달"
+    "submission": "submission_a118_01.csv",
+    "public_score": 10.1018318718,
+    "note": "a117 계열 보정 폭 조절 실험. 최고 갱신 실패."
   },
   {
     "date": "2026-04-28",
-    "name": "a119_03",
-    "score": 10.1010915332,
-    "file": "submission_a119_03.csv",
-    "note": "a117_09 근처 microgrid. 거의 같은 분포였지만 최고 기록 미달"
+    "submission": "submission_a119_03.csv",
+    "public_score": 10.1010915332,
+    "note": "late pressure family를 보수적으로 유지했으나 a117_09보다 낮음."
   },
   {
     "date": "2026-04-28",
-    "name": "a122_1045",
-    "score": 10.0967991272,
-    "file": "submission_a122_1045.csv",
-    "note": "late/high-stress small uplift. a121 high-error EDA에서 찾은 과소예측 축이 public에서 검증됨"
+    "submission": "submission_a122_1045.csv",
+    "public_score": 10.0967991272,
+    "note": "late pressure uplift 방향에서 10.09대 진입. 당시 최고점."
+  },
+  {
+    "date": "2026-04-29",
+    "submission": "submission_a123_059.csv",
+    "public_score": 10.0967996581,
+    "note": "stress tail two-tier 추가는 a122와 거의 동일하나 소폭 악화."
+  },
+  {
+    "date": "2026-04-29",
+    "submission": "submission_a124_1443.csv",
+    "public_score": 10.0960054075,
+    "note": "late-shift mean-preserving uplift로 새 최고점 갱신. a125는 이 축을 중심으로 조율 예정."
   }
 ]

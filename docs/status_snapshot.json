@@ -1,41 +1,39 @@
 {
-  "generated_at": "2026-04-28",
+  "generated_at": "2026-04-29",
   "best_public": {
-    "date": "2026-04-28",
-    "name": "a122_1045",
-    "score": 10.0967991272,
-    "file": "submission_a122_1045.csv",
-    "note": "a117_09 앵커의 late/high-stress 과소예측 구간에 작은 양수 uplift를 적용해 최고 기록 갱신"
+    "date": "2026-04-29",
+    "name": "a124_1443",
+    "score": 10.0960054075,
+    "file": "submission_a124_1443.csv",
+    "note": "a122_1045의 flat top-stress uplift를 late-weighted 형태로 옮겨 최고 기록 갱신"
   },
   "latest_submissions": [
     {
-      "date": "2026-04-28",
-      "name": "a118_01",
-      "score": 10.1018318718,
-      "file": "submission_a118_01.csv",
-      "note": "asymmetric clipped ridge delta. OOF는 좋았지만 public에서 a117_09 미달"
+      "date": "2026-04-29",
+      "name": "a123_059",
+      "score": 10.0967996581,
+      "file": "submission_a123_059.csv",
+      "note": "stress tail two-tier 추가. a122_1045와 사실상 동점으로 추가 개선 실패"
     },
     {
-      "date": "2026-04-28",
-      "name": "a119_03",
-      "score": 10.1010915332,
-      "file": "submission_a119_03.csv",
-      "note": "a117_09 초근접 microgrid. 거의 같은 분포였지만 public 개선 실패"
-    },
-    {
-      "date": "2026-04-28",
-      "name": "a122_1045",
-      "score": 10.0967991272,
-      "file": "submission_a122_1045.csv",
-      "note": "late/high-stress small uplift. 10.10 벽을 처음 돌파"
+      "date": "2026-04-29",
+      "name": "a124_1443",
+      "score": 10.0960054075,
+      "file": "submission_a124_1443.csv",
+      "note": "mean-preserving late-weighted stress shift. 최고 기록 갱신"
     }
   ],
   "current_view": {
-    "main_anchor": "a122_1045",
-    "summary": "a117_09 근처의 clipped ridge delta micro tuning은 포화됐지만, a121 high-error EDA를 통해 late/high-pressure/high-utilization/high-stress 구간의 구조적 과소예측을 확인했다. a122_1045는 이 구간에만 작은 양수 uplift를 적용해 public 최고 기록을 갱신했다.",
-    "next_direction": "a122_1045 family를 중심으로 risk score, binning, shrink, uplift cap을 정밀 조정한다. 평균 uplift와 max uplift를 과하게 키우지 않되, late/high-stress 과소예측 보정 축은 유지한다."
+    "main_anchor": "a124_1443",
+    "summary": "late/high-stress 과소예측 보정 축은 public에서 계속 유효하다. 단순히 stress tail에 더 얹은 a123_059는 거의 동점이었지만, 보정 총량을 유지하면서 late slot 쪽으로 배분을 옮긴 a124_1443은 최고 기록을 갱신했다.",
+    "next_direction": "2026-04-30에는 a125로 이어가며 a124_1443 주변의 q, target_mean, floor, start, denom, power를 정밀 탐색한다. 평균 uplift는 0.052~0.058, coverage는 0.095~0.105, max uplift는 0.80~0.90 근처를 우선한다."
   },
   "recent_best_scores": [
+    {
+      "date": "2026-04-29",
+      "name": "a124_1443",
+      "score": 10.0960054075
+    },
     {
       "date": "2026-04-28",
       "name": "a122_1045",
@@ -50,40 +48,23 @@
       "date": "2026-04-26",
       "name": "a114_09",
       "score": 10.103316418
-    },
-    {
-      "date": "2026-04-21",
-      "name": "a101_10",
-      "score": 10.1064209775
     }
   ],
   "today_experiments": [
     {
-      "name": "a118",
-      "summary": "비대칭 clipped delta. OOF는 좋았지만 public 10.1018318718로 최고 기록 미달."
+      "name": "a123",
+      "summary": "a122_1045의 stress uplift를 two-tier tail 방식으로 확장. 제출한 a123_059는 10.0967996581로 거의 동점."
     },
     {
-      "name": "a119",
-      "summary": "a117_09 초근접 microgrid. public 10.1010915332로 최고 기록 미달."
-    },
-    {
-      "name": "a120",
-      "summary": "scenario bias calibrator. local 개선폭이 너무 작아 제출하지 않음."
-    },
-    {
-      "name": "a121",
-      "summary": "high-error group EDA. late/high-pressure/high-utilization/high-stress 구간의 구조적 과소예측 확인."
-    },
-    {
-      "name": "a122",
-      "summary": "late/high-stress small uplift. submission_a122_1045.csv가 public 10.0967991272로 최고 기록 갱신."
+      "name": "a124",
+      "summary": "flat uplift를 late-weighted 형태로 이동. a124_1443이 10.0960054075로 최고 기록 갱신."
     }
   ],
   "guardrails": [
-    "a122_1045를 현재 최고 public 앵커로 유지한다.",
-    "clipped ridge delta 자체의 추가 micro tuning은 우선순위를 낮춘다.",
-    "late/high-stress 과소예측 보정 축은 유지한다.",
-    "보정량은 평균 uplift와 max uplift를 함께 보며 과하게 키우지 않는다.",
-    "OOF 개선만 보고 제출하지 않고, test 변화량과 public-safe profile을 함께 확인한다."
+    "a124_1443을 현재 최고 public 앵커로 유지한다.",
+    "단순 tail 추가보다 late-weighted shift를 우선한다.",
+    "평균 uplift는 a122/a124에서 검증된 0.055 근처를 유지한다.",
+    "max uplift를 과하게 키운 후보는 공격형으로 분리한다.",
+    "2026-04-30에는 a125로 이어가며 public-safe 후보와 공격형 후보를 나눠 생성한다."
   ]
 }
