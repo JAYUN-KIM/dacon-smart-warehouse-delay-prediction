@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-27",
+  "generated_at": "2026-04-28",
   "best_public": {
     "date": "2026-04-27",
     "name": "a117_09",
@@ -7,17 +7,26 @@
     "file": "submission_a117_09.csv",
     "note": "ridge seq2seq direct prediction의 delta를 q98 clip, alpha 0.08로 얇게 반영해 새 최고 기록 갱신"
   },
-  "previous_best": {
-    "date": "2026-04-26",
-    "name": "a114_09",
-    "score": 10.103316418,
-    "file": "submission_a114_09.csv",
-    "note": "future-window 신호를 scenario baseline/scale 강화용으로 넣어 당시 최고 기록"
-  },
+  "latest_submissions": [
+    {
+      "date": "2026-04-28",
+      "name": "a118_01",
+      "score": 10.1018318718,
+      "file": "submission_a118_01.csv",
+      "note": "asymmetric clipped ridge delta. OOF는 좋았지만 public에서 a117_09 미달"
+    },
+    {
+      "date": "2026-04-28",
+      "name": "a119_03",
+      "score": 10.1010915332,
+      "file": "submission_a119_03.csv",
+      "note": "a117_09 초근접 microgrid. 거의 같은 분포였지만 public 개선 실패"
+    }
+  ],
   "current_view": {
-    "main_family": "a117 clipped ridge delta blend",
-    "summary": "a114의 future-window scenario baseline/scale 해석은 유지하되, a116 ridge seq2seq direct prediction을 단독 모델로 쓰지 않고 앵커와의 delta만 clipped blend하는 방식이 public에서 새 최고 기록을 만들었다. direct 모델 자체는 약하지만 delta provider로는 가치가 있으며, 강도를 높이면 public이 흔들릴 수 있어 낮은 alpha와 clipping이 핵심이다.",
-    "next_direction": "a118_01을 우선 제출해 asymmetric clipped delta가 a117_09보다 나은지 확인한다. 개선되면 alpha, positive/negative cap, distribution guard를 좁혀 10.00대 진입을 노린다. 실패하면 a117_09를 안전 앵커로 유지한다."
+    "main_anchor": "a117_09",
+    "summary": "a117_09가 현재 최고 public으로 유지됐다. a118은 분포 shape를 더 안전하게 보이도록 바꿨지만 public이 악화됐고, a119는 a117_09와 거의 같은 후보였음에도 개선되지 않았다. clipped ridge delta 계열은 한 번 유효했지만 a117_09 근처에서 포화된 것으로 판단한다.",
+    "next_direction": "같은 ridge delta family의 alpha, clip quantile, tail tempering을 더 깎기보다 a117_09의 high-error scenario를 다시 EDA한다. 목표는 ridge delta와 상관이 낮은 새 독립 신호를 찾는 것이다."
   },
   "recent_best_scores": [
     {
@@ -38,30 +47,18 @@
   ],
   "today_experiments": [
     {
-      "name": "a116",
-      "summary": "ridge seq2seq direct family. 단독 direct OOF는 약했지만 앵커와 다른 delta를 제공했다."
-    },
-    {
-      "name": "a117",
-      "summary": "ridge delta를 q98 clipping 후 낮은 alpha로 반영. a117_09가 public 10.1005923422로 새 최고 기록."
-    },
-    {
       "name": "a118",
-      "summary": "a117_09의 안전한 평균/최댓값 대역을 기준으로 asymmetric clipped delta 후보 생성. public은 내일 확인 예정."
+      "summary": "비대칭 clipped delta. OOF와 분포 guard는 좋아 보였지만 public은 10.1018318718로 악화."
+    },
+    {
+      "name": "a119",
+      "summary": "a117_09 초근접 microgrid. public은 10.1010915332로 최고 기록 미달."
     }
   ],
-  "candidate_for_next_submission": {
-    "name": "a118_01",
-    "file": "submission_a118_01.csv",
-    "oof_mae": 7.7275009155,
-    "test_mean": 18.35656,
-    "test_max": 44.054348,
-    "note": "OOF 1등이 아니라 public-safe distribution shape를 우선한 후보"
-  },
   "guardrails": [
-    "direct ridge prediction을 단독 제출하지 않는다.",
-    "delta 반영은 clipping과 낮은 alpha를 반드시 함께 사용한다.",
-    "OOF 1등 후보라도 test mean/max가 a117_09 safe band에서 벗어나면 우선순위를 낮춘다.",
-    "hard mask, aggressive fallback, correction layer 추가는 계속 보류한다."
+    "a117_09를 현재 최고 public 앵커로 유지한다.",
+    "clipped ridge delta family의 추가 미세조정은 우선순위를 낮춘다.",
+    "OOF 개선만으로 제출 후보를 고르지 않는다.",
+    "다음 실험은 high-error scenario EDA와 독립 신호 탐색을 먼저 수행한다."
   ]
 }
