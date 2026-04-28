@@ -1,11 +1,11 @@
 {
   "generated_at": "2026-04-28",
   "best_public": {
-    "date": "2026-04-27",
-    "name": "a117_09",
-    "score": 10.1005923422,
-    "file": "submission_a117_09.csv",
-    "note": "ridge seq2seq direct prediction의 delta를 q98 clip, alpha 0.08로 얇게 반영해 새 최고 기록 갱신"
+    "date": "2026-04-28",
+    "name": "a122_1045",
+    "score": 10.0967991272,
+    "file": "submission_a122_1045.csv",
+    "note": "a117_09 앵커의 late/high-stress 과소예측 구간에 작은 양수 uplift를 적용해 최고 기록 갱신"
   },
   "latest_submissions": [
     {
@@ -21,14 +21,26 @@
       "score": 10.1010915332,
       "file": "submission_a119_03.csv",
       "note": "a117_09 초근접 microgrid. 거의 같은 분포였지만 public 개선 실패"
+    },
+    {
+      "date": "2026-04-28",
+      "name": "a122_1045",
+      "score": 10.0967991272,
+      "file": "submission_a122_1045.csv",
+      "note": "late/high-stress small uplift. 10.10 벽을 처음 돌파"
     }
   ],
   "current_view": {
-    "main_anchor": "a117_09",
-    "summary": "a117_09가 현재 최고 public으로 유지됐다. a118은 분포 shape를 더 안전하게 보이도록 바꿨지만 public이 악화됐고, a119는 a117_09와 거의 같은 후보였음에도 개선되지 않았다. clipped ridge delta 계열은 한 번 유효했지만 a117_09 근처에서 포화된 것으로 판단한다.",
-    "next_direction": "같은 ridge delta family의 alpha, clip quantile, tail tempering을 더 깎기보다 a117_09의 high-error scenario를 다시 EDA한다. 목표는 ridge delta와 상관이 낮은 새 독립 신호를 찾는 것이다."
+    "main_anchor": "a122_1045",
+    "summary": "a117_09 근처의 clipped ridge delta micro tuning은 포화됐지만, a121 high-error EDA를 통해 late/high-pressure/high-utilization/high-stress 구간의 구조적 과소예측을 확인했다. a122_1045는 이 구간에만 작은 양수 uplift를 적용해 public 최고 기록을 갱신했다.",
+    "next_direction": "a122_1045 family를 중심으로 risk score, binning, shrink, uplift cap을 정밀 조정한다. 평균 uplift와 max uplift를 과하게 키우지 않되, late/high-stress 과소예측 보정 축은 유지한다."
   },
   "recent_best_scores": [
+    {
+      "date": "2026-04-28",
+      "name": "a122_1045",
+      "score": 10.0967991272
+    },
     {
       "date": "2026-04-27",
       "name": "a117_09",
@@ -48,17 +60,30 @@
   "today_experiments": [
     {
       "name": "a118",
-      "summary": "비대칭 clipped delta. OOF와 분포 guard는 좋아 보였지만 public은 10.1018318718로 악화."
+      "summary": "비대칭 clipped delta. OOF는 좋았지만 public 10.1018318718로 최고 기록 미달."
     },
     {
       "name": "a119",
-      "summary": "a117_09 초근접 microgrid. public은 10.1010915332로 최고 기록 미달."
+      "summary": "a117_09 초근접 microgrid. public 10.1010915332로 최고 기록 미달."
+    },
+    {
+      "name": "a120",
+      "summary": "scenario bias calibrator. local 개선폭이 너무 작아 제출하지 않음."
+    },
+    {
+      "name": "a121",
+      "summary": "high-error group EDA. late/high-pressure/high-utilization/high-stress 구간의 구조적 과소예측 확인."
+    },
+    {
+      "name": "a122",
+      "summary": "late/high-stress small uplift. submission_a122_1045.csv가 public 10.0967991272로 최고 기록 갱신."
     }
   ],
   "guardrails": [
-    "a117_09를 현재 최고 public 앵커로 유지한다.",
-    "clipped ridge delta family의 추가 미세조정은 우선순위를 낮춘다.",
-    "OOF 개선만으로 제출 후보를 고르지 않는다.",
-    "다음 실험은 high-error scenario EDA와 독립 신호 탐색을 먼저 수행한다."
+    "a122_1045를 현재 최고 public 앵커로 유지한다.",
+    "clipped ridge delta 자체의 추가 micro tuning은 우선순위를 낮춘다.",
+    "late/high-stress 과소예측 보정 축은 유지한다.",
+    "보정량은 평균 uplift와 max uplift를 함께 보며 과하게 키우지 않는다.",
+    "OOF 개선만 보고 제출하지 않고, test 변화량과 public-safe profile을 함께 확인한다."
   ]
 }

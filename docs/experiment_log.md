@@ -2,235 +2,121 @@
 
 ## 현재 최고 기록
 
-- 점수: `10.1005923422`
-- 파일: `submission_a117_09.csv`
-- 날짜: `2026-04-27`
+- 점수: `10.0967991272`
+- 파일: `submission_a122_1045.csv`
+- 날짜: `2026-04-28`
 
 ## 주요 점수 흐름
 
-- baseline: `11.83`
-- `a48_v4_3`: `10.1477`
-- `a56_3`: `10.1276`
-- `a66_5`: `10.1260335184`
-- `a75_01`: `10.122152212`
-- `a76_01`: `10.121563682`
-- `a77_01`: `10.1214405285`
-- `a79_01`: `10.1214263184`
-- `a81_01`: `10.121418246`
-- `a83_01`: `10.1214032792`
-- `a88_27`: `10.1201425252`
-- `a94_51`: `10.1133848903`
-- `a100_05`: `10.1090848449`
-- `a101_10`: `10.1064209775`
-- `a102_24`: `10.1360030381`
-- `a104_15`: `10.1111502564`
-- `a105_16`: `10.1104250846`
-- `a105_13`: `10.1074718609`
-- `a106_20`: `10.11045386`
-- `a107_10`: `10.1067154934`
-- `a108_12`: `10.1122539111`
-- `a109_09`: `10.1085982977`
-- `a110_09`: `10.106859334`
-- `a114_09`: `10.103316418`
-- `a115_146`: `10.1066275842`
-- `a117_09`: `10.1005923422`
-- `a117_18 계열`: `10.1014682069`
-- `a118_01`: `10.1018318718`
-- `a119_03`: `10.1010915332`
+| 실험 | public | 핵심 |
+| --- | ---: | --- |
+| baseline | `11.83` | 초기 기준선 |
+| a48 | `10.1477` | 초기 ensemble |
+| a56 | `10.1276` | STT + TransLF 계열 |
+| a66 | `10.1260335184` | blend 비중 조정 |
+| a75 | `10.122152212` | residual CatBoost |
+| a88 | `10.1201425252` | representation 기반 shift expert |
+| a94 | `10.1133848903` | scenario baseline + shift/high/unseen specialist |
+| a100 | `10.1090848449` | baseline + scale + routed deviation |
+| a101 | `10.1064209775` | soft expected-error router |
+| a114 | `10.103316418` | future-window scenario baseline/scale 강화 |
+| a117 | `10.1005923422` | clipped ridge seq2seq delta |
+| a122 | `10.0967991272` | late/high-stress small uplift |
 
-## 최근 실험 해석
+## 주요 실험 해석
 
-### a94
+### a88: representation 기반 shift expert
 
-- `representation residual`
-- `scenario baseline signal`
-- `shift + high + unseen combo specialist`
-
-를 통합해서 큰 점프를 만든 실험입니다.
-
-`a94_51`은 specialist 계열의 가장 강한 기준점이었습니다.
-
-### a100
-
-문제를 아래처럼 다시 분해했습니다.
-
-- `baseline`
-- `scale`
-- `routed deviation`
-
-그리고 `y = baseline + scale * routed_z` 구조를 도입해 `a100_05 = 10.1090848449`를 만들었습니다.
-
-### a101
-
-`a100` 위에
-
-- soft expected-error router
-- robust baseline / scale
-- fallback
-
-을 얹어 오랫동안 최고 기록이었던 `10.1064209775`를 만들었습니다.
-
-### a102 ~ a106
-
-이 구간은 모두 `a101` 위에 correction layer를 더 얹는 방향이었습니다.
-
-공통된 결론:
-- local OOF는 좋아 보이는 경우가 있었음
-- public에서는 모두 실패
-
-해석:
-- backbone이 약해서가 아니라
-- correction trigger / mask / magnitude calibration이 local OOF에 과적합됨
-
-### a107
-
-`a107`은 correction layer를 더 얹지 않고 `shift-heavy expert` 자체를 다시 학습한 실험이었습니다.
-
-- `a101` direct router OOF: `7.4224`
-- `a107` direct router OOF: `7.4162`
-- public: `10.1067154934`
-
-의미:
-- correction layer 추가보다 expert 재학습이 더 건강한 방향임
-- 다만 최고를 뒤집을 정도로 강하진 않음
-
-### a108
-
-`a108`은 pseudo-group 기반 shift-heavy expert 재학습 실험이었습니다.
-
-중간에 중요한 문제를 확인했습니다.
-
-- scenario hardness를 feature에 직접 넣었더니 비정상적으로 좋은 로컬 성능이 나옴
-- leakage-like 착시로 판단
-- hardness는 feature에서 제거하고 weighting에만 사용하도록 수정
-
-수정 후:
-- `a108` direct router OOF: `7.4219`
-- public: `10.1122539111`
-
-의미:
-- pseudo-group 방향 자체는 가능성 있음
-- 하지만 현재 구현은 아직 public 제출용 카드가 아님
-- hardness를 direct feature로 쓰는 건 매우 위험함
-
-### a109
-
-`a109`는 pseudo-group를 더 늘리기보다 `shift_phys`, `shift_extreme` 같은 단순한 물리 expert와 `worst-group / testlike / baseline_hi` 중심 선택 기준으로 다시 정리한 실험이었습니다.
-
-- public: `10.1085982977`
-
-의미:
-- `a108`보다 훨씬 안정적
-- validation과 selection 방향은 맞았음
-- 하지만 selection 기준만 바꾸는 것으로는 대형 점프가 어렵다는 점을 확인
-
-### a110
-
-`a110`은 문제를 창고 운영 관점에서 다시 해석한 실험입니다.
-
-핵심 가설:
-- 이 문제는 현재값만 맞추는 회귀가 아니라
-- 같은 시나리오 안의 25슬롯 전체 맥락으로 가까운 미래 부하와 압력을 읽는 문제에 가깝다
-
-추가한 핵심 피처:
-- `lead1`, `fut2`, `fut3`
-- `future_load_per_robot`
-- `future_pressure_gap`
-- `future_work_gap`
-- `future_battery_gap`
-- `future_instability`
-- `future_stress_score`
+representation residual을 활용해 shift 구간을 더 잘 다루려는 실험입니다.
 
 결과:
-- `a110` direct router OOF: `7.4081`
-- best candidate OOF: `7.7730`
-- public: `10.106859334`
+- public: `10.1201425252`
 
 의미:
-- correction layer와는 다른 성격의 새로운 backbone 신호를 확인
-- future-window 해석 자체는 실제로 유효함
+- 단순 평균 예측기보다, 어려운 운영 구간을 따로 보는 specialist 방향이 유효했습니다.
 
-### a111_v2
+### a94: integrated shift specialist
 
-외부에서 받은 routed-z 파이프라인을 그대로 검토하고 실행했습니다.
-
-결론:
-- 구조는 정돈되어 있었음
-- 하지만 raw feature 중심 standalone backbone이라 성능이 너무 약했음
-- `a101/a110`을 대체할 수 있는 수준은 아니었고, 운영/구조 참고용에 가까웠음
-
-### a112
-
-질문: 미래창 피처를 300개 이상으로 늘리면 더 나아질까?
-
-실험:
-- 총 피처 수 `348`
-- 미래창 관련 피처 `220`
+`representation residual`, `scenario baseline`, `shift/high/unseen combo specialist`를 통합했습니다.
 
 결과:
-- `direct_router_mae = 7.4448`
-- best candidate OOF `7.7841`
+- public: `10.1133848903`
 
 의미:
-- 미래창 해석이 틀린 건 아님
-- 하지만 너무 많이 넣으면 신호가 희석되고 오히려 성능이 나빠짐
+- baseline과 specialist를 함께 쓰는 방향이 큰 점프를 만들었습니다.
 
-### a113
+### a100: decomposition router
 
-`a112`보다 작게 줄인 compact future row backbone 실험이었습니다.
+문제를 다음 구조로 분해했습니다.
+
+```text
+y_hat = baseline + scale * routed_z
+```
 
 결과:
-- `direct_router_mae = 7.4633`
-- best candidate OOF `7.7857`
+- public: `10.1090848449`
 
 의미:
-- 단순히 개수를 줄이는 것만으로 해결되지 않음
-- row expert 쪽에 future 신호를 과하게 넣는 방향 자체가 약할 수 있음
+- raw target을 바로 맞히기보다 baseline, scale, deviation을 나눠보는 접근이 맞았습니다.
 
-### a114
+### a101: soft router
 
-`a114`는 미래창 정보를 row expert 쪽으로 확장하는 대신, **scenario baseline/scale 강화용**으로 넣은 실험입니다.
+expected-error 기반 soft router와 fallback을 적용했습니다.
 
 결과:
-- `direct_router_mae = 7.3957`
-- best candidate OOF `7.7759`
-- public: `10.103316418`
+- public: `10.1064209775`
 
 의미:
-- 현재까지 future-window 계열 중 가장 성공적
-- 미래창 신호는 “더 많이”보다 “어디에 넣느냐”가 중요하다는 점을 확인
-- scenario-level stress 해석과 가장 궁합이 좋았음
+- hard routing보다 soft routing이 더 안정적이었습니다.
+- 이 시점까지는 decomposition + routing이 주력 family였습니다.
 
-### a115
+### a102 ~ a106: correction layer 계열
 
-`a115`는 `a114` backbone은 그대로 두고, 후보 생성과 fallback calibration만 정밀하게 다시 튜닝한 실험입니다.
+`a101` 앵커 위에 support-aware fallback, subset correction, continuous correction을 얹는 실험을 반복했습니다.
 
-결과:
-- local best candidate OOF: `7.7112`
-- public: `10.1066275842`
-
-의미:
-- 로컬 기준으론 좋아졌지만 public에서는 `a114`를 못 넘음
-- 이 family 안에서 candidate generation만 더 미세하게 다듬는 방식은 한계가 있다는 신호
-
-### a116
-
-`a116`은 `a114` 이후 새 direct family를 찾기 위해, scenario-level feature를 펼친 뒤 25개 슬롯을 한 번에 예측하는 ridge seq2seq 계열을 시도한 실험입니다.
-
-결과:
-- feature count: `950`
-- anchor OOF MAE: `7.7799119949`
-- direct ridge OOF MAE: `7.9801287651`
-- best ridge alpha: `500.0`
+대표 결과:
+- `a102_24 = 10.1360030381`
+- `a104_15 = 10.1111502564`
+- `a105_13 = 10.1074718609`
+- `a106_20 = 10.11045386`
 
 의미:
-- direct ridge 자체는 앵커보다 약함
-- 하지만 기존 앵커와 다른 방향의 예측 delta를 제공함
-- 단독 제출 모델이 아니라, `a114/a117` 앵커를 보조하는 delta provider로 활용할 가치가 있음
+- local OOF에서는 좋아 보이는 경우가 있었지만 public에서 반복적으로 실패했습니다.
+- correction layer가 local residual noise에 과적합되기 쉽다는 판단을 내렸습니다.
 
-### a117
+### a107 ~ a109: expert 재학습과 pseudo-group
 
-`a117`은 `a116` direct ridge prediction을 그대로 섞지 않고, `a114` 앵커와의 차이를 clipping한 뒤 낮은 alpha로 반영한 실험입니다.
+correction layer 대신 shift-heavy expert 자체를 다시 학습하거나, pseudo-group을 정의해 어려운 구간을 강화했습니다.
+
+대표 결과:
+- `a107_10 = 10.1067154934`
+- `a108_12 = 10.1122539111`
+- `a109_09 = 10.1085982977`
+
+의미:
+- expert 재학습은 correction layer보다 건강한 방향이었지만, pseudo-group을 복잡하게 만들면 public에서 흔들렸습니다.
+
+### a110 ~ a115: future-window 계열
+
+같은 시나리오 내 25개 슬롯 전체를 활용해 가까운 미래의 부하와 압력 신호를 만들었습니다.
+
+대표 결과:
+- `a110_09 = 10.106859334`
+- `a114_09 = 10.103316418`
+- `a115_146 = 10.1066275842`
+
+의미:
+- future-window 신호는 유효했습니다.
+- 다만 row-level feature를 무작정 늘리는 것보다 scenario baseline/scale을 강화하는 방식이 더 안정적이었습니다.
+- `a114`가 이 방향의 가장 좋은 성과였습니다.
+
+### a116 ~ a117: ridge seq2seq delta
+
+`a116`에서는 scenario-level feature를 이용해 25개 슬롯 전체를 한 번에 예측하는 ridge seq2seq direct model을 만들었습니다.
+
+직접 모델 자체는 약했지만, 기존 앵커와 다른 방향의 예측 delta를 제공했습니다.
+
+`a117`에서는 이 delta를 작게 clipping해서 앵커에 반영했습니다.
 
 결과:
 - `submission_a117_09.csv`
@@ -238,56 +124,68 @@
 - OOF MAE: `7.7673277855`
 - public: `10.1005923422`
 
-비교:
-- 기존 최고 `a114_09 = 10.103316418`
-- `a117_09`가 새 최고 기록 갱신
-- 더 강한 계열은 `10.1014682069`로 `a117_09`를 넘지 못함
+의미:
+- 약한 direct model도 앵커와 다른 방향의 정보를 주면 도움이 될 수 있습니다.
+- 단, delta를 크게 반영하면 public에서 악화됐습니다.
+
+### a118 ~ a120: a117 주변 포화 확인
+
+`a118`은 asymmetric clipped delta, `a119`는 `a117_09` 근처 microgrid, `a120`은 scenario bias calibrator였습니다.
+
+결과:
+- `a118_01 = 10.1018318718`
+- `a119_03 = 10.1010915332`
+- `a120`은 local 개선폭이 너무 작아 미제출
 
 의미:
-- ridge seq2seq direct family 전체를 믿으면 위험함
-- 다만 앵커와의 delta를 제한적으로 반영하면 public 개선이 가능함
-- 현재 핵심은 더 세게 보정하는 것이 아니라, public-safe clipped delta band를 찾는 것
+- `a117_09` 근처의 단순 delta shape 조정은 포화됐습니다.
+- 같은 family를 계속 미세 조정하는 것보다, `a117_09`가 구조적으로 틀리는 구간을 다시 찾는 것이 필요했습니다.
 
-### a118
+### a121: high-error group EDA
 
-`a118`은 `a117_09`에서 성공한 clipped delta 방향을 더 안전하게 다듬기 위한 비대칭 클리핑 후보 생성 실험입니다.
+`a117_09`의 OOF residual을 기준으로 high-error scenario를 분석했습니다.
+
+핵심 수치:
+- scenario MAE top 10% threshold: `19.055895`
+- high-error scenario mean MAE: `36.048248`
+- rest scenario mean MAE: `4.625003`
+- high-error scenario mean bias: `+26.686848`
+
+주요 신호:
+- late slot에서 오차와 positive bias가 커졌습니다.
+- `pack_pressure` high q90: MAE lift `13.784`, bias `+10.598`
+- `pack_utilization` high q90: MAE lift `10.610`, bias `+8.178`
+- `future_stress_score` high q90: MAE lift `6.266`, bias `+5.166`
+
+의미:
+- high-error group은 단순 노이즈가 아니라 구조적 과소예측이었습니다.
+- 이 분석이 `a122`의 직접적인 근거가 됐습니다.
+
+### a122: late/high-stress small uplift
+
+`a117_09`를 앵커로 유지하고, stress risk가 높은 일부 구간에만 작은 양수 보정을 적용했습니다.
 
 대표 후보:
-- `submission_a118_01.csv`
-- OOF MAE: `7.7275009155`
-- test mean: `18.356560`
-- test max: `44.054348`
-- public: `10.1018318718`
+- `submission_a122_1045.csv`
+- risk: `all_stress_small`
+- bins: `10`
+- stat: `median`
+- shrink: `0.5`
+- OOF MAE: `7.7663116455`
+- test 평균 uplift: `0.054897`
+- max uplift: `0.393809`
+
+public:
+- `10.0967991272`
 
 의미:
-- OOF 1등 후보는 평균과 최댓값이 올라가 public에서 흔들릴 위험이 있었음
-- 따라서 `a117_09`의 평균/최댓값 대역에 가까운 후보를 우선 제출 후보로 선정
-- 하지만 public에서는 `a117_09`를 넘지 못함
-- 최댓값을 낮추고 비대칭 클리핑을 적용해도 public 개선으로 이어지지 않았음
-- `a117_09`의 shape를 조금만 바꿔도 public이 민감하게 악화될 수 있음
+- 처음으로 10.10 벽을 깼습니다.
+- `a121`에서 찾은 late/high-stress 과소예측 축이 public에서도 유효하다는 점을 확인했습니다.
 
-### a119
+## 현재 결론
 
-`a119`는 `a118` 실패 이후, `a117_09`를 거의 그대로 유지하는 초근접 microgrid 후보 생성 실험입니다.
-
-대표 후보:
-- `submission_a119_03.csv`
-- 방식: `q98 clip`을 `q98.5`로 아주 살짝 풀어준 후보
-- OOF MAE: `7.760396`
-- `a117_09` 대비 OOF 개선: 약 `0.00693`
-- `a117_09` 대비 test 평균 변화량: 약 `0.00055`
-- public: `10.1010915332`
-
-의미:
-- `a117_09`와 거의 같은 분포를 유지했지만 public 개선이 나오지 않음
-- ridge delta 계열은 `a117_09` 근처에서 거의 포화된 것으로 판단
-- 같은 family 안에서 alpha, clip quantile, tail tempering을 더 깎는 방식은 기대값이 낮음
-
-## 현재 판단
-
-1. `a100 family`와 `a114`의 future-window scenario 해석은 맞았다.
-2. 현재 최고 public 앵커는 `a117_09`다.
-3. `a116` ridge seq2seq direct model은 단독으로 약하지만 delta provider로 가치가 있다.
-4. correction layer를 더 얹는 방향은 계속 우선순위를 낮춘다.
-5. clipped ridge delta family는 `a117_09`에서 한 번 성공했지만 이후 `a118`, `a119`에서 포화 신호가 확인됐다.
-6. 다음은 `a117_09`의 high-error scenario를 다시 분석해 ridge delta와 다른 독립 신호를 찾는 것이다.
+1. `a122_1045`가 현재 최고 public 앵커입니다.
+2. clipped ridge delta micro tuning은 `a117_09` 근처에서 포화됐습니다.
+3. correction layer를 넓게 얹는 방식은 여전히 위험합니다.
+4. public이 반응한 축은 late/high-pressure/high-utilization/high-stress 구간의 작은 양수 보정입니다.
+5. 다음 실험은 `a122_1045` family를 중심으로 risk score와 uplift 강도를 정밀 탐색하는 것이 가장 합리적입니다.

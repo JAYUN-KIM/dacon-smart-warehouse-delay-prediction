@@ -4,14 +4,14 @@
     "name": "baseline",
     "score": 11.83,
     "file": "submission_baseline.csv",
-    "note": "기본 베이스라인"
+    "note": "초기 기준선"
   },
   {
     "date": "2026-04-10",
     "name": "a48_v4_3",
     "score": 10.1477,
     "file": "submission_a48_v4_3.csv",
-    "note": "초기 강한 앙상블 베이스"
+    "note": "초기 강한 ensemble 계열"
   },
   {
     "date": "2026-04-12",
@@ -35,42 +35,7 @@
     "note": "residual CatBoost 시작"
   },
   {
-    "date": "2026-04-17",
-    "name": "a76_01",
-    "score": 10.121563682,
-    "file": "submission_a76_01.csv",
-    "note": "anchor2 residual"
-  },
-  {
     "date": "2026-04-18",
-    "name": "a77_01",
-    "score": 10.1214405285,
-    "file": "submission_a77_01.csv",
-    "note": "anchor3 residual"
-  },
-  {
-    "date": "2026-04-18",
-    "name": "a79_01",
-    "score": 10.1214263184,
-    "file": "submission_a79_01.csv",
-    "note": "sequence residual branch"
-  },
-  {
-    "date": "2026-04-18",
-    "name": "a81_01",
-    "score": 10.121418246,
-    "file": "submission_a81_01.csv",
-    "note": "sequence residual v2"
-  },
-  {
-    "date": "2026-04-19",
-    "name": "a83_01",
-    "score": 10.1214032792,
-    "file": "submission_a83_01.csv",
-    "note": "layout-aware sequence residual"
-  },
-  {
-    "date": "2026-04-19",
     "name": "a88_27",
     "score": 10.1201425252,
     "file": "submission_a88_27.csv",
@@ -102,7 +67,7 @@
     "name": "a102_24",
     "score": 10.1360030381,
     "file": "submission_a102_24.csv",
-    "note": "support-aware fallback 과적용으로 악화"
+    "note": "support-aware fallback을 과하게 적용해 악화"
   },
   {
     "date": "2026-04-22",
@@ -110,13 +75,6 @@
     "score": 10.1111502564,
     "file": "submission_a104_15.csv",
     "note": "a101 앵커 기반 subset correction 실패"
-  },
-  {
-    "date": "2026-04-22",
-    "name": "a105_16",
-    "score": 10.1104250846,
-    "file": "submission_a105_16.csv",
-    "note": "continuous correction 시도, 최고 미달"
   },
   {
     "date": "2026-04-23",
@@ -137,21 +95,21 @@
     "name": "a107_10",
     "score": 10.1067154934,
     "file": "submission_a107_10.csv",
-    "note": "shift-heavy expert 재학습, 최고 근접"
+    "note": "shift-heavy expert 재학습. 최고 근접"
   },
   {
     "date": "2026-04-24",
     "name": "a108_12",
     "score": 10.1122539111,
     "file": "submission_a108_12.csv",
-    "note": "pseudo-group shift expert 검증, 현재 버전은 실패"
+    "note": "pseudo-group shift expert 검증. public 실패"
   },
   {
     "date": "2026-04-25",
     "name": "a109_09",
     "score": 10.1085982977,
     "file": "submission_a109_09.csv",
-    "note": "worst-group 중심 선택 기준을 적용한 shift router"
+    "note": "worst-group 중심 선택 기준 적용"
   },
   {
     "date": "2026-04-25",
@@ -165,41 +123,48 @@
     "name": "a114_09",
     "score": 10.103316418,
     "file": "submission_a114_09.csv",
-    "note": "future-window 신호를 scenario baseline/scale 강화용으로 넣어 당시 최고 기록 갱신"
+    "note": "future-window 신호를 scenario baseline/scale 강화로 반영해 당시 최고 기록 갱신"
   },
   {
     "date": "2026-04-26",
     "name": "a115_146",
     "score": 10.1066275842,
     "file": "submission_a115_146.csv",
-    "note": "a114 backbone 유지 + candidate generation 정밀화, local 개선 대비 public은 미달"
+    "note": "a114 backbone 유지 + candidate generation 정리. local 개선 대비 public 미달"
   },
   {
     "date": "2026-04-27",
     "name": "a117_09",
     "score": 10.1005923422,
     "file": "submission_a117_09.csv",
-    "note": "ridge seq2seq direct prediction의 delta를 q98 clip, alpha 0.08로 얇게 반영해 새 최고 기록 갱신"
+    "note": "ridge seq2seq direct prediction의 delta를 q98 clip, alpha 0.08로 작게 반영해 최고 기록 갱신"
   },
   {
     "date": "2026-04-27",
     "name": "a117_18_family",
     "score": 10.1014682069,
     "file": "submission_a117_18.csv",
-    "note": "더 강한 ridge delta 반영 계열. 방향은 유지됐지만 a117_09보다 낮아 과한 correction은 위험하다는 신호"
+    "note": "더 강한 ridge delta 반영은 a117_09보다 악화"
   },
   {
     "date": "2026-04-28",
     "name": "a118_01",
     "score": 10.1018318718,
     "file": "submission_a118_01.csv",
-    "note": "asymmetric clipped ridge delta. OOF와 분포 guard는 좋아 보였지만 public에서 a117_09 미달"
+    "note": "asymmetric clipped ridge delta. OOF와 분포 guard는 좋아 보였지만 public 미달"
   },
   {
     "date": "2026-04-28",
     "name": "a119_03",
     "score": 10.1010915332,
     "file": "submission_a119_03.csv",
-    "note": "a117_09 초근접 microgrid. 거의 같은 분포였지만 최고 기록을 넘지 못함"
+    "note": "a117_09 근처 microgrid. 거의 같은 분포였지만 최고 기록 미달"
+  },
+  {
+    "date": "2026-04-28",
+    "name": "a122_1045",
+    "score": 10.0967991272,
+    "file": "submission_a122_1045.csv",
+    "note": "late/high-stress small uplift. a121 high-error EDA에서 찾은 과소예측 축이 public에서 검증됨"
   }
 ]
