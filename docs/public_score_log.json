@@ -153,6 +153,24 @@
     "date": "2026-04-29",
     "submission": "submission_a124_1443.csv",
     "public_score": 10.0960054075,
-    "note": "late-shift mean-preserving uplift로 새 최고점 갱신. a125는 이 축을 중심으로 조율 예정."
+    "note": "late-shift mean-preserving uplift로 새 최고점 갱신."
+  },
+  {
+    "date": "2026-04-30",
+    "submission": "submission_a125_001.csv",
+    "public_score": 10.0953184117,
+    "note": "a124_1443을 anchor로 더 이른 시작과 더 큰 평균 uplift를 적용해 개선."
+  },
+  {
+    "date": "2026-04-30",
+    "submission": "submission_a126_001.csv",
+    "public_score": 10.0946609016,
+    "note": "q=0.900을 유지하고 mean uplift를 0.0600까지 강화해 추가 개선."
+  },
+  {
+    "date": "2026-04-30",
+    "submission": "submission_a127_003.csv",
+    "public_score": 10.0941228322,
+    "note": "중간 강도의 a127 후보가 새 최고점. late/high-stress uplift 축이 연속 개선."
   }
 ]

@@ -1,70 +1,50 @@
 {
-  "generated_at": "2026-04-29",
+  "generated_at": "2026-04-30",
+  "competition": "DACON Smart Warehouse Outbound Delay Prediction",
+  "goal": "public MAE 9점대 진입",
   "best_public": {
-    "date": "2026-04-29",
-    "name": "a124_1443",
-    "score": 10.0960054075,
-    "file": "submission_a124_1443.csv",
-    "note": "a122_1045의 flat top-stress uplift를 late-weighted 형태로 옮겨 최고 기록 갱신"
+    "date": "2026-04-30",
+    "name": "a127_003",
+    "score": 10.0941228322,
+    "file": "submission_a127_003.csv",
+    "note": "q=0.900 coverage를 유지하고 평균 uplift를 0.063 부근까지 강화한 late/high-stress 보정 후보"
+  },
+  "previous_best": {
+    "date": "2026-04-30",
+    "name": "a126_001",
+    "score": 10.0946609016,
+    "file": "submission_a126_001.csv"
   },
   "latest_submissions": [
     {
-      "date": "2026-04-29",
-      "name": "a123_059",
-      "score": 10.0967996581,
-      "file": "submission_a123_059.csv",
-      "note": "stress tail two-tier 추가. a122_1045와 사실상 동점으로 추가 개선 실패"
+      "date": "2026-04-30",
+      "file": "submission_a125_001.csv",
+      "score": 10.0953184117,
+      "summary": "a124_1443을 anchor로 public-guided late shift를 강화"
     },
     {
-      "date": "2026-04-29",
-      "name": "a124_1443",
-      "score": 10.0960054075,
-      "file": "submission_a124_1443.csv",
-      "note": "mean-preserving late-weighted stress shift. 최고 기록 갱신"
+      "date": "2026-04-30",
+      "file": "submission_a126_001.csv",
+      "score": 10.0946609016,
+      "summary": "a125_001 기준 mean uplift를 0.0600까지 강화"
+    },
+    {
+      "date": "2026-04-30",
+      "file": "submission_a127_003.csv",
+      "score": 10.0941228322,
+      "summary": "a126_001 기준 한 단계 더 밀되 중간 강도 후보를 선택해 새 최고점"
     }
   ],
-  "current_view": {
-    "main_anchor": "a124_1443",
-    "summary": "late/high-stress 과소예측 보정 축은 public에서 계속 유효하다. 단순히 stress tail에 더 얹은 a123_059는 거의 동점이었지만, 보정 총량을 유지하면서 late slot 쪽으로 배분을 옮긴 a124_1443은 최고 기록을 갱신했다.",
-    "next_direction": "2026-04-30에는 a125로 이어가며 a124_1443 주변의 q, target_mean, floor, start, denom, power를 정밀 탐색한다. 평균 uplift는 0.052~0.058, coverage는 0.095~0.105, max uplift는 0.80~0.90 근처를 우선한다."
-  },
-  "recent_best_scores": [
-    {
-      "date": "2026-04-29",
-      "name": "a124_1443",
-      "score": 10.0960054075
-    },
-    {
-      "date": "2026-04-28",
-      "name": "a122_1045",
-      "score": 10.0967991272
-    },
-    {
-      "date": "2026-04-27",
-      "name": "a117_09",
-      "score": 10.1005923422
-    },
-    {
-      "date": "2026-04-26",
-      "name": "a114_09",
-      "score": 10.103316418
-    }
+  "current_direction": [
+    "late/high-stress underprediction 보정축을 유지한다.",
+    "q=0.900, coverage 10%는 우선 고정한다.",
+    "target_mean은 0.0625~0.0645 범위에서 미세 조정한다.",
+    "test max가 45.05 이상으로 튀는 후보는 공격형으로 분리한다.",
+    "a128은 a127_003 주변의 public-safe fine grid로 시작한다."
   ],
-  "today_experiments": [
-    {
-      "name": "a123",
-      "summary": "a122_1045의 stress uplift를 two-tier tail 방식으로 확장. 제출한 a123_059는 10.0967996581로 거의 동점."
-    },
-    {
-      "name": "a124",
-      "summary": "flat uplift를 late-weighted 형태로 이동. a124_1443이 10.0960054075로 최고 기록 갱신."
-    }
-  ],
-  "guardrails": [
-    "a124_1443을 현재 최고 public 앵커로 유지한다.",
-    "단순 tail 추가보다 late-weighted shift를 우선한다.",
-    "평균 uplift는 a122/a124에서 검증된 0.055 근처를 유지한다.",
-    "max uplift를 과하게 키운 후보는 공격형으로 분리한다.",
-    "2026-04-30에는 a125로 이어가며 public-safe 후보와 공격형 후보를 나눠 생성한다."
+  "risks": [
+    "개선폭이 점점 작아지고 있어 단순 uplift 강화만으로는 곧 포화될 수 있다.",
+    "max uplift와 test max가 커질수록 public/private overfit 위험이 증가한다.",
+    "OOF가 더 좋아도 public에서 항상 개선되는 것은 아니므로 anchor 근처 검산이 필요하다."
   ]
 }

@@ -13,9 +13,9 @@
 
 ## 현재 최고 성과
 
-- 최고 제출: `submission_a124_1443.csv`
-- Public MAE: `10.0960054075`
-- 달성일: `2026-04-29`
+- 최고 제출: `submission_a127_003.csv`
+- Public MAE: `10.0941228322`
+- 달성일: `2026-04-30`
 
 ## 핵심적으로 배운 점
 
@@ -24,17 +24,22 @@
 - support/testlike 신호는 hard switch로 쓰면 위험하고, 보조 feature 또는 부드러운 routing 신호로만 다뤄야 한다.
 - aggressive correction layer, hard subset mask, direct DANN 계열은 public에서 안정적으로 먹히지 않았다.
 - a114 이후로는 미래창/pressure/late-slot 관점이 점수 개선에 더 직접적으로 반응했다.
-- a122/a124 결과상 late/high-stress underprediction을 완만하게 보정하는 방향이 현재 가장 유효하다.
+- a122 이후 late/high-stress underprediction을 완만하게 보정하는 방향이 가장 꾸준하게 public 개선을 만들었다.
+- a125부터 a127까지는 같은 coverage 안에서 평균 uplift와 late profile을 강화하는 방식이 연속으로 먹혔다.
 
 ## 최근 방향 전환
 
 초반에는 모델 구조와 MoE routing 중심으로 접근했다. 이후 public score가 10.10 부근에서 막히면서 원점 EDA와 미래 예측 관점으로 다시 돌아갔다. 그 결과, 후반 slot과 high-pressure/high-stress 구간에서 과소예측되는 축을 발견했고, 이를 평균 보존형 uplift로 다루는 방향이 새 최고점으로 이어졌다.
 
+2026-04-30에는 이 방향을 더 밀어 `a125`, `a126`, `a127`에서 연속 개선을 확인했다.
+
 ## 다음 계획
 
-2026-04-30에는 `a125`부터 시작한다.
+다음 실험은 `a128`부터 시작한다.
 
-- `a124_1443`을 anchor로 유지한다.
-- late-shift uplift의 시작 slot, coverage quantile, uplift 평균, 최대 보정 폭을 좁은 범위에서 정밀 탐색한다.
-- 제출 후보는 public-safe 후보와 aggressive 후보로 나누어 관리한다.
-- 목표는 10.096대에서 10.09 초반, 이후 10.00대와 9점대 진입을 노리는 것이다.
+- `a127_003`을 anchor로 유지한다.
+- `q=0.900` coverage 10%는 우선 고정한다.
+- target mean은 `0.0625~0.0645` 근처에서 세밀하게 조절한다.
+- max uplift는 `1.03~1.06` 근처에서 관리한다.
+- test max가 과하게 튀는 후보는 공격형으로 분리한다.
+- 목표는 10.094대에서 10.09 초반, 이후 10.00대와 9점대 진입을 노리는 것이다.
