@@ -172,5 +172,29 @@
     "submission": "submission_a127_003.csv",
     "public_score": 10.0941228322,
     "note": "중간 강도의 a127 후보가 새 최고점. late/high-stress uplift 축이 연속 개선."
+  },
+  {
+    "date": "2026-05-01",
+    "submission": "submission_a128_001.csv",
+    "public_score": 10.0939941912,
+    "note": "a127 방향을 public-safe하게 한 번 더 밀어 10.093대 진입."
+  },
+  {
+    "date": "2026-05-01",
+    "submission": "submission_a129_001.csv",
+    "public_score": 10.0939015979,
+    "note": "scenario-relative shift 보정으로 미세하지만 추가 개선."
+  },
+  {
+    "date": "2026-05-01",
+    "submission": "submission_a130_002.csv",
+    "public_score": 10.0946330552,
+    "note": "scenario offset pivot을 더 공격적으로 적용했으나 public에서 악화. 같은 축의 확장 한계 확인."
+  },
+  {
+    "date": "2026-05-01",
+    "submission": "submission_a131_101.csv",
+    "public_score": 10.0920140626,
+    "note": "from-scratch direct LGBM signal을 a129 anchor에 1.5%만 흡수한 microblend가 새 최고점 달성."
   }
 ]

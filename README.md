@@ -12,14 +12,16 @@
 
 ## 현재 최고 기록
 
-- 최고 public 점수: `10.0941228322`
-- 제출 파일: `submission_a127_003.csv`
-- 기록 날짜: `2026-04-30`
-- 핵심 해석: late/high-stress 구간의 과소예측 보정축이 계속 유효했고, `q=0.900` coverage 10%를 유지한 채 평균 uplift와 late profile을 조금씩 강화하는 방식이 public에서 연속 개선을 만들었습니다.
+- 최고 public 점수: `10.0920140626`
+- 제출 파일: `submission_a131_101.csv`
+- 기록 날짜: `2026-05-01`
+- 핵심 해석: late/high-stress 보정축이 10.0939 부근까지는 유효했지만 단순 uplift 강화는 포화 신호가 나타났습니다. 이후 raw data 기반 direct LGBM family를 완전히 새로 만들고, 이를 기존 최고 anchor에 아주 낮은 비율로 흡수한 `a131_101`이 다시 의미 있는 개선을 만들었습니다.
 
 ## 현재 핵심 판단
 
 초반에는 강한 ensemble과 residual model을 중심으로 점수를 줄였고, 중반에는 `baseline + scale + routed deviation` 구조로 문제를 분해했습니다. 이후 `a114`부터 future-window 기반 warehouse pressure와 late-slot 관점이 효과를 보였고, `a122` 이후에는 late/high-stress 구간 과소예측 보정이 가장 강한 개선축으로 확인됐습니다.
+
+다만 `a130`에서 scenario offset pivot을 더 공격적으로 적용했을 때 public이 악화되면서, 같은 축의 미세 보정만으로는 한계가 있다는 신호를 확인했습니다. `a131`에서는 기존 제출 예측을 feature로 쓰지 않는 raw direct model family를 새로 만들었고, 단독 제출보다는 anchor에 낮은 비율로 섞는 방식이 더 안정적이라는 결론을 얻었습니다.
 
 최근의 핵심 흐름은 다음과 같습니다.
 
@@ -28,8 +30,11 @@
 - `a125`: a124보다 조금 이른 시작과 더 큰 평균 uplift로 `10.0953184117` 달성
 - `a126`: 평균 uplift를 `0.0600`까지 밀어 `10.0946609016` 달성
 - `a127`: 평균 uplift `0.0630`, max uplift 약 `1.04` 근처 후보로 `10.0941228322` 달성
+- `a128`: public-safe late blend로 `10.0939941912` 달성
+- `a129`: scenario-relative shift 보정으로 `10.0939015979` 달성
+- `a131`: raw direct LGBM signal을 1.5%만 흡수한 microblend로 `10.0920140626` 달성
 
-즉 현재 방향은 새 backbone을 무작정 바꾸는 것이 아니라, public이 반응한 late/high-stress underprediction 보정축을 더 정밀하게 조절하는 것입니다.
+즉 현재 방향은 두 축입니다. 첫째, public이 반응한 late/high-stress underprediction 보정축은 계속 유지합니다. 둘째, 그 축이 포화될 때를 대비해 raw data 기반 direct model처럼 상관이 낮은 새 신호를 만들고, 이를 작은 비율로 안전하게 흡수합니다.
 
 ## 주요 점수 흐름
 
@@ -47,6 +52,9 @@
 | a125 | `10.0953184117` | public-guided late shift 강화 |
 | a126 | `10.0946609016` | a125 anchor 기준 mean uplift 추가 강화 |
 | a127 | `10.0941228322` | q=0.900 유지, 평균 uplift 0.063 부근으로 추가 개선 |
+| a128 | `10.0939941912` | public-safe fast blend로 10.093대 진입 |
+| a129 | `10.0939015979` | scenario-relative shift로 미세 개선 |
+| a131 | `10.0920140626` | from-scratch direct model signal을 낮은 비율로 흡수 |
 
 ## 문서 구성
 

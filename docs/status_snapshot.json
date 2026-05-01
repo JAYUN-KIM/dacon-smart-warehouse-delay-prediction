@@ -1,50 +1,57 @@
 {
-  "generated_at": "2026-04-30",
+  "generated_at": "2026-05-01",
   "competition": "DACON Smart Warehouse Outbound Delay Prediction",
   "goal": "public MAE 9점대 진입",
   "best_public": {
-    "date": "2026-04-30",
-    "name": "a127_003",
-    "score": 10.0941228322,
-    "file": "submission_a127_003.csv",
-    "note": "q=0.900 coverage를 유지하고 평균 uplift를 0.063 부근까지 강화한 late/high-stress 보정 후보"
+    "date": "2026-05-01",
+    "name": "a131_101",
+    "score": 10.0920140626,
+    "file": "submission_a131_101.csv",
+    "note": "from-scratch row direct LGBM signal을 a129_001 anchor에 1.5%만 흡수한 microblend 후보"
   },
   "previous_best": {
-    "date": "2026-04-30",
-    "name": "a126_001",
-    "score": 10.0946609016,
-    "file": "submission_a126_001.csv"
+    "date": "2026-05-01",
+    "name": "a129_001",
+    "score": 10.0939015979,
+    "file": "submission_a129_001.csv"
   },
   "latest_submissions": [
     {
-      "date": "2026-04-30",
-      "file": "submission_a125_001.csv",
-      "score": 10.0953184117,
-      "summary": "a124_1443을 anchor로 public-guided late shift를 강화"
+      "date": "2026-05-01",
+      "file": "submission_a128_001.csv",
+      "score": 10.0939941912,
+      "summary": "a127 방향을 public-safe하게 더 밀어 10.093대에 진입"
     },
     {
-      "date": "2026-04-30",
-      "file": "submission_a126_001.csv",
-      "score": 10.0946609016,
-      "summary": "a125_001 기준 mean uplift를 0.0600까지 강화"
+      "date": "2026-05-01",
+      "file": "submission_a129_001.csv",
+      "score": 10.0939015979,
+      "summary": "scenario-relative shift 보정으로 미세 개선"
     },
     {
-      "date": "2026-04-30",
-      "file": "submission_a127_003.csv",
-      "score": 10.0941228322,
-      "summary": "a126_001 기준 한 단계 더 밀되 중간 강도 후보를 선택해 새 최고점"
+      "date": "2026-05-01",
+      "file": "submission_a130_002.csv",
+      "score": 10.0946330552,
+      "summary": "scenario offset pivot은 public에서 악화되어 공격적 확장의 위험 확인"
+    },
+    {
+      "date": "2026-05-01",
+      "file": "submission_a131_101.csv",
+      "score": 10.0920140626,
+      "summary": "raw direct LGBM family를 새로 만들고 anchor에 낮은 비율로 흡수해 새 최고점"
     }
   ],
   "current_direction": [
-    "late/high-stress underprediction 보정축을 유지한다.",
-    "q=0.900, coverage 10%는 우선 고정한다.",
-    "target_mean은 0.0625~0.0645 범위에서 미세 조정한다.",
-    "test max가 45.05 이상으로 튀는 후보는 공격형으로 분리한다.",
-    "a128은 a127_003 주변의 public-safe fine grid로 시작한다."
+    "late/high-stress underprediction 보정축은 유지하되 단순 강화는 포화 신호가 있다.",
+    "기존 anchor 주변 미세 조정만으로는 개선폭이 작아졌으므로 상관이 낮은 새 신호를 만들어야 한다.",
+    "from-scratch direct row LGBM signal은 단독 제출보다 1~3% microblend로 쓰는 것이 안전하다.",
+    "scenario-slot direct처럼 OOF가 좋아도 test mean이 무너지는 후보는 제출 후보에서 제외한다.",
+    "a132는 a131_101 anchor 위에서 direct signal alpha와 selective mask를 좁게 검증한다."
   ],
   "risks": [
-    "개선폭이 점점 작아지고 있어 단순 uplift 강화만으로는 곧 포화될 수 있다.",
-    "max uplift와 test max가 커질수록 public/private overfit 위험이 증가한다.",
-    "OOF가 더 좋아도 public에서 항상 개선되는 것은 아니므로 anchor 근처 검산이 필요하다."
+    "public-guided microblend는 과하면 leaderboard overfit이 될 수 있다.",
+    "direct model 단독 제출은 기존 최고 분포와 평균/상관이 크게 달라 위험하다.",
+    "slot-direct 계열은 validation mismatch가 커서 OOF만 믿으면 안 된다.",
+    "9점대 진입을 위해서는 단순 uplift보다 새 신호와 안전한 흡수 전략을 병행해야 한다."
   ]
 }
