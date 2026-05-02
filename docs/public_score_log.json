@@ -196,5 +196,35 @@
     "submission": "submission_a131_101.csv",
     "public_score": 10.0920140626,
     "note": "from-scratch direct LGBM signal을 a129 anchor에 1.5%만 흡수한 microblend가 새 최고점 달성."
+  },
+  {
+    "date": "2026-05-02",
+    "submission": "submission_a132_002.csv",
+    "public_score": 10.0913986125,
+    "note": "direct signal refinement로 전일 최고점 대비 소폭 개선."
+  },
+  {
+    "date": "2026-05-02",
+    "submission": "submission_a133_104.csv",
+    "public_score": 10.0905078248,
+    "note": "direct alpha gamble 계열이 10.090대까지 접근했으나 개선폭은 여전히 제한적."
+  },
+  {
+    "date": "2026-05-02",
+    "submission": "submission_a135_003.csv",
+    "public_score": 10.0901537375,
+    "note": "ranker signal을 기존 계열에 섞어 10.0901까지 개선."
+  },
+  {
+    "date": "2026-05-02",
+    "submission": "submission_a137_011.csv",
+    "public_score": 10.02829,
+    "note": "이전 제출 예측을 입력으로 쓰지 않는 raw-only reboot ensemble이 대형 개선을 달성."
+  },
+  {
+    "date": "2026-05-02",
+    "submission": "submission_a138_147.csv",
+    "public_score": 10.0265043299,
+    "note": "a137 성공 분포를 유지한 raw-only fine grid 후보가 현재 최고점 갱신."
   }
 ]

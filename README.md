@@ -12,16 +12,16 @@
 
 ## 현재 최고 기록
 
-- 최고 public 점수: `10.0920140626`
-- 제출 파일: `submission_a131_101.csv`
-- 기록 날짜: `2026-05-01`
-- 핵심 해석: late/high-stress 보정축이 10.0939 부근까지는 유효했지만 단순 uplift 강화는 포화 신호가 나타났습니다. 이후 raw data 기반 direct LGBM family를 완전히 새로 만들고, 이를 기존 최고 anchor에 아주 낮은 비율로 흡수한 `a131_101`이 다시 의미 있는 개선을 만들었습니다.
+- 최고 public 점수: `10.0265043299`
+- 제출 파일: `submission_a138_147.csv`
+- 기록 날짜: `2026-05-02`
+- 핵심 해석: 기존 late/high-stress 보정축과 direct microblend는 10.09대에서 포화 신호가 강했습니다. 이후 이전 제출 예측을 모델 입력으로 쓰지 않는 raw-only reboot ensemble을 새로 구성했고, `a137_011`이 `10.02829`로 크게 점프한 뒤 `a138_147`이 `10.0265043299`로 현재 최고점을 갱신했습니다.
 
 ## 현재 핵심 판단
 
 초반에는 강한 ensemble과 residual model을 중심으로 점수를 줄였고, 중반에는 `baseline + scale + routed deviation` 구조로 문제를 분해했습니다. 이후 `a114`부터 future-window 기반 warehouse pressure와 late-slot 관점이 효과를 보였고, `a122` 이후에는 late/high-stress 구간 과소예측 보정이 가장 강한 개선축으로 확인됐습니다.
 
-다만 `a130`에서 scenario offset pivot을 더 공격적으로 적용했을 때 public이 악화되면서, 같은 축의 미세 보정만으로는 한계가 있다는 신호를 확인했습니다. `a131`에서는 기존 제출 예측을 feature로 쓰지 않는 raw direct model family를 새로 만들었고, 단독 제출보다는 anchor에 낮은 비율로 섞는 방식이 더 안정적이라는 결론을 얻었습니다.
+다만 `a130`에서 scenario offset pivot을 더 공격적으로 적용했을 때 public이 악화되면서, 같은 축의 미세 보정만으로는 한계가 있다는 신호를 확인했습니다. `a131`에서는 기존 제출 예측을 feature로 쓰지 않는 raw direct model family를 새로 만들었고, 낮은 비율로 흡수하는 방식이 안정적이었습니다. 2026-05-02에는 여기서 한 번 더 나아가 raw train/test/layout_info 기반으로 domain/future/scenario feature와 ranker signal을 다시 구성한 raw-only reboot ensemble을 만들었고, 이 방향이 가장 큰 public 개선을 만들었습니다.
 
 최근의 핵심 흐름은 다음과 같습니다.
 
@@ -33,8 +33,11 @@
 - `a128`: public-safe late blend로 `10.0939941912` 달성
 - `a129`: scenario-relative shift 보정으로 `10.0939015979` 달성
 - `a131`: raw direct LGBM signal을 1.5%만 흡수한 microblend로 `10.0920140626` 달성
+- `a135`: ranker signal blend로 `10.0901537375` 달성
+- `a137`: raw-only reboot ensemble로 `10.02829` 달성
+- `a138`: a137 성공 분포를 유지한 fine grid로 `10.0265043299` 달성
 
-즉 현재 방향은 두 축입니다. 첫째, public이 반응한 late/high-stress underprediction 보정축은 계속 유지합니다. 둘째, 그 축이 포화될 때를 대비해 raw data 기반 direct model처럼 상관이 낮은 새 신호를 만들고, 이를 작은 비율로 안전하게 흡수합니다.
+즉 현재 방향은 두 축입니다. 첫째, public이 반응한 late/high-stress underprediction 보정축의 교훈은 유지합니다. 둘째, 이제는 기존 anchor 미세 조정보다 raw-only reboot family 안에서 상관이 낮은 ranker/domain/future-window 신호를 더 늘리는 것이 핵심입니다.
 
 ## 주요 점수 흐름
 
@@ -55,6 +58,9 @@
 | a128 | `10.0939941912` | public-safe fast blend로 10.093대 진입 |
 | a129 | `10.0939015979` | scenario-relative shift로 미세 개선 |
 | a131 | `10.0920140626` | from-scratch direct model signal을 낮은 비율로 흡수 |
+| a135 | `10.0901537375` | ranker signal blend로 10.090대 접근 |
+| a137 | `10.02829` | raw-only reboot ensemble로 대형 개선 |
+| a138 | `10.0265043299` | raw-only fine grid로 현재 최고점 갱신 |
 
 ## 문서 구성
 

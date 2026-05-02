@@ -1,57 +1,63 @@
 {
-  "generated_at": "2026-05-01",
+  "generated_at": "2026-05-02",
   "competition": "DACON Smart Warehouse Outbound Delay Prediction",
   "goal": "public MAE 9점대 진입",
   "best_public": {
-    "date": "2026-05-01",
-    "name": "a131_101",
-    "score": 10.0920140626,
-    "file": "submission_a131_101.csv",
-    "note": "from-scratch row direct LGBM signal을 a129_001 anchor에 1.5%만 흡수한 microblend 후보"
+    "date": "2026-05-02",
+    "name": "a138_147",
+    "score": 10.0265043299,
+    "file": "submission_a138_147.csv",
+    "note": "raw-only reboot ensemble의 성공 분포를 유지한 fine grid 후보가 현재 최고점 갱신"
   },
   "previous_best": {
-    "date": "2026-05-01",
-    "name": "a129_001",
-    "score": 10.0939015979,
-    "file": "submission_a129_001.csv"
+    "date": "2026-05-02",
+    "name": "a137_011",
+    "score": 10.02829,
+    "file": "submission_a137_011.csv"
   },
   "latest_submissions": [
     {
-      "date": "2026-05-01",
-      "file": "submission_a128_001.csv",
-      "score": 10.0939941912,
-      "summary": "a127 방향을 public-safe하게 더 밀어 10.093대에 진입"
+      "date": "2026-05-02",
+      "file": "submission_a132_002.csv",
+      "score": 10.0913986125,
+      "summary": "전일 best 이후 direct signal refinement로 소폭 개선"
     },
     {
-      "date": "2026-05-01",
-      "file": "submission_a129_001.csv",
-      "score": 10.0939015979,
-      "summary": "scenario-relative shift 보정으로 미세 개선"
+      "date": "2026-05-02",
+      "file": "submission_a133_104.csv",
+      "score": 10.0905078248,
+      "summary": "direct alpha gamble 계열이 10.090대까지 접근"
     },
     {
-      "date": "2026-05-01",
-      "file": "submission_a130_002.csv",
-      "score": 10.0946330552,
-      "summary": "scenario offset pivot은 public에서 악화되어 공격적 확장의 위험 확인"
+      "date": "2026-05-02",
+      "file": "submission_a135_003.csv",
+      "score": 10.0901537375,
+      "summary": "외부 ranker 코드 점검 후 ranker signal blend로 미세 개선"
     },
     {
-      "date": "2026-05-01",
-      "file": "submission_a131_101.csv",
-      "score": 10.0920140626,
-      "summary": "raw direct LGBM family를 새로 만들고 anchor에 낮은 비율로 흡수해 새 최고점"
+      "date": "2026-05-02",
+      "file": "submission_a137_011.csv",
+      "score": 10.02829,
+      "summary": "raw-only reboot ensemble이 큰 폭의 public 개선을 달성"
+    },
+    {
+      "date": "2026-05-02",
+      "file": "submission_a138_147.csv",
+      "score": 10.0265043299,
+      "summary": "a137 성공 분포를 유지한 fine grid로 현재 최고점 갱신"
     }
   ],
   "current_direction": [
-    "late/high-stress underprediction 보정축은 유지하되 단순 강화는 포화 신호가 있다.",
-    "기존 anchor 주변 미세 조정만으로는 개선폭이 작아졌으므로 상관이 낮은 새 신호를 만들어야 한다.",
-    "from-scratch direct row LGBM signal은 단독 제출보다 1~3% microblend로 쓰는 것이 안전하다.",
-    "scenario-slot direct처럼 OOF가 좋아도 test mean이 무너지는 후보는 제출 후보에서 제외한다.",
-    "a132는 a131_101 anchor 위에서 direct signal alpha와 selective mask를 좁게 검증한다."
+    "기존 late/high-stress uplift 축은 포화 신호가 강해졌고, 오늘의 큰 개선은 raw-only reboot family에서 발생했다.",
+    "이전 제출 예측을 모델 입력으로 쓰지 않고 raw train/test/layout_info 기반 domain/future/scenario feature를 재구성한 점이 핵심이다.",
+    "ranker 계열은 시간 정렬 로직을 반드시 점검해야 하며, 운영 변수를 시간 컬럼으로 오인하면 위험하다.",
+    "a137/a138의 성공 분포를 유지하되, 다음에는 단순 alpha grid보다 raw-only specialist와 ranker diversity를 늘려야 한다.",
+    "목표는 10.0265에서 9점대로 진입하는 것이며, public-hit 분포를 깨지 않는 범위 안에서 tail 보정과 scenario pressure feature를 확장한다."
   ],
   "risks": [
-    "public-guided microblend는 과하면 leaderboard overfit이 될 수 있다.",
-    "direct model 단독 제출은 기존 최고 분포와 평균/상관이 크게 달라 위험하다.",
-    "slot-direct 계열은 validation mismatch가 커서 OOF만 믿으면 안 된다.",
-    "9점대 진입을 위해서는 단순 uplift보다 새 신호와 안전한 흡수 전략을 병행해야 한다."
+    "a138 fine grid를 과도하게 반복하면 leaderboard overfit 위험이 커진다.",
+    "public code 기반 ranker는 정렬/누수/테스트 활용 범위를 매번 재검증해야 한다.",
+    "raw-only family라도 test 분포를 직접 학습 대상으로 쓰면 규정 위반 또는 private 붕괴 위험이 생긴다.",
+    "p95~p99 tail을 너무 공격적으로 올리면 평균은 유지돼도 MAE가 다시 악화될 수 있다."
   ]
 }
