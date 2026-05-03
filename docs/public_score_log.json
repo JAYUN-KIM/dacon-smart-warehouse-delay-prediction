@@ -3,228 +3,180 @@
     "date": "2026-04-18",
     "submission": "baseline",
     "public_score": 11.83,
-    "note": "초기 기준선. 전체 파이프라인과 제출 형식 검증."
+    "note": "초기 기준선"
   },
   {
     "date": "2026-04-18",
     "submission": "submission_a48_v4_3.csv",
     "public_score": 10.1477,
-    "note": "초기 앙상블/후처리 계열에서 10.1대 진입."
-  },
-  {
-    "date": "2026-04-18",
-    "submission": "submission_a56_3.csv",
-    "public_score": 10.1276,
-    "note": "시나리오 통계와 잔차 보정 계열 개선."
-  },
-  {
-    "date": "2026-04-18",
-    "submission": "submission_a66_5.csv",
-    "public_score": 10.1260335184,
-    "note": "앙상블/후처리 안정화."
+    "note": "초기 앙상블/전처리 계열에서 10.1대 진입"
   },
   {
     "date": "2026-04-18",
     "submission": "submission_a75_01.csv",
     "public_score": 10.122152212,
-    "note": "low-band residual 보정 계열."
+    "note": "low-band residual 보정 계열"
   },
   {
     "date": "2026-04-19",
     "submission": "submission_a88_27.csv",
     "public_score": 10.1201425252,
-    "note": "representation residual 및 shift/high/unseen specialist 방향으로 전환."
+    "note": "representation residual 및 shift/high/unseen specialist 방향 전환"
   },
   {
     "date": "2026-04-20",
     "submission": "submission_a94_51.csv",
     "public_score": 10.1133848903,
-    "note": "scenario baseline signal과 specialist 통합으로 큰 폭 개선."
+    "note": "scenario baseline signal과 specialist 통합으로 개선"
   },
   {
     "date": "2026-04-21",
     "submission": "submission_a100_05.csv",
     "public_score": 10.1090848449,
-    "note": "baseline + scale + routed_z decomposition 구조가 유효함을 확인."
+    "note": "baseline + scale + routed_z decomposition 구조의 유효성 확인"
   },
   {
     "date": "2026-04-22",
     "submission": "submission_a101_10.csv",
     "public_score": 10.1064209775,
-    "note": "soft expected-error router 계열 최고점 갱신."
+    "note": "soft expected-error router 계열 최고 기록"
   },
   {
     "date": "2026-04-23",
     "submission": "submission_a102_24.csv",
     "public_score": 10.1360030381,
-    "note": "support-aware hard routing/fallback이 public에서 크게 악화됨."
-  },
-  {
-    "date": "2026-04-23",
-    "submission": "submission_a104_15.csv",
-    "public_score": 10.1111502564,
-    "note": "aggressive correction/subset mask 계열은 과적합 위험 확인."
+    "note": "support-aware hard routing/fallback이 public에서 크게 악화"
   },
   {
     "date": "2026-04-24",
     "submission": "submission_a105_13.csv",
     "public_score": 10.1074718609,
-    "note": "anchor-preserving correction은 안정적이나 a101_10을 넘지 못함."
-  },
-  {
-    "date": "2026-04-24",
-    "submission": "submission_a106_20.csv",
-    "public_score": 10.11045386,
-    "note": "domain-informed reweighting 계열이 public에서 개선 실패."
-  },
-  {
-    "date": "2026-04-25",
-    "submission": "submission_a107_10.csv",
-    "public_score": 10.1067154934,
-    "note": "a101_10 근처까지 회복했으나 최고 갱신 실패."
+    "note": "anchor-preserving correction은 안정적이었지만 a101_10을 넘지 못함"
   },
   {
     "date": "2026-04-25",
     "submission": "submission_a108_12.csv",
     "public_score": 10.1122539111,
-    "note": "pseudo-group shift-heavy expert 재학습 방향은 public 악화."
-  },
-  {
-    "date": "2026-04-25",
-    "submission": "submission_a109_09.csv",
-    "public_score": 10.1085982977,
-    "note": "원점 재점검 이후에도 10.10대 초반 벽 유지."
+    "note": "pseudo-group shift-heavy expert 재학습 방향은 public에서 후퇴"
   },
   {
     "date": "2026-04-25",
     "submission": "submission_a110_09.csv",
     "public_score": 10.106859334,
-    "note": "future-window/warehouse-pressure 관점 재구성. 최고점 근처 회복."
+    "note": "미래창/warehouse pressure 재점검 후에도 10.10대 초반 유지"
   },
   {
     "date": "2026-04-26",
     "submission": "submission_a114_09.csv",
     "public_score": 10.103316418,
-    "note": "미래창/pressure 피처 확장 방향에서 유의미한 개선."
-  },
-  {
-    "date": "2026-04-26",
-    "submission": "submission_a115_146.csv",
-    "public_score": 10.1066275842,
-    "note": "a114 확장형은 public에서 후퇴. 과한 변형보다 보수적 제어 필요."
+    "note": "미래창 pressure 피처 확장 방향에서 유의미한 개선"
   },
   {
     "date": "2026-04-27",
     "submission": "submission_a117_09.csv",
     "public_score": 10.1005923422,
-    "note": "late/high-pressure uplift 계열에서 10.10 근처까지 접근."
-  },
-  {
-    "date": "2026-04-27",
-    "submission": "submission_a117_18_family.csv",
-    "public_score": 10.1014682069,
-    "note": "같은 방향의 공격적 변형은 소폭 악화."
-  },
-  {
-    "date": "2026-04-28",
-    "submission": "submission_a118_01.csv",
-    "public_score": 10.1018318718,
-    "note": "a117 계열 보정 폭 조절 실험. 최고 갱신 실패."
-  },
-  {
-    "date": "2026-04-28",
-    "submission": "submission_a119_03.csv",
-    "public_score": 10.1010915332,
-    "note": "late pressure family를 보수적으로 유지했으나 a117_09보다 낮음."
+    "note": "late/high-pressure uplift 계열에서 10.10 근처 접근"
   },
   {
     "date": "2026-04-28",
     "submission": "submission_a122_1045.csv",
     "public_score": 10.0967991272,
-    "note": "late pressure uplift 방향에서 10.09대 진입. 당시 최고점."
-  },
-  {
-    "date": "2026-04-29",
-    "submission": "submission_a123_059.csv",
-    "public_score": 10.0967996581,
-    "note": "stress tail two-tier 추가는 a122와 거의 동일하나 소폭 악화."
+    "note": "late pressure uplift 방향에서 10.09대 진입"
   },
   {
     "date": "2026-04-29",
     "submission": "submission_a124_1443.csv",
     "public_score": 10.0960054075,
-    "note": "late-shift mean-preserving uplift로 새 최고점 갱신."
+    "note": "late-shift mean-preserving uplift로 최고 기록 갱신"
   },
   {
     "date": "2026-04-30",
     "submission": "submission_a125_001.csv",
     "public_score": 10.0953184117,
-    "note": "a124_1443을 anchor로 더 이른 시작과 더 큰 평균 uplift를 적용해 개선."
+    "note": "a124 anchor 기반 평균 uplift 추가 개선"
   },
   {
     "date": "2026-04-30",
     "submission": "submission_a126_001.csv",
     "public_score": 10.0946609016,
-    "note": "q=0.900을 유지하고 mean uplift를 0.0600까지 강화해 추가 개선."
+    "note": "mean uplift 강화로 추가 개선"
   },
   {
     "date": "2026-04-30",
     "submission": "submission_a127_003.csv",
     "public_score": 10.0941228322,
-    "note": "중간 강도의 a127 후보가 새 최고점. late/high-stress uplift 축이 연속 개선."
+    "note": "late/high-stress uplift 축의 미세 개선"
   },
   {
     "date": "2026-05-01",
     "submission": "submission_a128_001.csv",
     "public_score": 10.0939941912,
-    "note": "a127 방향을 public-safe하게 한 번 더 밀어 10.093대 진입."
+    "note": "public-safe late blend로 10.093대 진입"
   },
   {
     "date": "2026-05-01",
     "submission": "submission_a129_001.csv",
     "public_score": 10.0939015979,
-    "note": "scenario-relative shift 보정으로 미세하지만 추가 개선."
-  },
-  {
-    "date": "2026-05-01",
-    "submission": "submission_a130_002.csv",
-    "public_score": 10.0946330552,
-    "note": "scenario offset pivot을 더 공격적으로 적용했으나 public에서 악화. 같은 축의 확장 한계 확인."
+    "note": "scenario-relative shift 보정으로 소폭 개선"
   },
   {
     "date": "2026-05-01",
     "submission": "submission_a131_101.csv",
     "public_score": 10.0920140626,
-    "note": "from-scratch direct LGBM signal을 a129 anchor에 1.5%만 흡수한 microblend가 새 최고점 달성."
+    "note": "from-scratch direct model signal을 소량 흡수한 microblend"
   },
   {
     "date": "2026-05-02",
     "submission": "submission_a132_002.csv",
     "public_score": 10.0913986125,
-    "note": "direct signal refinement로 전일 최고점 대비 소폭 개선."
+    "note": "direct signal refinement로 전일 best 대비 소폭 개선"
   },
   {
     "date": "2026-05-02",
     "submission": "submission_a133_104.csv",
     "public_score": 10.0905078248,
-    "note": "direct alpha gamble 계열이 10.090대까지 접근했으나 개선폭은 여전히 제한적."
+    "note": "direct alpha gamble 계열에서 10.090대 접근"
   },
   {
     "date": "2026-05-02",
     "submission": "submission_a135_003.csv",
     "public_score": 10.0901537375,
-    "note": "ranker signal을 기존 계열에 섞어 10.0901까지 개선."
+    "note": "ranker signal blend로 10.0901까지 개선"
   },
   {
     "date": "2026-05-02",
     "submission": "submission_a137_011.csv",
     "public_score": 10.02829,
-    "note": "이전 제출 예측을 입력으로 쓰지 않는 raw-only reboot ensemble이 대형 개선을 달성."
+    "note": "raw-only reboot ensemble로 큰 폭 개선"
   },
   {
     "date": "2026-05-02",
     "submission": "submission_a138_147.csv",
     "public_score": 10.0265043299,
-    "note": "a137 성공 분포를 유지한 raw-only fine grid 후보가 현재 최고점 갱신."
+    "note": "raw-only fine grid로 전일 최고 기록"
+  },
+  {
+    "date": "2026-05-03",
+    "submission": "submission_a139_511.csv",
+    "public_score": 10.0208783095,
+    "note": "공격적 tail expert 계열로 추가 개선"
+  },
+  {
+    "date": "2026-05-03",
+    "submission": "submission_a141_014.csv",
+    "public_score": 10.0255310477,
+    "note": "장시간 후보였지만 public에서는 기대보다 낮아 보류"
+  },
+  {
+    "date": "2026-05-03",
+    "submission": "submission_a145_1755.csv",
+    "public_score": 10.0143960347,
+    "note": "future-pressure slot redistribution으로 큰 폭 개선"
+  },
+  {
+    "date": "2026-05-03",
+    "submission": "submission_a145_4830.csv",
+    "public_score": 10.010757563,
+    "note": "현재 최고 기록. scenario 평균 보존 + 미래 압력 기반 슬롯 재분배가 적중"
   }
 ]

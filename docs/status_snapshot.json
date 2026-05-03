@@ -1,63 +1,79 @@
 {
-  "generated_at": "2026-05-02",
+  "generated_at": "2026-05-03",
   "competition": "DACON Smart Warehouse Outbound Delay Prediction",
   "goal": "public MAE 9점대 진입",
   "best_public": {
-    "date": "2026-05-02",
-    "name": "a138_147",
-    "score": 10.0265043299,
-    "file": "submission_a138_147.csv",
-    "note": "raw-only reboot ensemble의 성공 분포를 유지한 fine grid 후보가 현재 최고점 갱신"
+    "date": "2026-05-03",
+    "name": "a145_4830",
+    "score": 10.010757563,
+    "file": "submission_a145_4830.csv",
+    "note": "future-pressure aligned slot redistribution 계열에서 현재 최고 기록을 갱신"
   },
   "previous_best": {
-    "date": "2026-05-02",
-    "name": "a137_011",
-    "score": 10.02829,
-    "file": "submission_a137_011.csv"
+    "date": "2026-05-03",
+    "name": "a145_1755",
+    "score": 10.0143960347,
+    "file": "submission_a145_1755.csv"
   },
   "latest_submissions": [
     {
-      "date": "2026-05-02",
-      "file": "submission_a132_002.csv",
-      "score": 10.0913986125,
-      "summary": "전일 best 이후 direct signal refinement로 소폭 개선"
+      "date": "2026-05-03",
+      "file": "submission_a139_511.csv",
+      "score": 10.0208783095,
+      "summary": "공격적 tail expert 계열로 전날 최고 기록 대비 개선"
     },
     {
-      "date": "2026-05-02",
-      "file": "submission_a133_104.csv",
-      "score": 10.0905078248,
-      "summary": "direct alpha gamble 계열이 10.090대까지 접근"
+      "date": "2026-05-03",
+      "file": "submission_a141_014.csv",
+      "score": 10.0255310477,
+      "summary": "장시간 후보였지만 public에서는 기대보다 낮아 보류"
     },
     {
-      "date": "2026-05-02",
-      "file": "submission_a135_003.csv",
-      "score": 10.0901537375,
-      "summary": "외부 ranker 코드 점검 후 ranker signal blend로 미세 개선"
+      "date": "2026-05-03",
+      "file": "submission_a145_1755.csv",
+      "score": 10.0143960347,
+      "summary": "future-pressure slot redistribution이 크게 적중"
     },
     {
-      "date": "2026-05-02",
-      "file": "submission_a137_011.csv",
-      "score": 10.02829,
-      "summary": "raw-only reboot ensemble이 큰 폭의 public 개선을 달성"
-    },
-    {
-      "date": "2026-05-02",
-      "file": "submission_a138_147.csv",
-      "score": 10.0265043299,
-      "summary": "a137 성공 분포를 유지한 fine grid로 현재 최고점 갱신"
+      "date": "2026-05-03",
+      "file": "submission_a145_4830.csv",
+      "score": 10.010757563,
+      "summary": "현재 최고 기록. scenario 평균 보존 + 슬롯별 미래 압력 재분배가 유효"
     }
   ],
   "current_direction": [
-    "기존 late/high-stress uplift 축은 포화 신호가 강해졌고, 오늘의 큰 개선은 raw-only reboot family에서 발생했다.",
-    "이전 제출 예측을 모델 입력으로 쓰지 않고 raw train/test/layout_info 기반 domain/future/scenario feature를 재구성한 점이 핵심이다.",
-    "ranker 계열은 시간 정렬 로직을 반드시 점검해야 하며, 운영 변수를 시간 컬럼으로 오인하면 위험하다.",
-    "a137/a138의 성공 분포를 유지하되, 다음에는 단순 alpha grid보다 raw-only specialist와 ranker diversity를 늘려야 한다.",
-    "목표는 10.0265에서 9점대로 진입하는 것이며, public-hit 분포를 깨지 않는 범위 안에서 tail 보정과 scenario pressure feature를 확장한다."
+    "기존 late/high-stress 미세조정만으로는 개선 폭이 작아졌고, 2026-05-03에는 슬롯 재분배 축에서 가장 큰 개선이 발생했다.",
+    "성공한 핵심 구조는 scenario 평균을 크게 흔들지 않고 25개 슬롯 내부의 예측 질량을 미래 압력 profile에 맞춰 이동하는 방식이다.",
+    "a145_4830이 public 10.010757563을 기록했으므로, 다음 제출은 이 후보를 anchor로 둔 a149 extrapolation 계열이 가장 유망하다.",
+    "다음 1순위 후보는 submission_a149_008.csv, 더 공격적인 도박 후보는 submission_a149_009.csv다."
+  ],
+  "next_candidates": [
+    {
+      "file": "submission_a149_008.csv",
+      "path": "C:/open/a149_candidates/submission_a149_008.csv",
+      "type": "balanced_aggressive",
+      "oof_mae": 8.57187915470064,
+      "note": "다음 1순위 제출 후보"
+    },
+    {
+      "file": "submission_a149_009.csv",
+      "path": "C:/open/a149_candidates/submission_a149_009.csv",
+      "type": "high_risk_gamble",
+      "oof_mae": 8.571574160627813,
+      "note": "더 강한 9점대 도박 후보"
+    },
+    {
+      "file": "submission_a149_085.csv",
+      "path": "C:/open/a149_candidates/submission_a149_085.csv",
+      "type": "safe",
+      "oof_mae": 8.572961947293882,
+      "note": "안정 후보지만 돌파력은 약할 수 있음"
+    }
   ],
   "risks": [
-    "a138 fine grid를 과도하게 반복하면 leaderboard overfit 위험이 커진다.",
-    "public code 기반 ranker는 정렬/누수/테스트 활용 범위를 매번 재검증해야 한다.",
-    "raw-only family라도 test 분포를 직접 학습 대상으로 쓰면 규정 위반 또는 private 붕괴 위험이 생긴다.",
-    "p95~p99 tail을 너무 공격적으로 올리면 평균은 유지돼도 MAE가 다시 악화될 수 있다."
+    "a149 계열은 p99와 max가 a145_4830보다 높아지므로 과한 extrapolation은 public/private에서 tail overshoot를 만들 수 있다.",
+    "OOF 개선폭이 작기 때문에 public 반응은 제출 전까지 확정할 수 없다.",
+    "다음 단계에서 평균을 흔드는 correction보다 scenario 내부 슬롯 분배를 조절하는 방식이 우선이다.",
+    "제출 전에는 행 수, ID 순서, NaN, min, mean, p95, p99, max를 반드시 재검증해야 한다."
   ]
 }
