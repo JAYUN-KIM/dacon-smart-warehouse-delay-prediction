@@ -178,5 +178,35 @@
     "submission": "submission_a145_4830.csv",
     "public_score": 10.010757563,
     "note": "현재 최고 기록. scenario 평균 보존 + 미래 압력 기반 슬롯 재분배가 적중"
+  },
+  {
+    "date": "2026-05-04",
+    "submission": "submission_a149_009.csv",
+    "public_score": 10.0073867868,
+    "note": "a145 성공 축을 더 강하게 민 public-guided extrapolation"
+  },
+  {
+    "date": "2026-05-04",
+    "submission": "submission_a150_012.csv",
+    "public_score": 10.0080170747,
+    "note": "tail을 너무 강하게 밀면 public에서 악화된다는 경계 확인"
+  },
+  {
+    "date": "2026-05-04",
+    "submission": "submission_a151_886.csv",
+    "public_score": 10.0068002221,
+    "note": "queueing/domain reallocation으로 추가 개선"
+  },
+  {
+    "date": "2026-05-04",
+    "submission": "submission_a155_481.csv",
+    "public_score": 10.0046018208,
+    "note": "next_30m 정의에 맞춘 future phase-lead와 tail 복원 구조가 적중"
+  },
+  {
+    "date": "2026-05-04",
+    "submission": "submission_a156_046.csv",
+    "public_score": 10.0038814352,
+    "note": "최종 제출. a155_481을 anchor로 p99/max tail을 한 단계 더 민 마지막 도박 후보"
   }
 ]

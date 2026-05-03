@@ -13,9 +13,9 @@
 
 ## 현재 최고 성과
 
-- 최고 제출: `submission_a138_147.csv`
-- Public MAE: `10.0265043299`
-- 달성일: `2026-05-02`
+- 최고 제출: `submission_a156_046.csv`
+- Public MAE: `10.0038814352`
+- 달성일: `2026-05-04`
 
 ## 핵심적으로 배운 점
 
@@ -30,6 +30,9 @@
 - a131에서 raw data 기반 direct LGBM family를 새로 만들고, 이를 낮은 비율로 anchor에 흡수하자 새 최고점이 나왔다.
 - a137에서 이전 제출 예측을 모델 입력으로 쓰지 않는 raw-only reboot ensemble이 public `10.02829`를 기록하며 가장 큰 점프를 만들었다.
 - a138에서 a137 성공 분포를 유지한 fine grid 후보가 `10.0265043299`로 현재 최고점을 갱신했다.
+- a145에서 scenario 평균을 보존하면서 미래 압력에 맞춰 25개 slot 안의 예측 질량을 재분배하자 public `10.010757563`까지 개선됐다.
+- a151에서 queueing/domain reallocation을 적용해 public `10.0068002221`까지 개선했다.
+- a155/a156에서 `next_30m` 정의에 맞춘 future phase-lead와 tail calibration을 결합해 최종 `10.0038814352`를 기록했다.
 - OOF가 좋아도 test prediction 평균이 비정상적으로 무너지는 모델은 제출 후보에서 제외해야 한다.
 
 ## 최근 방향 전환
@@ -38,13 +41,11 @@
 
 2026-04-30에는 이 방향을 더 밀어 `a125`, `a126`, `a127`에서 연속 개선을 확인했다. 2026-05-01에는 같은 축의 포화 신호를 확인한 뒤, from-scratch direct model signal을 아주 낮은 비율로 흡수하는 방식으로 `a131_101` 새 최고점을 달성했다. 2026-05-02에는 기존 anchor 미세 조정 대신 raw train/test/layout_info 기반의 raw-only reboot pipeline을 만들었고, ranker/domain/future-window feature를 결합한 `a137`, `a138` 계열이 큰 public 개선을 만들었다.
 
-## 다음 계획
+마지막 구간에는 scenario 평균보다 slot 위치와 미래 phase가 중요하다는 결론으로 이동했다. `a145`에서는 future-pressure slot redistribution, `a151`에서는 queueing/domain reallocation, `a155/a156`에서는 future phase-lead와 tail calibration을 적용했다. 최종적으로 `submission_a156_046.csv`가 public `10.0038814352`를 기록했다.
 
-다음 실험은 `a139`부터 시작한다.
+## 최종 정리
 
-- raw-only reboot pipeline을 유지한다.
-- ranker model diversity를 늘려 a136 domain reboot와의 error correlation을 낮춘다.
-- scenario-level queue/load/capacity feature를 확장한다.
-- high-delay tail 전용 specialist를 추가하되 hard switch는 사용하지 않는다.
-- `a138_147`의 public-hit prediction distribution에서 크게 벗어나는 후보는 제출 후보에서 제외한다.
-- 목표는 10.0265에서 10.00대를 거쳐 9점대에 진입하는 것이다.
+- 최종 public MAE는 `10.0038814352`이다.
+- 9점대에는 닿지 못했지만 초기 `11.83` 대비 약 `1.8261` MAE를 줄였다.
+- 최종적으로 가장 효과가 컸던 축은 `raw-only reboot`, `future-pressure slot redistribution`, `queueing/domain reallocation`, `future phase-lead`였다.
+- 자세한 최종 연구 흐름은 `docs/final_research_summary.md`에 정리했다.

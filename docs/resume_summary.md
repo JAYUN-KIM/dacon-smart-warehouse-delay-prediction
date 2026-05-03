@@ -17,6 +17,9 @@ DACON 스마트 창고 출고 지연 예측 AI 경진대회 참여
 - 이전 제출 예측을 입력으로 쓰지 않는 raw-only reboot ensemble을 설계하고 ranker/domain/future-window feature를 결합해 큰 폭의 public 개선 달성
 - 외부/공개 코드 기반 ranker를 검토하며 시간 정렬 로직과 누수 가능성을 점검하고 수정
 - OOF 성능과 public 성능이 어긋나는 후보를 prediction distribution 관점에서 필터링
+- 창고 queueing/operation 관점의 utilization, capacity gap, path friction, tech friction, future queue shock feature 설계
+- `next_30m` 예측 정의에 맞춰 미래 1~2 slot 신호를 현재 slot 예측에 반영하는 phase-lead 후보 설계
+- public-hit 후보의 p99/max tail shape를 기준으로 마지막 제출 후보를 calibration
 
 ## Technical Keywords
 
@@ -31,10 +34,12 @@ DACON 스마트 창고 출고 지연 예측 AI 경진대회 참여
 - OOD Generalization
 - Ensemble Optimization
 - Experiment Tracking
+- Queueing-inspired Feature Engineering
+- Prediction Distribution Calibration
 
 ## Outcome
 
-- public leaderboard score를 `11.83` 기준선에서 `10.0265043299`까지 지속적으로 개선
-- best public submission: `submission_a138_147.csv`
-- 단순 모델 교체보다, 문제 구조를 baseline/scale/deviation, late/high-stress shift, direct model signal로 분해해 개선축을 검증
+- public leaderboard score를 `11.83` 기준선에서 `10.0038814352`까지 지속적으로 개선
+- best public submission: `submission_a156_046.csv`
+- 단순 모델 교체보다, 문제 구조를 baseline/scale/deviation, late/high-stress shift, raw-only reboot, future slot redistribution, phase-lead로 분해해 개선축을 검증
 - 실패 실험도 기록해 aggressive correction, hard routing, 분포가 무너진 slot-direct 계열의 위험을 명확히 정리

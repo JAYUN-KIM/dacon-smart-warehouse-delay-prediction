@@ -1,73 +1,82 @@
 # 일일 리포트
 
-- 작성 날짜: `2026-05-03`
-- 현재 최고 public 점수: `10.010757563`
-- 현재 최고 제출 파일: `submission_a145_4830.csv`
-- 다음 작업: `a149` 후보 제출 및 9점대 진입 도박
+- 작성 날짜: `2026-05-04`
+- 최종 최고 public 점수: `10.0038814352`
+- 최종 최고 제출 파일: `submission_a156_046.csv`
+- 상태: 마지막 제출까지 완료
 
 ## 오늘의 변화
 
-오늘은 10.02대에서 10.01 초반까지 크게 전진한 날입니다. 전날 `a138_147`의 public `10.0265043299`에서 시작해, 기존 미세조정 축을 버리고 더 공격적인 미래 압력 기반 슬롯 재분배를 밀었습니다.
+오늘은 대회의 마지막 제출 기회까지 사용한 최종 마감일입니다. 전날 최고였던 `submission_a145_4830.csv`의 public `10.010757563`에서 시작해, public 피드백을 반영하며 `10.0038814352`까지 줄였습니다.
 
-처음에는 tail expert와 공격적 후보를 넓게 테스트했고, `submission_a139_511.csv`가 public `10.0208783095`를 기록했습니다. 이후 단순 tail 강화만으로는 9점대까지 부족하다고 판단해, scenario 평균은 보존하면서 같은 scenario 안의 25개 슬롯 예측값을 미래 압력 신호에 맞춰 재분배하는 방향으로 전환했습니다.
+처음에는 `a149` 계열로 전날 성공한 slot redistribution을 더 강하게 밀었습니다. `submission_a149_009.csv`가 public `10.0073867868`을 기록하며, 전날보다 확실히 개선됐습니다. 이후 `a150`의 과한 tail extrapolation은 `10.0080170747`로 악화되어, tail을 무작정 올리면 안 된다는 경계를 확인했습니다.
 
-이 전환이 오늘의 핵심이었습니다. `a145` 계열에서 `submission_a145_1755.csv`가 public `10.0143960347`을 기록했고, 더 공격적인 `submission_a145_4830.csv`가 public `10.010757563`까지 내려가며 현재 최고 기록을 세웠습니다.
+그 다음에는 queueing/domain 관점의 reallocation을 적용해 `submission_a151_886.csv`가 `10.0068002221`을 기록했습니다. 여기서도 9점대에는 닿지 못했지만, 창고 운영 압력과 tail 분포 조절이 public에서 계속 유효하다는 것을 확인했습니다.
+
+마지막 구간에서는 완전히 원점으로 돌아가 문제 정의를 다시 봤습니다. 이 대회는 현재 지연을 맞히는 문제가 아니라 `avg_delay_minutes_next_30m`, 즉 향후 30분 평균 지연을 맞히는 문제입니다. 그래서 같은 scenario 안에서 앞으로 1~2 slot의 예측과 운영 압력 신호를 현재 slot으로 당겨오는 `future phase-lead` 실험을 만들었습니다.
+
+`a154`에서 phase-lead만 적용하자 OOF는 크게 좋아졌지만 p99/max 꼬리가 낮아졌습니다. 이를 보완하기 위해 `a155`에서는 phase-lead 구조를 유지하면서 public에서 먹힌 tail 분포를 복원했습니다. `submission_a155_481.csv`가 public `10.0046018208`을 기록했고, 마지막에는 이 후보를 anchor로 p99/max를 한 단계 더 밀어 `submission_a156_046.csv`를 제출했습니다.
 
 ## 오늘 확인한 public 점수
 
 | 제출 | public MAE | 해석 |
 | --- | ---: | --- |
-| `submission_a139_511.csv` | `10.0208783095` | 공격적 tail expert 계열로 전날 best 대비 추가 개선 |
-| `submission_a141_014.csv` | `10.0255310477` | 장시간 후보였지만 public에서는 후퇴 |
-| `submission_a145_1755.csv` | `10.0143960347` | future-pressure slot redistribution 축이 강하게 적중 |
-| `submission_a145_4830.csv` | `10.010757563` | 현재 최고 기록, 9점대 직전까지 접근 |
+| `submission_a149_009.csv` | `10.0073867868` | 전날 성공한 slot redistribution extrapolation이 추가 개선 |
+| `submission_a150_012.csv` | `10.0080170747` | tail을 너무 강하게 밀면 악화됨을 확인 |
+| `submission_a151_886.csv` | `10.0068002221` | queueing/domain reallocation으로 추가 개선 |
+| `submission_a155_481.csv` | `10.0046018208` | future phase-lead + tail 복원 축이 적중 |
+| `submission_a156_046.csv` | `10.0038814352` | 마지막 제출, 최종 최고 기록 |
 
 ## 오늘의 실험 요약
 
-### a139: 공격적 tail expert
+### a149/a150: public-guided extrapolation
 
-- 목적: 기존 raw-only reboot family 위에서 high-delay tail을 더 강하게 밀어 public 개선을 만드는 것
-- 결과: `submission_a139_511.csv`가 `10.0208783095`를 기록
-- 판단: 방향은 유효했지만, 단순 tail 강화만으로는 9점대 돌파력이 부족했습니다.
-
-### a142/a143: retrieval/layout residual 재시도
-
-- 목적: scenario retrieval 또는 layout residual transfer를 통해 기존 축과 다른 일반화 신호를 찾는 것
-- 판단: 오늘 최고 기록을 만드는 핵심 축은 아니었습니다.
-- 결론: retrieval/layout residual보다 미래 운영 압력과 슬롯별 분배가 더 강한 신호였습니다.
-
-### a144/a145: future-pressure slot redistribution
-
-- 목적: scenario 평균은 보존하되, 25개 슬롯 안에서 미래 압력과 출고 지연 가능성이 큰 구간으로 예측 질량을 재분배
-- 핵심 아이디어: public에서 계속 관찰된 underprediction이 단순 평균 문제가 아니라 슬롯 위치 문제일 수 있다고 보고, 같은 scenario 안의 rank/pressure profile을 조절
+- 목적: `a145_4830`의 성공 축을 더 강하게 밀어 9점대에 접근
 - 결과:
-  - `submission_a145_1755.csv`: `10.0143960347`
-  - `submission_a145_4830.csv`: `10.010757563`
-- 판단: 오늘의 가장 큰 breakthrough입니다.
+  - `submission_a149_009.csv`: `10.0073867868`
+  - `submission_a150_012.csv`: `10.0080170747`
+- 판단: extrapolation은 유효하지만, p99/max를 과하게 올리면 public에서 바로 악화되었습니다.
 
-### a146/a147/a148/a149: 다음 도박 후보 탐색
+### a151: queueing/domain reallocation
 
-- `a146`: horizon/rank rewire 실험. 방향 확인용으로는 의미 있었지만 `a145_4830`을 넘는 public 후보로 확신하기는 어려웠습니다.
-- `a147`: scenario-level bias reboot. scenario residual model의 상관은 있었지만 최종 MAE 개선으로 이어지지 않아 보류했습니다.
-- `a148`: public-guided interpolation으로 `a145_4830` 성공 후보를 재확인했습니다.
-- `a149`: `a145_4830`을 anchor로 두고 9점대 진입을 위한 extrapolation 후보를 생성했습니다.
+- 목적: 단순 tail 상승이 아니라 창고의 병목, queue pressure, path/tech friction을 반영해 같은 scenario 안에서 예측 질량을 재배분
+- 참고한 관점:
+  - utilization/capacity gap
+  - Kingman/VUT 계열 queueing proxy
+  - path friction, tech friction, future queue shock
+- 결과: `submission_a151_886.csv`가 public `10.0068002221`
+- 판단: 외부 데이터를 직접 사용하지는 않았지만, 외부 queueing/warehouse 운영 아이디어를 feature 설계에 반영한 것이 효과적이었습니다.
 
-## 다음 제출 후보
+### a152/a153: 새 축 실험과 실패 확인
 
-| 후보 | 성격 | OOF MAE | p99 | max | 판단 |
-| --- | --- | ---: | ---: | ---: | --- |
-| `submission_a149_085.csv` | 안전 | `8.5729619473` | `50.1012` | `66.1678` | 안정적이지만 9점대 돌파력은 약할 수 있음 |
-| `submission_a149_008.csv` | 균형 잡힌 공격 | `8.5718791547` | `50.3072` | `66.3585` | 다음 1순위 제출 후보 |
-| `submission_a149_009.csv` | 강한 도박 | `8.5715741606` | `50.4171` | `66.4545` | 제출 기회가 남으면 공격적으로 시도할 후보 |
+- `a152`: train target profile을 이용해 high-risk scenario의 시간 profile을 바꾸려 했지만 내부 지표가 약했습니다.
+- `a153`: scenario 평균 residual을 risk 기반으로 재배분하려 했지만 개선 폭이 너무 작았습니다.
+- 판단: scenario 평균을 직접 흔드는 방식보다, slot-level phase와 tail shape를 조절하는 방식이 더 맞았습니다.
+
+### a154/a155/a156: 마지막 핵심 축
+
+- `a154`: `next_30m` 정의에 맞춰 미래 1~2 slot 예측을 현재로 당기는 phase-lead 실험. OOF가 크게 좋아졌지만 tail이 낮아져 public 위험이 있었습니다.
+- `a155`: phase-lead 구조를 유지하고 public-best tail shape를 복원. `submission_a155_481.csv`가 `10.0046018208` 기록.
+- `a156`: 마지막 제출용으로 `a155_481`을 anchor로 두고 p99/max만 한 단계 더 밀어 `submission_a156_046.csv` 제출. 최종 `10.0038814352`.
+
+## 최종 최고 기록
+
+- 최종 점수: `10.0038814352`
+- 최종 파일: `submission_a156_046.csv`
+- 최종 후보 분포:
+  - mean: `19.7761617`
+  - p95: `40.5907`
+  - p99: `51.0872`
+  - max: `67.0523`
 
 ## 오늘의 결론
 
-1. 10.09대 이후 미세조정 축은 개선 폭이 너무 작았습니다.
-2. raw-only reboot와 대규모 미래창/도메인 피처 확장이 큰 점프를 만들었습니다.
-3. 오늘의 결정적 개선은 `future-pressure slot redistribution`에서 나왔습니다.
-4. 현재 best는 `submission_a145_4830.csv`의 `10.010757563`입니다.
-5. 12시 이후에는 `a149_008`을 1순위로, 필요하면 `a149_009`를 9점대 도박 카드로 제출하는 전략이 가장 합리적입니다.
+1. 9점대에는 닿지 못했지만, 최종적으로 `10.0038814352`까지 접근했습니다.
+2. 마지막 개선은 단순 모델 변경이 아니라 문제 정의 재해석에서 나왔습니다.
+3. `next_30m` 예측이므로 미래 slot의 신호를 현재 예측에 반영하는 phase-lead가 중요했습니다.
+4. public에서는 tail shape가 매우 민감했고, p99/max를 너무 강하게 밀면 바로 악화되었습니다.
+5. 가장 효과적인 최종 조합은 `future phase-lead + public-tail calibration`이었습니다.
 
 ## 한 줄 요약
 
-오늘은 기존 미세조정에서 벗어나 미래 압력 기반 슬롯 재분배라는 새 축을 찾았고, public `10.010757563`까지 도달했습니다. 이제 다음 목표는 같은 축을 더 공격적으로 밀어 9점대 문턱을 넘는 것입니다.
+마지막 날에는 미래 30분 예측이라는 문제 정의로 돌아가 phase-lead와 tail calibration을 결합했고, 최종 public `10.0038814352`로 대회를 마무리했습니다.

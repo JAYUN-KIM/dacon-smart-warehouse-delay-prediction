@@ -12,10 +12,10 @@
 
 ## 현재 최고 기록
 
-- 최고 public MAE: `10.010757563`
-- 제출 파일: `submission_a145_4830.csv`
-- 기록 날짜: `2026-05-03`
-- 핵심 해석: 기존 late/high-stress 미세 보정 축에서 벗어나, raw feature 기반 대규모 미래창/도메인 피처와 scenario mean-preserving slot redistribution을 결합하면서 10.01 초반까지 크게 전진했습니다.
+- 최고 public MAE: `10.0038814352`
+- 제출 파일: `submission_a156_046.csv`
+- 기록 날짜: `2026-05-04`
+- 핵심 해석: 마지막에는 단순 tail uplift가 아니라 `next_30m` 문제 정의로 돌아가, 미래 1~2 slot 정보를 현재 예측으로 당기는 phase-lead 구조와 public에서 먹힌 tail 분포 복원을 결합했습니다.
 
 ## 현재 판단
 
@@ -23,11 +23,14 @@
 
 2026-05-02부터는 기존 제출 예측을 그대로 anchor로 쓰는 방식에서 벗어나, raw train/test/layout 기반의 미래창 피처, 창고 압력 피처, scenario aggregate 피처를 대폭 확장했습니다. 이 축에서 `a137`, `a138`이 크게 먹혔고, 2026-05-03에는 future-pressure slot redistribution을 본격적으로 적용해 `a145_4830`이 `10.010757563`까지 내려갔습니다.
 
+2026-05-04에는 마지막 제출을 앞두고 다시 원점으로 돌아가 문제 정의를 재해석했습니다. 예측 대상이 현재 지연이 아니라 향후 30분 평균 지연이라는 점에 집중해, 같은 scenario 안에서 앞으로 1~2 slot의 예측 및 운영 압력 신호를 현재 slot으로 당겨오는 `future phase-lead` 구조를 만들었습니다. 이후 public에서 검증된 `a155_481`의 꼬리 분포를 기준으로 마지막 도박 후보를 만들었고, 최종 `submission_a156_046.csv`가 public `10.0038814352`를 기록했습니다.
+
 현재 가장 중요한 결론은 다음과 같습니다.
 
 - 단순 모델 교체보다, 미래 운영 압력과 슬롯별 지연 재분배 구조가 더 큰 개선을 만들었습니다.
 - scenario 평균은 크게 흔들지 않고, 같은 scenario 안에서 어느 슬롯을 더 올리고 내릴지 조절하는 방식이 public에 잘 맞았습니다.
-- 9점대 진입을 위해서는 안전한 미세조정보다 `a145_4830`을 기준으로 더 공격적인 extrapolation 후보를 시험해야 합니다.
+- 마지막에는 public 검증 후보를 anchor로 두되, 문제 정의에 맞는 미래 phase 보정과 tail calibration을 결합하는 방식이 가장 강했습니다.
+- 목표였던 9점대에는 닿지 못했지만, 초기 `11.83`에서 최종 `10.0038814352`까지 약 `1.8261` MAE를 줄였습니다.
 
 ## 주요 점수 흐름
 
@@ -47,22 +50,29 @@
 | a138 | `10.0265043299` | raw-only fine grid |
 | a139 | `10.0208783095` | 공격적 tail expert 계열 |
 | a145_1755 | `10.0143960347` | future-pressure slot redistribution 성공 |
-| a145_4830 | `10.010757563` | 현재 최고 기록 |
+| a145_4830 | `10.010757563` | scenario 평균 보존형 slot redistribution |
+| a149_009 | `10.0073867868` | public-guided extrapolation |
+| a151_886 | `10.0068002221` | queueing/domain reallocation |
+| a155_481 | `10.0046018208` | future phase-lead + tail 복원 |
+| a156_046 | `10.0038814352` | 최종 public-tail gamble |
 
-## 다음 실험 방향
+## 최종 정리
 
-다음 제출 가능 시점에는 `a145_4830`을 anchor로 두고 9점대 진입을 위한 도박 후보를 우선 시험합니다.
+이번 대회에서는 다음과 같은 흐름으로 연구했습니다.
 
-- 1순위 후보: `submission_a149_008.csv`
-- 2순위 공격 후보: `submission_a149_009.csv`
-- 안전 후보: `submission_a149_085.csv`
+- 모델 family 탐색: CatBoost, LightGBM, sequence model, residual ensemble, MoE routing
+- 구조 분해: scenario baseline, scale, standardized deviation, expected-error router
+- OOD 대응: support/testlike feature, pseudo-group, shift-heavy expert, hard routing 실패 분석
+- 원점 재해석: 미래창 feature, 창고 압력 feature, raw-only reboot, slot redistribution
+- 최종 도박: next-30m phase-lead와 public-tail calibration 결합
 
-핵심은 평균 예측값을 크게 바꾸는 것이 아니라, public에서 먹힌 미래 압력 기반 슬롯 재분배 모양을 조금 더 강하게 밀어붙이는 것입니다.
+가장 큰 교훈은 평균적으로 좋은 모델을 하나 더 만드는 것보다, 대회 문제 정의에 맞춰 “미래 압력이 어느 슬롯에서 지연으로 나타나는지”를 예측 분포에 반영하는 것이 더 중요했다는 점입니다.
 
 ## 문서 구성
 
 - [프로젝트 개요](docs/project_overview.md)
 - [실험 로그](docs/experiment_log.md)
 - [일일 리포트](docs/daily_report.md)
+- [최종 연구 요약](docs/final_research_summary.md)
 - [날짜별 작업 기록](docs/daily_logs/)
 - [public 점수 로그](docs/public_score_log.json)
