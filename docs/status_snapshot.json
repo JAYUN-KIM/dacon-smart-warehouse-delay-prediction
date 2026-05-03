@@ -1,7 +1,7 @@
 {
   "generated_at": "2026-05-04",
   "competition": "DACON Smart Warehouse Outbound Delay Prediction",
-  "goal": "public MAE 9점대 진입 시도 및 최종 실험 기록",
+  "goal": "대회 종료 기준 최종 실험 기록과 회고 정리",
   "best_public": {
     "date": "2026-05-04",
     "name": "a156_046",

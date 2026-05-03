@@ -1,8 +1,8 @@
 # 프로젝트 개요
 
-## 목표
+## 프로젝트 목표
 
-데이콘 스마트 창고 출고 지연 예측 대회에서 향후 30분 평균 출고 지연 시간을 예측한다. 평가지표는 MAE이며, 현재 실험 목표는 public score 9점대 진입이다.
+데이콘 스마트 창고 출고 지연 예측 대회에서 향후 30분 평균 출고 지연 시간을 예측했습니다. 평가지표는 MAE이며, 실험 기간 동안의 목표는 public score 9점대 진입이었습니다.
 
 ## 데이터 구조
 
@@ -11,7 +11,7 @@
 - scenario는 독립 그룹으로 보며, 같은 scenario 안의 25개 slot context는 활용 가능하다.
 - layout generalization과 운영 상태 분포 이동이 핵심 난제다.
 
-## 현재 최고 성과
+## 최종 성과
 
 - 최고 제출: `submission_a156_046.csv`
 - Public MAE: `10.0038814352`
@@ -35,13 +35,13 @@
 - a155/a156에서 `next_30m` 정의에 맞춘 future phase-lead와 tail calibration을 결합해 최종 `10.0038814352`를 기록했다.
 - OOF가 좋아도 test prediction 평균이 비정상적으로 무너지는 모델은 제출 후보에서 제외해야 한다.
 
-## 최근 방향 전환
+## 후반부 방향 전환
 
-초반에는 모델 구조와 MoE routing 중심으로 접근했다. 이후 public score가 10.10 부근에서 막히면서 원점 EDA와 미래 예측 관점으로 다시 돌아갔다. 그 결과, 후반 slot과 high-pressure/high-stress 구간에서 과소예측되는 축을 발견했고, 이를 평균 보존형 uplift로 다루는 방향이 새 최고점으로 이어졌다.
+초반에는 모델 구조와 MoE routing 중심으로 접근했습니다. 이후 public score가 10.10 부근에서 막히면서 원점 EDA와 미래 예측 관점으로 다시 돌아갔습니다. 그 결과, 후반 slot과 high-pressure/high-stress 구간에서 과소예측되는 축을 발견했고, 이를 평균 보존형 uplift로 다루는 방향이 새 최고점으로 이어졌습니다.
 
-2026-04-30에는 이 방향을 더 밀어 `a125`, `a126`, `a127`에서 연속 개선을 확인했다. 2026-05-01에는 같은 축의 포화 신호를 확인한 뒤, from-scratch direct model signal을 아주 낮은 비율로 흡수하는 방식으로 `a131_101` 새 최고점을 달성했다. 2026-05-02에는 기존 anchor 미세 조정 대신 raw train/test/layout_info 기반의 raw-only reboot pipeline을 만들었고, ranker/domain/future-window feature를 결합한 `a137`, `a138` 계열이 큰 public 개선을 만들었다.
+2026-04-30에는 이 방향을 더 밀어 `a125`, `a126`, `a127`에서 연속 개선을 확인했습니다. 2026-05-01에는 같은 축의 포화 신호를 확인한 뒤, from-scratch direct model signal을 아주 낮은 비율로 흡수하는 방식으로 `a131_101` 새 최고점을 달성했습니다. 2026-05-02에는 기존 anchor 미세 조정 대신 raw train/test/layout_info 기반의 raw-only reboot pipeline을 만들었고, ranker/domain/future-window feature를 결합한 `a137`, `a138` 계열이 큰 public 개선을 만들었습니다.
 
-마지막 구간에는 scenario 평균보다 slot 위치와 미래 phase가 중요하다는 결론으로 이동했다. `a145`에서는 future-pressure slot redistribution, `a151`에서는 queueing/domain reallocation, `a155/a156`에서는 future phase-lead와 tail calibration을 적용했다. 최종적으로 `submission_a156_046.csv`가 public `10.0038814352`를 기록했다.
+마지막 구간에는 scenario 평균보다 slot 위치와 미래 phase가 중요하다는 결론으로 이동했습니다. `a145`에서는 future-pressure slot redistribution, `a151`에서는 queueing/domain reallocation, `a155/a156`에서는 future phase-lead와 tail calibration을 적용했습니다. 최종적으로 `submission_a156_046.csv`가 public `10.0038814352`를 기록했습니다.
 
 ## 최종 정리
 
@@ -49,3 +49,4 @@
 - 9점대에는 닿지 못했지만 초기 `11.83` 대비 약 `1.8261` MAE를 줄였다.
 - 최종적으로 가장 효과가 컸던 축은 `raw-only reboot`, `future-pressure slot redistribution`, `queueing/domain reallocation`, `future phase-lead`였다.
 - 자세한 최종 연구 흐름은 `docs/final_research_summary.md`에 정리했다.
+- 이 프로젝트는 2026-05-04 마지막 제출을 끝으로 종료되었으며, 이후 문서는 최종 회고와 포트폴리오 기록 용도로 유지한다.
