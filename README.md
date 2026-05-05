@@ -71,8 +71,6 @@
 ## 문서 구성
 
 - [포트폴리오 케이스 스터디](docs/portfolio_case_study.md)
-- [이력서 / 포트폴리오 요약](docs/resume_summary.md)
-- [다른 AI에게 전달할 정리 프롬프트](docs/ai_handoff_prompt.md)
 - [프로젝트 개요](docs/project_overview.md)
 - [실험 로그](docs/experiment_log.md)
 - [일일 리포트](docs/daily_report.md)
