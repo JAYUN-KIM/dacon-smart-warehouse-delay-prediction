@@ -1,45 +1,50 @@
-# Resume / Portfolio Summary
+# 이력서 / 포트폴리오 요약
 
-## Project
+## 프로젝트
 
-DACON 스마트 창고 출고 지연 예측 AI 경진대회 참여  
-향후 30분 평균 출고 지연 시간을 예측하는 MAE 최적화 문제를 해결했습니다.
+**DACON 스마트 창고 출고 지연 예측 경진대회**
 
-## My Contributions
+스마트 창고의 scenario별 25개 slot 운영 데이터를 바탕으로 `avg_delay_minutes_next_30m`, 즉 향후 30분 평균 출고 지연 시간을 예측하는 MAE 회귀 문제를 수행했습니다.
 
-- 10,000개 train scenario와 2,000개 test scenario의 25-step 구조를 반영한 tabular-sequence modeling pipeline 설계
-- layout generalization과 운영 상태 분포 이동을 고려한 scenario-level feature engineering
-- CatBoost, LightGBM, Transformer, LSTM, residual ensemble 기반의 단계적 실험 수행
-- `baseline + scale + routed_z` decomposition과 soft expected-error routing 구조 설계
-- future-window, pressure, late-slot 관점의 피처 확장 및 public leaderboard 기반 검증
-- late/high-stress underprediction 구간을 발견하고 public-safe uplift 전략으로 연속 개선
-- from-scratch direct LGBM family를 새로 만들고, 기존 best anchor에 낮은 비율로 흡수하는 microblend 전략 검증
-- 이전 제출 예측을 입력으로 쓰지 않는 raw-only reboot ensemble을 설계하고 ranker/domain/future-window feature를 결합해 큰 폭의 public 개선 달성
-- 외부/공개 코드 기반 ranker를 검토하며 시간 정렬 로직과 누수 가능성을 점검하고 수정
-- OOF 성능과 public 성능이 어긋나는 후보를 prediction distribution 관점에서 필터링
-- 창고 queueing/operation 관점의 utilization, capacity gap, path friction, tech friction, future queue shock feature 설계
-- `next_30m` 예측 정의에 맞춰 미래 1~2 slot 신호를 현재 slot 예측에 반영하는 phase-lead 후보 설계
-- public-hit 후보의 p99/max tail shape를 기준으로 마지막 제출 후보를 calibration
+## 핵심 성과
 
-## Technical Keywords
+- 초기 public MAE `11.83`에서 최종 `10.0038814352`까지 개선
+- 약 `1.8261` MAE 감소
+- 최종 제출 파일: `submission_a156_046.csv`
+- 10.12, 10.09, 10.02 정체 구간을 각각 다른 모델링/feature 축으로 돌파
+
+## 주요 기여
+
+- 10,000개 train scenario와 2,000개 test scenario의 25-slot 구조를 반영한 tabular-time-series modeling pipeline 설계
+- CatBoost, LightGBM, sequence model, residual ensemble, Mixture-of-Experts 기반 실험 수행
+- scenario baseline, scale, standardized deviation을 분리한 `baseline + scale * routed_z` decomposition 구조 설계
+- expected-error 기반 soft routing과 specialist expert 구조 실험
+- DANN, hard support-aware routing, aggressive correction 등 실패 실험을 분석하여 OOD 대응 전략 재설계
+- future-window, warehouse pressure, queueing-inspired feature, slot redistribution, phase-lead feature 설계
+- prediction distribution, p99/max tail, scenario 평균 보존 여부를 기준으로 public-safe calibration 수행
+- 날짜별 실험 로그, public score log, 최종 연구 요약, 포트폴리오 문서 작성
+
+## 기술 키워드
 
 - Python
-- CatBoost
+- pandas / NumPy
 - LightGBM
-- GroupKFold
-- Scenario-level Feature Engineering
-- Time-series Tabular Modeling
-- Residual Learning
+- CatBoost
+- Time-series tabular modeling
+- Scenario-level feature engineering
+- Residual learning
 - Mixture-of-Experts
-- OOD Generalization
-- Ensemble Optimization
-- Experiment Tracking
-- Queueing-inspired Feature Engineering
-- Prediction Distribution Calibration
+- OOD generalization
+- Queueing-inspired feature engineering
+- Prediction distribution calibration
+- Experiment tracking
 
-## Outcome
+## 이력서용 Bullet
 
-- public leaderboard score를 `11.83` 기준선에서 `10.0038814352`까지 지속적으로 개선
-- best public submission: `submission_a156_046.csv`
-- 단순 모델 교체보다, 문제 구조를 baseline/scale/deviation, late/high-stress shift, raw-only reboot, future slot redistribution, phase-lead로 분해해 개선축을 검증
-- 실패 실험도 기록해 aggressive correction, hard routing, 분포가 무너진 slot-direct 계열의 위험을 명확히 정리
+- DACON 스마트 창고 출고 지연 예측 대회에서 10,000개 scenario x 25 slot의 tabular-time-series 데이터를 활용해 향후 30분 평균 출고 지연 예측 파이프라인을 설계하고, public MAE를 `11.83`에서 `10.00388`까지 개선
+- CatBoost/LightGBM ensemble, residual learning, `baseline + scale * routed_z` decomposition, MoE routing, future-window pressure feature, slot redistribution, tail calibration을 단계적으로 실험
+- local OOF와 public leaderboard가 불일치하는 상황에서 hard routing과 aggressive correction의 실패 원인을 분석하고, 문제 정의 기반 feature engineering과 prediction distribution calibration 중심으로 전략 전환
+
+## 포트폴리오용 소개 문단
+
+이 프로젝트는 단순히 모델을 더 많이 쌓는 방식보다, 대회 문제 정의를 정확히 해석하는 것이 중요했던 사례입니다. 초반에는 ensemble과 residual correction으로 성능을 끌어올렸지만 10.1 근처에서 정체가 발생했습니다. 이후 `next_30m` 타겟의 의미를 다시 해석해 미래 주문 압력과 작업 병목이 어느 slot에서 지연으로 나타나는지를 feature와 예측 분포에 반영했고, raw-only reboot, queueing-inspired feature, future phase-lead, tail calibration을 통해 최종 public MAE `10.0038814352`까지 개선했습니다.
